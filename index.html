@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>MEMORY//ЯЗЫК — Сеть смыслов v1.3.5</title>
+<style>
+
+:root{
+  --bg:#efe7da;
+  --panel:#fff9f0;
+  --panel2:#f6edde;
+  --surface:#fffdf8;
+  --ink:#223038;
+  --muted:#677670;
+  --line:rgba(52,71,63,.16);
+  --teal:#2f8f83;
+  --teal-2:#5fb4a1;
+  --berry:#c35f73;
+  --gold:#d5a54c;
+  --good:#2f9464;
+  --bad:#c75f5a;
+  --shadow:0 16px 44px rgba(65,55,39,.12),0 4px 12px rgba(65,55,39,.08);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color-scheme:light}
+body{
+  margin:0;min-height:100dvh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);overflow-x:hidden;
+  background:
+    radial-gradient(850px 420px at -8% 0%, rgba(95,180,161,.16), transparent 62%),
+    radial-gradient(680px 360px at 100% 4%, rgba(211,165,76,.14), transparent 58%),
+    linear-gradient(180deg,#f6efe3 0%,#efe7da 52%,#ebe1d1 100%);
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.55;
+  background-image:
+    linear-gradient(rgba(73,91,85,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(73,91,85,.035) 1px, transparent 1px),
+    radial-gradient(circle at 20% 30%, rgba(47,143,131,.07) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 18%, rgba(195,95,115,.06) 0 2px, transparent 3px),
+    radial-gradient(circle at 62% 82%, rgba(213,165,76,.08) 0 2px, transparent 3px);
+  background-size:28px 28px,28px 28px, 180px 180px, 220px 220px, 240px 240px;
+  mix-blend-mode:multiply;
+}
+button{font:inherit}
+button:focus-visible{outline:3px solid rgba(47,143,131,.35);outline-offset:3px}
+[hidden]{display:none!important}
+.shell{width:min(1160px,100%);margin:0 auto;padding:24px clamp(14px,3vw,34px) 36px;position:relative;z-index:1}
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.logo{font-weight:900;letter-spacing:.04em;font-size:clamp(18px,2.2vw,28px);color:#21343c}
+.logo span{color:var(--berry)}
+.build{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#586661;border:1px solid rgba(52,71,63,.14);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.55)}
+.panel{background:linear-gradient(180deg,rgba(255,251,244,.94),rgba(246,237,222,.95));border:1px solid rgba(52,71,63,.12);border-radius:32px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.panel:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.42),transparent 24%)}
+.intro{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(320px,.94fr);min-height:620px}
+.hero{padding:clamp(32px,5vw,68px);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;background:
+  radial-gradient(260px 180px at 85% 22%, rgba(95,180,161,.13), transparent 65%),
+  linear-gradient(180deg, rgba(255,255,255,.34), transparent 55%)}
+.hero:before{
+  content:"";position:absolute;right:32px;top:42px;width:min(38vw,360px);height:min(28vw,260px);opacity:.9;pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 76%, rgba(47,143,131,.18) 0 8px, transparent 9px),
+    radial-gradient(circle at 47% 22%, rgba(195,95,115,.18) 0 8px, transparent 9px),
+    radial-gradient(circle at 76% 74%, rgba(213,165,76,.2) 0 8px, transparent 9px),
+    linear-gradient(150deg, transparent 0 21%, rgba(52,71,63,.13) 21.5% 23.2%, transparent 23.7% 100%),
+    linear-gradient(28deg, transparent 0 40%, rgba(52,71,63,.11) 40.4% 41.7%, transparent 42.1% 100%),
+    linear-gradient(90deg, transparent 0 50%, rgba(52,71,63,.1) 50.3% 51.5%, transparent 51.8% 100%);
+}
+.hero:after{
+  content:"";position:absolute;right:-36px;bottom:28px;width:250px;height:164px;border-radius:28px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,249,240,.38)),
+    repeating-linear-gradient(180deg, transparent 0 24px, rgba(52,71,63,.06) 24px 25px);
+  border:1px solid rgba(52,71,63,.12);
+  transform:rotate(-7deg);box-shadow:0 18px 32px rgba(77,68,56,.1)
+}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+h1{font-size:clamp(42px,7vw,78px);line-height:.94;letter-spacing:-.055em;margin:0 0 22px;max-width:780px;color:#1f2f37}
+h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparent 64%, rgba(195,95,115,.16) 0)}
+.lead{max-width:640px;font-size:clamp(17px,2.1vw,22px);line-height:1.45;color:#4d595f;margin:0 0 28px}
+.mission-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.chip{padding:9px 12px;border:1px solid rgba(52,71,63,.12);border-radius:999px;background:rgba(255,255,255,.62);font-size:13px;color:#46545a}
+.setup{padding:clamp(24px,4vw,44px);border-left:1px solid rgba(52,71,63,.11);display:flex;flex-direction:column;justify-content:center;background:
+  linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.12)),
+  radial-gradient(280px 160px at 15% 0%, rgba(213,165,76,.12), transparent 62%)}
+.setup h2{font-size:26px;margin:0 0 8px;color:#243139}.setup p{margin:0 0 26px;color:var(--muted);line-height:1.5}
+.field{margin-bottom:22px}.field-title{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#4c5e63;margin-bottom:9px}
+.segment{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.segment.three{grid-template-columns:1fr}
+.choice{border:1px solid rgba(52,71,63,.14);background:rgba(255,255,255,.72);color:#25343c;border-radius:18px;padding:14px 15px;text-align:left;cursor:pointer;transition:.18s ease;position:relative;box-shadow:0 5px 14px rgba(73,63,49,.05)}
+.choice:hover{transform:translateY(-1px);border-color:rgba(47,143,131,.4);background:#fffdf9}.choice.active{border-color:rgba(47,143,131,.72);background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(235,249,244,.88));box-shadow:inset 0 0 0 1px rgba(47,143,131,.14),0 10px 20px rgba(47,143,131,.08)}
+.choice.active:after{content:"";position:absolute;right:12px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(47,143,131,.1)}
+.choice strong{display:block;font-size:14px}.choice small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
+.primary,.secondary{border:0;border-radius:18px;padding:14px 18px;font-weight:850;cursor:pointer;transition:.18s ease}
+.primary{color:#fff;background:linear-gradient(135deg,var(--teal),var(--teal-2));box-shadow:0 10px 26px rgba(47,143,131,.18)}
+.primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(47,143,131,.22)}
+.secondary{background:rgba(255,255,255,.72);color:#223038;border:1px solid rgba(52,71,63,.14)}.secondary:hover{border-color:rgba(52,71,63,.26);transform:translateY(-1px);background:#fff}
+.startrow{display:flex;gap:10px;align-items:center}.startrow .primary{flex:1}
+.hud{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;margin:14px 0}
+.hudbox{border:1px solid rgba(52,71,63,.11);background:rgba(255,251,244,.94);border-radius:18px;padding:10px 13px;min-height:56px;box-shadow:0 6px 18px rgba(77,68,56,.07)}
+.hudbox b{display:block;font-size:16px;color:#223038}.hudbox span{display:block;color:#66736d;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}.progresswrap{min-width:220px}.progressline{height:7px;background:#dfd5c5;border-radius:999px;overflow:hidden;margin-top:8px}.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s ease}
+.gamepanel{padding:clamp(16px,2.6vw,28px);min-height:650px;position:relative;background:
+  linear-gradient(180deg,rgba(255,255,255,.28),transparent 18%),
+  radial-gradient(720px 200px at 0 0, rgba(95,180,161,.08), transparent 60%)}
+.stagehead{display:flex;justify-content:space-between;gap:16px;align-items:end;margin:4px 2px 18px}.stagehead h2{font-size:clamp(24px,4vw,38px);letter-spacing:-.035em;margin:0;color:#1f2f37}.stagehead p{margin:5px 0 0;color:#66736d;max-width:680px;line-height:1.45}
+.modebadge{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);border:1px solid rgba(47,143,131,.22);background:rgba(47,143,131,.08);border-radius:999px;padding:8px 11px;white-space:nowrap}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-content:start;padding:6px;border-radius:24px;background:
+  linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.16));
+  border:1px dashed rgba(52,71,63,.1)}
+.memory-card{min-width:0;aspect-ratio:1.03/1;border:0;background:transparent;padding:0;perspective:900px;cursor:pointer}
+.card-inner{display:block;position:relative;width:100%;height:100%;transition:transform .42s cubic-bezier(.2,.75,.25,1);transform-style:preserve-3d}
+.memory-card.revealed .card-inner,.memory-card.matched .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;border-radius:22px 22px 14px 22px;backface-visibility:hidden;border:1px solid rgba(52,71,63,.12);overflow:hidden;clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);box-shadow:0 10px 22px rgba(78,68,56,.08)}
+.card-back{background:
+  linear-gradient(180deg,rgba(255,255,255,.9),rgba(247,239,223,.94)),
+  repeating-linear-gradient(180deg, transparent 0 24px, rgba(52,71,63,.05) 24px 25px);
+  display:flex;align-items:center;justify-content:center;position:absolute}
+.card-back:before{content:"";width:54%;height:34%;border-radius:15px;border:2px solid rgba(47,143,131,.38);background:rgba(255,255,255,.78);box-shadow:-18px 16px 0 -7px rgba(195,95,115,.22),20px -14px 0 -8px rgba(213,165,76,.22)}
+.card-back:after{content:"";position:absolute;width:48%;height:2px;background:rgba(52,71,63,.16);box-shadow:0 0 0 0 rgba(52,71,63,.16), -28px 16px 0 0 rgba(52,71,63,.16), 24px -14px 0 0 rgba(52,71,63,.16)}
+.card-front{transform:rotateY(180deg);background:linear-gradient(180deg,#fffefb,#f8f0e1);padding:14px 14px 15px;display:flex;flex-direction:column;text-align:left}
+.card-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:20px}
+.card-type{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);font-weight:900}
+.card-open-number{font-size:10px;line-height:1;font-weight:900;color:#78847f;border:1px solid rgba(52,71,63,.12);background:rgba(255,255,255,.64);border-radius:999px;padding:4px 6px;flex:0 0 auto}
+.card-copy{flex:1;display:flex;align-items:center;justify-content:center;padding:10px 3px 13px;text-align:center;min-height:0}
+.card-text{font-size:clamp(13px,1.5vw,18px);font-weight:760;line-height:1.3;overflow-wrap:anywhere;color:#243139;max-width:100%}
+.card-back-number{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(26px,3vw,38px);line-height:1;font-weight:900;color:#2d756d;z-index:2;text-shadow:0 1px 0 rgba(255,255,255,.9)}
+.memory-card.matched .card-face{border-color:rgba(47,148,100,.48);box-shadow:0 0 0 1px rgba(47,148,100,.1),0 12px 24px rgba(47,148,100,.1)}
+.memory-card.matched .card-front:after{content:"СВЯЗАНО";position:absolute;right:10px;bottom:8px;font-size:8px;letter-spacing:.14em;color:var(--good);font-weight:900}
+.memory-card.wrong .card-face{animation:shake .34s ease;border-color:rgba(199,95,90,.65)}
+@keyframes shake{20%{transform:translateX(-2px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(1px)}}
+.feedback{min-height:46px;margin-top:16px;border-radius:16px;padding:11px 14px;color:#3e4d54;border:1px solid transparent;display:flex;align-items:center;background:#fffaf2}
+.feedback.good{border-color:rgba(47,148,100,.2);background:rgba(47,148,100,.08);color:#1f6a49}
+.feedback.bad{border-color:rgba(199,95,90,.22);background:rgba(199,95,90,.08);color:#8c433f}
+.feedback.info{border-color:rgba(47,143,131,.18);background:rgba(47,143,131,.06)}
+.pulse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:860px;margin:0 auto}
+.pulse-card{min-height:180px;border:1px solid rgba(52,71,63,.12);background:linear-gradient(180deg,#fffefb,#f5eddd);border-radius:22px 22px 14px 22px;color:var(--ink);padding:18px;text-align:left;cursor:pointer;transition:.16s ease;position:relative;clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);box-shadow:0 10px 22px rgba(78,68,56,.08)}
+.pulse-card:hover{transform:translateY(-2px);border-color:rgba(47,143,131,.33)}
+.pulse-card.selected{border-color:rgba(47,143,131,.8);box-shadow:0 0 0 2px rgba(47,143,131,.12),0 14px 28px rgba(47,143,131,.12)}
+.pulse-card.locked{border-color:rgba(47,148,100,.55);opacity:.58;cursor:default}
+.pulse-card .card-type{margin-bottom:14px}.pulse-card .card-text{font-size:clamp(15px,2vw,20px)}.pulse-counter{text-align:center;color:#66736d;margin:8px 0 18px}
+.transition{min-height:560px;display:grid;place-items:center;text-align:center;padding:40px;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.02))}
+.transition-core{width:min(640px,100%)}
+.orb{width:150px;height:110px;margin:0 auto 24px;position:relative;border-radius:26px 26px 12px 26px;border:1px solid rgba(52,71,63,.14);background:linear-gradient(180deg,#fffefb,#f8f0e1);box-shadow:0 14px 30px rgba(77,68,56,.1);animation:pulse 1.8s ease-in-out infinite}
+.orb:before{content:"";position:absolute;inset:18px 28px 28px 24px;border-radius:14px;border:2px solid rgba(47,143,131,.38)}
+.orb:after{content:"";position:absolute;width:74px;height:2px;background:rgba(52,71,63,.18);left:50%;top:53%;transform:translate(-50%,-50%);box-shadow:-34px 18px 0 0 rgba(52,71,63,.18), 32px -18px 0 0 rgba(52,71,63,.18)}
+@keyframes pulse{50%{transform:translateY(-3px) scale(1.01);box-shadow:0 18px 32px rgba(77,68,56,.12)}}
+.transition h2{font-size:clamp(32px,5vw,56px);letter-spacing:-.045em;margin:0 0 12px;color:#1f2f37}.transition p{color:#66736d;font-size:18px;line-height:1.5}
+.transition .primary{margin-top:18px}
+.final{display:grid;grid-template-columns:1.1fr .9fr;min-height:610px}
+.final-main{padding:clamp(28px,5vw,60px);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,.14),transparent)}
+.final-side{border-left:1px solid rgba(52,71,63,.11);padding:clamp(24px,4vw,42px);background:rgba(255,255,255,.34);display:flex;flex-direction:column;justify-content:center}
+.final-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--good);font-weight:900}.final h2{font-size:clamp(42px,7vw,76px);line-height:.98;letter-spacing:-.055em;margin:12px 0 18px;color:#1f2f37}.final-main p{font-size:18px;line-height:1.5;color:#4a585e;max-width:630px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{border:1px solid rgba(52,71,63,.12);border-radius:18px;padding:14px;background:rgba(255,255,255,.68)}.stat strong{font-size:24px;color:#223038}.stat span{display:block;color:#66736d;font-size:12px;margin-top:3px}.final-actions{display:flex;gap:9px;margin-top:20px}.final-actions button{flex:1}.note{font-size:12px;color:#6b7872;line-height:1.45;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:#21343c;border:1px solid rgba(52,71,63,.18);border-radius:999px;padding:10px 14px;color:#fffdf8;transition:.22s ease;z-index:20;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* v1.2 implementation corrections: preserve the accepted paper/semantic-network identity. */
+.memory-card{position:relative;min-height:176px}
+.card-inner{position:absolute;inset:0;width:auto;height:auto}
+.card-face{overflow:visible}
+.card-back{overflow:hidden}
+.card-front{overflow:visible}
+.board,.pulse-grid{position:relative}
+.semantic-link{position:absolute;height:3px;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--gold));transform-origin:0 50%;opacity:0;pointer-events:none;z-index:8;box-shadow:0 0 0 1px rgba(255,255,255,.5),0 3px 12px rgba(47,143,131,.16);transition:opacity .16s ease,filter .3s ease}
+.semantic-link:before,.semantic-link:after{content:"";position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--teal);transform:translate(-50%,-50%);box-shadow:0 0 0 5px rgba(47,143,131,.12)}
+.semantic-link:after{left:100%;background:var(--gold);box-shadow:0 0 0 5px rgba(213,165,76,.12)}
+.semantic-link.active{opacity:.78;filter:saturate(1.1)}
+#pulseStage{scroll-margin-top:110px}
+.final-main,.final-side,.stats,.stat{min-width:0}
+.stat{overflow-wrap:anywhere}
+
+
+.teacher-meta{font-size:11px;line-height:1.4;color:#72807a;letter-spacing:.025em}
+.teacher-meta strong{color:#4a5a55;font-weight:800}
+.teacher-meta-setup{margin:2px 0 16px;padding:10px 12px;border:1px dashed rgba(52,71,63,.16);border-radius:14px;background:rgba(255,255,255,.38)}
+.hudmeta{margin-top:6px;font-size:9.5px;line-height:1.25;color:#7a8781;letter-spacing:.02em;overflow-wrap:anywhere}
+.final-teacher-meta{margin-top:16px;padding:12px 14px;border:1px dashed rgba(52,71,63,.16);border-radius:16px;background:rgba(255,255,255,.48)}
+.final-teacher-meta .teacher-label{display:block;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:#87918c;margin-bottom:5px}
+.final-teacher-meta .teacher-id{font-size:11px;line-height:1.45;color:#56655f;overflow-wrap:anywhere}
+.final-teacher-meta .round-id{margin-top:3px;font-weight:800;color:#324740}
+
+@media(max-width:900px){.intro,.final{grid-template-columns:1fr}.setup,.final-side{border-left:0;border-top:1px solid rgba(52,71,63,.11)}.board{grid-template-columns:repeat(4,1fr)}.pulse-grid{grid-template-columns:repeat(2,1fr)}.hud{grid-template-columns:1fr 1fr 1fr}.progresswrap{grid-column:1/-1;order:4}.hero:before{right:20px;top:28px;width:220px;height:180px}.hero:after{width:180px;height:128px;right:-24px}}
+@media(max-width:620px){.shell{padding:12px 10px 22px}.brandbar{margin-bottom:10px}.build{display:none}.panel{border-radius:22px}.hero{padding:30px 22px}.setup{padding:24px 18px}.intro{min-height:0}.mission-strip{gap:6px}.chip{font-size:11px;padding:7px 9px}.hud{position:sticky;top:0;z-index:6;background:rgba(239,231,218,.94);backdrop-filter:blur(10px);padding:8px 0;margin:4px 0 8px}.hudbox{padding:8px 9px;min-height:48px}.hudbox b{font-size:14px}.hudbox span{font-size:9px}.gamepanel{padding:14px 10px;min-height:calc(100dvh - 92px)}.stagehead{flex-direction:column;align-items:flex-start;margin-bottom:12px}.stagehead h2{font-size:26px}.stagehead p{font-size:13px}.modebadge{font-size:9px;padding:6px 8px;white-space:normal;max-width:100%;line-height:1.25}.board{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:5px}.memory-card{aspect-ratio:auto;min-height:184px}.card-front{padding:10px 10px 12px}.card-copy{padding:8px 2px 12px}.card-text{font-size:clamp(12px,3.45vw,14.5px);line-height:1.28}.card-type{font-size:7.5px}.card-open-number{font-size:9px;padding:3px 5px}.card-back-number{font-size:30px}.feedback{font-size:13px;margin-top:10px}.pulse-grid{gap:8px}.pulse-card{min-height:148px;padding:13px;border-radius:18px 18px 12px 18px}.pulse-card .card-text{font-size:14px}.transition{min-height:calc(100dvh - 110px);padding:25px 15px}.final-main{padding:32px 22px}.final-side{padding:24px 18px}.final h2{font-size:clamp(34px,11vw,46px);overflow-wrap:anywhere}.final-main p{font-size:16px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat strong{font-size:21px}.stat span{font-size:11px;line-height:1.3}.final-actions{flex-direction:column}.hero:before,.hero:after{opacity:.65}}
+@media(max-width:360px){.board{gap:7px}.memory-card{min-height:190px}.card-front{padding:9px 8px}.card-text{font-size:11.3px}.pulse-card{min-height:150px}.hudbox{padding:7px}.final h2{font-size:36px}.stats{grid-template-columns:1fr 1fr}.stat{padding:12px 10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+.teacher-build{font-size:11px;color:var(--muted);opacity:.8;margin-top:5px;letter-spacing:.03em}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="brandbar">
+    <div class="logo">MEMORY<span>//</span>ЯЗЫК</div>
+  </div>
+
+  <section id="intro" class="panel intro">
+    <div class="hero">
+      <div class="eyebrow">Сеть смыслов</div>
+      <h1>Свяжи <em>точно.</em><br>Запомни лучше.</h1>
+      <p class="lead">Восстанови смысловые связи между карточками. Расположение помогает памяти, но финальный импульс проверит саму связь — без подсказки позицией.</p>
+      <div class="mission-strip">
+        <span class="chip">5–10 минут</span><span class="chip">5–8 классы</span>
+      </div>
+    </div>
+    <div class="setup">
+      <h2>Настройка раунда</h2>
+      <p>Выбери возрастной уровень и тип смысловой связи. Ядро игры остаётся тем же, меняется только банк.</p>
+      <div class="field">
+        <div class="field-title">Уровень</div>
+        <div class="segment" id="levelChoices">
+          <button class="choice active" data-level="56"><strong>5–6 класс</strong><small>более прозрачная лексика</small></button>
+          <button class="choice" data-level="78"><strong>7–8 класс</strong><small>более точные смысловые различия</small></button>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-title">Банк</div>
+        <div class="segment three" id="bankChoices">
+          <button class="choice active" data-bank="meaning"><strong>Слово ↔ значение</strong><small>точно соотнести слово и его смысл</small></button>
+          <button class="choice" data-bank="collocation"><strong>Слово ↔ сочетание</strong><small>найти естественную лексическую связь</small></button>
+          <button class="choice" data-bank="idiom"><strong>Фразеологизм ↔ значение</strong><small>соотнести устойчивое выражение и смысл</small></button>
+        </div>
+      </div>
+      <div id="setupContentId" class="teacher-meta teacher-meta-setup"><strong>Для преподавателя:</strong> G-002 / 5–6 / слово↔значение / BANK-01 / v1</div>
+      <div class="startrow"><button id="startBtn" class="primary">Запустить сеть</button></div>
+    </div>
+  </section>
+
+  <div id="hud" class="hud" hidden>
+    <div class="hudbox progresswrap"><b id="progressText">Связи 0/7</b><span id="phaseLabel">Поле памяти</span><div class="progressline"><div id="progressFill" class="progressfill"></div></div><div id="hudContentId" class="hudmeta">G-002 / 5–6 / BANK-01 v1</div></div>
+    <div class="hudbox"><b id="scoreText">0</b><span>баллы</span></div>
+    <div class="hudbox"><b id="streakText">×0</b><span>серия</span></div>
+    <div class="hudbox"><b id="signalText">100%</b><span>сигнал</span></div>
+  </div>
+
+  <section id="game" class="panel gamepanel" hidden>
+    <div id="boardStage">
+      <div class="stagehead"><div><h2>Поле памяти</h2><p>Открывай карточки по две и ищи точную смысловую пару. Если связь верная, пара останется в сети.</p></div><div class="modebadge" id="modeBadge">слово ↔ значение</div></div>
+      <div id="board" class="board" aria-live="polite"></div>
+      <div id="feedback" class="feedback info">Начни с любой карточки. Открывай по две и ищи пару по смыслу.</div>
+    </div>
+    <div id="transitionStage" class="transition" hidden>
+      <div class="transition-core"><div class="orb"></div><h2>Память синхронизирована.</h2><p>Теперь расположение не поможет. В открытом поле нужно восстановить точные смысловые связи.</p><button id="pulseBtn" class="primary">Открыть смысловой импульс</button></div>
+    </div>
+    <div id="pulseStage" hidden>
+      <div class="stagehead"><div><h2>Смысловой импульс</h2><p>Все карточки открыты. Выбери две, которые образуют точную пару. Ошибочную связь можно сразу исправить.</p></div><div class="modebadge">без опоры на расположение</div></div>
+      <div id="pulseCounter" class="pulse-counter">Осталось связей: 3</div>
+      <div id="pulseGrid" class="pulse-grid"></div>
+      <div id="pulseFeedback" class="feedback info">Сравни смысл карточек, а не их положение.</div>
+    </div>
+  </section>
+
+  <section id="final" class="panel final" hidden>
+    <div class="final-main">
+      <div class="final-kicker">Раунд завершён</div>
+      <h2 id="finalTitle">Сеть восстановлена.</h2>
+      <p id="finalNote">Ты собрал все смысловые связи. Новый раунд даст другой набор карточек.</p>
+      <div class="final-actions"><button id="replayBtn" class="primary">Новая партия</button><button id="changeBtn" class="secondary">Сменить режим</button></div>
+      <div class="final-teacher-meta">
+        <span class="teacher-label">Для преподавателя</span>
+        <div id="finalContentId" class="teacher-id">G-002 / 5–6 / слово↔значение / BANK-01 / v1</div>
+        <div id="finalRoundId" class="teacher-id round-id">ROUND-ID: —</div>
+      </div>
+      <div class="note">Результат этого игрового раунда не является диагностикой освоения темы. Игра предназначена для лёгкой смысловой практики в конце урока.</div>
+    </div>
+    <div class="final-side">
+      <div class="stats">
+        <div class="stat"><strong id="finalScore">0</strong><span>баллы</span></div>
+        <div class="stat"><strong id="finalPairs">9/9</strong><span>связей собрано</span></div>
+        <div class="stat"><strong id="finalFirst">0/8</strong><span>с первой попытки</span></div>
+        <div class="stat"><strong id="finalWrong">0</strong><span>неточных попыток</span></div>
+        <div class="stat"><strong id="finalStreak">0</strong><span>макс. серия</span></div>
+        <div class="stat"><strong id="finalSignal">100%</strong><span>стабильность сигнала</span></div>
+        <div class="stat"><strong id="finalPulse">3/3</strong><span>смысловой импульс</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script>
+(() => {
+'use strict';
+const GAME_VERSION='1.3.5';
+const PULSE_PAIRS=3;
+function boardPairCount(level=state?.level||'56'){return level==='78'?8:6}
+function totalLinks(level=state?.level||'56'){return boardPairCount(level)+PULSE_PAIRS}
+
+const CONTENT={
+  '56':{
+    meaning:[
+      ['56m01','бережный','аккуратный, старающийся не повредить'],
+      ['56m02','робкий','неуверенный, боязливый'],
+      ['56m03','замысел','задуманный план'],
+      ['56m04','окрестность','местность вокруг какого-либо места'],
+      ['56m05','преграда','то, что мешает движению или действию'],
+      ['56m06','наблюдать','внимательно следить за чем-либо'],
+      ['56m07','редкий','встречающийся нечасто'],
+      ['56m08','упрямый','не желающий менять своё решение'],
+      ['56m09','поспешный','сделанный слишком быстро, без достаточного обдумывания'],
+      ['56m10','надёжный','такой, на кого или на что можно положиться'],
+      ['56m11','впечатление','чувство или мнение после увиденного или услышанного'],
+      ['56m12','поступок','действие человека, которое можно оценить'],
+      ['56m13','сомнение','неуверенность в том, что что-то верно'],
+      ['56m14','событие','то, что произошло или происходит'],
+      ['56m15','причина','то, из-за чего что-либо произошло'],
+      ['56m16','последствие','результат, возникший после события или действия'],
+      ['56m17','маршрут','заранее намеченный путь движения'],
+      ['56m18','свидетель','человек, который видел событие и может рассказать о нём'],
+      ['56m19','доказательство','факт или довод, подтверждающий что-либо'],
+      ['56m20','предположение','догадка, которая ещё требует проверки'],
+      ['56m21','очевидный','ясный, не вызывающий сомнений']
+    ],
+    collocation:[
+      ['56c01','одержать','победу'],
+      ['56c02','принять','участие'],
+      ['56c03','обратить','внимание'],
+      ['56c04','преодолеть','препятствие'],
+      ['56c05','соблюдать','правило'],
+      ['56c06','высказать','мнение'],
+      ['56c07','проявить','смелость'],
+      ['56c08','поставить','цель'],
+      ['56c09','прийти','на помощь'],
+      ['56c10','сделать','вывод'],
+      ['56c11','хранить','тайну'],
+      ['56c12','сдержать','обещание'],
+      ['56c13','потерпеть','неудачу'],
+      ['56c14','нести','службу'],
+      ['56c15','оказать','помощь'],
+      ['56c16','принести','извинения'],
+      ['56c17','решить','задачу'],
+      ['56c18','провести','опыт'],
+      ['56c19','составить','план'],
+      ['56c20','выразить','благодарность'],
+      ['56c21','обнаружить','ошибку']
+    ],
+    idiom:[
+      ['56i01','зарубить на носу','крепко запомнить'],
+      ['56i02','как снег на голову','совершенно неожиданно'],
+      ['56i03','держать язык за зубами','не рассказывать тайну'],
+      ['56i04','водить за нос','обманывать'],
+      ['56i05','рукой подать','очень близко'],
+      ['56i06','работать спустя рукава','работать небрежно'],
+      ['56i07','сломя голову','очень быстро, стремительно'],
+      ['56i08','не покладая рук','усердно, без отдыха'],
+      ['56i09','как две капли воды','очень похожи'],
+      ['56i10','сесть в лужу','попасть в неловкое положение'],
+      ['56i11','кот наплакал','очень мало'],
+      ['56i12','повесить нос','сильно расстроиться'],
+      ['56i13','держать себя в руках','сохранять спокойствие'],
+      ['56i14','витать в облаках','мечтать, не замечая реальности'],
+      ['56i15','держать ухо востро','быть внимательным и осторожным'],
+      ['56i16','как рыба в воде','чувствовать себя уверенно в знакомой обстановке'],
+      ['56i17','ни свет ни заря','очень рано'],
+      ['56i18','засучив рукава','энергично и старательно'],
+      ['56i19','прикусить язык','вовремя замолчать, не сказать лишнего'],
+      ['56i20','считать ворон','быть невнимательным, отвлекаться'],
+      ['56i21','яблоку негде упасть','очень тесно из-за множества людей']
+    ]
+  },
+  '78':{
+    meaning:[
+      ['78m01','предвзятый','заранее склонный к определённой оценке, необъективный'],
+      ['78m02','исчерпывающий','полный, не оставляющий существенных вопросов'],
+      ['78m03','двусмысленный','допускающий два разных понимания'],
+      ['78m04','самобытный','своеобразный, не похожий на других'],
+      ['78m05','убедительный','заставляющий поверить благодаря веским доводам'],
+      ['78m06','непреклонный','твёрдый в решении, не уступающий'],
+      ['78m07','уместный','подходящий к данной ситуации'],
+      ['78m08','последовательный','логично придерживающийся одного порядка или позиции'],
+      ['78m09','мнимый','кажущийся, но не настоящий'],
+      ['78m10','существенный','важный для сути дела'],
+      ['78m11','предостеречь','заранее предупредить о возможной опасности'],
+      ['78m12','опровергнуть','доказать ошибочность утверждения'],
+      ['78m13','лаконичный','краткий и точный'],
+      ['78m14','противоречивый','содержащий несовместимые положения или признаки'],
+      ['78m15','беспристрастный','оценивающий без предвзятости и личных предпочтений'],
+      ['78m16','достоверный','соответствующий действительности, заслуживающий доверия'],
+      ['78m17','закономерный','естественно вытекающий из причин или условий'],
+      ['78m18','предпосылка','условие, создающее возможность для чего-либо'],
+      ['78m19','интерпретация','объяснение смысла или значения чего-либо'],
+      ['78m20','аргумент','довод в подтверждение или опровержение мысли'],
+      ['78m21','компромисс','решение, основанное на взаимных уступках']
+    ],
+    collocation:[
+      ['78c01','учесть','обстоятельства'],
+      ['78c02','предпринять','попытку'],
+      ['78c03','подвергнуть','сомнению'],
+      ['78c04','возложить','ответственность'],
+      ['78c05','прийти','к выводу'],
+      ['78c06','вступить','в противоречие'],
+      ['78c07','оказать','сопротивление'],
+      ['78c08','привлечь','внимание'],
+      ['78c09','достичь','результата'],
+      ['78c10','выдвинуть','версию'],
+      ['78c11','провести','наблюдение'],
+      ['78c12','сохранить','нейтралитет'],
+      ['78c13','внести','уточнение'],
+      ['78c14','вынести','предупреждение'],
+      ['78c15','сформулировать','тезис'],
+      ['78c16','привести','аргумент'],
+      ['78c17','проверить','гипотезу'],
+      ['78c18','установить','причину'],
+      ['78c19','выявить','закономерность'],
+      ['78c20','обосновать','позицию'],
+      ['78c21','разрешить','противоречие']
+    ],
+    idiom:[
+      ['78i01','бить баклуши','бездельничать'],
+      ['78i02','выйти сухим из воды','избежать неприятных последствий'],
+      ['78i03','играть первую скрипку','занимать ведущую роль'],
+      ['78i04','попасть впросак','оказаться в неловком положении'],
+      ['78i05','держать камень за пазухой','скрывать недоброжелательство'],
+      ['78i06','пускать пыль в глаза','создавать ложное впечатление'],
+      ['78i07','как в воду глядел','точно предугадал'],
+      ['78i08','семь пятниц на неделе','часто менять решения или обещания'],
+      ['78i09','делать из мухи слона','сильно преувеличивать'],
+      ['78i10','попасть пальцем в небо','сказать или сделать невпопад; ошибиться в предположении'],
+      ['78i11','на вес золота','быть очень ценным'],
+      ['78i12','вставлять палки в колёса','мешать делу'],
+      ['78i13','взять быка за рога','сразу решительно взяться за дело'],
+      ['78i14','ходить вокруг да около','не говорить прямо о главном'],
+      ['78i15','расставить все точки над i','окончательно прояснить ситуацию'],
+      ['78i16','читать между строк','понимать скрытый смысл'],
+      ['78i17','метать бисер перед свиньями','напрасно объяснять тому, кто не способен это оценить'],
+      ['78i18','держать руку на пульсе','внимательно следить за развитием ситуации'],
+      ['78i19','плыть против течения','действовать вопреки общему мнению'],
+      ['78i20','сгущать краски','представлять ситуацию хуже, чем она есть'],
+      ['78i21','выйти из себя','потерять самообладание']
+    ]
+  }
+};
+
+const BANK_META={
+  meaning:{label:'слово ↔ значение', left:'СЛОВО', right:'ЗНАЧЕНИЕ'},
+  collocation:{label:'слово ↔ сочетание', left:'СЛОВО', right:'СОЧЕТАНИЕ'},
+  idiom:{label:'фразеологизм ↔ значение', left:'ФРАЗЕОЛОГИЗМ', right:'ЗНАЧЕНИЕ'}
+};
+
+const CONTENT_IDENTITY={
+  '56':{
+    meaning:{mode:'5–6',bankId:'BANK-01',bankVersion:'v1'},
+    collocation:{mode:'5–6',bankId:'BANK-02',bankVersion:'v1'},
+    idiom:{mode:'5–6',bankId:'BANK-03',bankVersion:'v1'}
+  },
+  '78':{
+    meaning:{mode:'7–8',bankId:'BANK-04',bankVersion:'v1'},
+    collocation:{mode:'7–8',bankId:'BANK-05',bankVersion:'v1'},
+    idiom:{mode:'7–8',bankId:'BANK-06',bankVersion:'v1'}
+  }
+};
+function contentIdentity(level=state.level,bank=state.bank){
+  const meta=CONTENT_IDENTITY[level][bank];
+  return {gameId:'G-002',mode:meta.mode,bankLabel:BANK_META[bank].label.replace(/\s*↔\s*/g,'↔'),bankId:meta.bankId,bankVersion:meta.bankVersion};
+}
+function contentIdentityText(level=state.level,bank=state.bank){
+  const m=contentIdentity(level,bank);
+  return `${m.gameId} / ${m.mode} / ${m.bankLabel} / ${m.bankId} / ${m.bankVersion}`;
+}
+function shortContentIdentityText(level=state.level,bank=state.bank){
+  const m=contentIdentity(level,bank);
+  return `${m.gameId} / ${m.mode} / ${m.bankId} ${m.bankVersion}`;
+}
+function makeRoundId(seed){
+  const code=hashSeed(`G-002-round:${seed>>>0}`).toString(36).toUpperCase().padStart(7,'0').slice(-6);
+  return `R-${code}`;
+}
+
+
+
+// Collocation collision metadata. Built after manual 21×21 cross-pair CONTENT QA for each level.
+// A conflict means two author pairs must never appear simultaneously in the same stage.
+const COLLOCATION_CONFLICTS_RAW={"56":{"56c01":["56c16"],"56c02":["56c05","56c06","56c07","56c12","56c13","56c15","56c16","56c19","56c20"],"56c03":["56c07","56c15"],"56c04":["56c21"],"56c05":["56c02","56c11","56c19","56c21"],"56c06":["56c02","56c16","56c19","56c20"],"56c07":["56c02","56c03","56c20"],"56c08":["56c17","56c18"],"56c09":[],"56c10":["56c17","56c18","56c19","56c21"],"56c11":["56c05"],"56c12":["56c02"],"56c13":["56c02"],"56c14":["56c18"],"56c15":["56c02","56c03","56c16"],"56c16":["56c01","56c02","56c06","56c15","56c20"],"56c17":["56c08","56c10","56c19"],"56c18":["56c08","56c10","56c14"],"56c19":["56c02","56c05","56c06","56c10","56c17"],"56c20":["56c02","56c06","56c07","56c16"],"56c21":["56c04","56c05","56c10"]},"78":{"78c01":["78c02","78c04","78c07","78c09","78c10","78c11","78c12","78c13","78c14","78c15","78c16","78c17","78c18","78c19","78c20","78c21"],"78c02":["78c01"],"78c03":[],"78c04":["78c01"],"78c05":["78c16"],"78c06":[],"78c07":["78c01","78c08"],"78c08":["78c07","78c12"],"78c09":["78c01","78c12","78c17","78c18"],"78c10":["78c01","78c12","78c15","78c16","78c17","78c20"],"78c11":["78c01","78c15","78c16","78c17"],"78c12":["78c01","78c08","78c09","78c10","78c20","78c21"],"78c13":["78c01","78c15","78c17"],"78c14":["78c01","78c15"],"78c15":["78c01","78c10","78c11","78c13","78c14","78c16","78c17","78c19","78c20","78c21"],"78c16":["78c01","78c05","78c10","78c11","78c15","78c17","78c18","78c20"],"78c17":["78c01","78c09","78c10","78c11","78c13","78c15","78c16","78c18","78c19","78c20"],"78c18":["78c01","78c09","78c16","78c17","78c19","78c20","78c21"],"78c19":["78c01","78c15","78c17","78c18","78c20","78c21"],"78c20":["78c01","78c10","78c12","78c15","78c16","78c17","78c18","78c19"],"78c21":["78c01","78c12","78c15","78c18","78c19"]}};
+
+function normalizeConflictGraph(raw){
+  const graph={};
+  for(const [level,map] of Object.entries(raw)){
+    graph[level]={};
+    for(const id of Object.keys(map)) graph[level][id]=new Set();
+    for(const [id,list] of Object.entries(map)){
+      if(!graph[level][id]) graph[level][id]=new Set();
+      for(const other of list){
+        if(!graph[level][other]) graph[level][other]=new Set();
+        graph[level][id].add(other);
+        graph[level][other].add(id);
+      }
+    }
+  }
+  return graph;
+}
+const COLLOCATION_CONFLICTS=normalizeConflictGraph(COLLOCATION_CONFLICTS_RAW);
+
+const state={
+  level:'56', bank:'meaning', phase:'intro', runSeed:0, roundId:'', rng:null, runPairIds:[], boardPairs:[], pulsePairs:[],
+  score:0, streak:0, maxStreak:0, signal:100, matchedBoard:0, matchedPulse:0, wrongSelections:0,
+  attempts:0, resolvedTasks:0, firstTryCorrect:0, eventualCorrect:0, wrongAttempts:0,
+  locked:false, firstCard:null, pulseSelected:[], pairStats:{}, lastRunIds:[], lastRunKey:null
+};
+
+const $=id=>document.getElementById(id);
+const el={intro:$('intro'),hud:$('hud'),game:$('game'),final:$('final'),board:$('board'),feedback:$('feedback'),boardStage:$('boardStage'),transitionStage:$('transitionStage'),pulseStage:$('pulseStage'),pulseGrid:$('pulseGrid'),pulseFeedback:$('pulseFeedback'),pulseCounter:$('pulseCounter'),modeBadge:$('modeBadge'),progressText:$('progressText'),progressFill:$('progressFill'),phaseLabel:$('phaseLabel'),scoreText:$('scoreText'),streakText:$('streakText'),signalText:$('signalText'),setupContentId:$('setupContentId'),hudContentId:$('hudContentId'),finalContentId:$('finalContentId'),finalRoundId:$('finalRoundId'),toast:$('toast')};
+
+function hashSeed(str){let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function makeRng(seed){let x=seed>>>0||0x9e3779b9;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/4294967296}}
+function shuffle(arr,rng=state.rng){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function sampleRun(pool,count){const last=new Set(state.lastRunIds||[]);const fresh=shuffle(pool.filter(p=>!last.has(p[0])));const old=shuffle(pool.filter(p=>last.has(p[0])));return [...fresh,...old].slice(0,count)}
+function makeSeed(){return hashSeed(`${Date.now()}-${performance.now()}-${Math.random()}`)}
+function updateSetupIdentity(){if(el.setupContentId)el.setupContentId.innerHTML=`<strong>Для преподавателя:</strong> ${escapeHtml(contentIdentityText())}`}
+function updateRunIdentity(){const full=contentIdentityText();if(el.hudContentId)el.hudContentId.textContent=`${full} · ${state.roundId}`;if(el.finalContentId)el.finalContentId.textContent=full;if(el.finalRoundId)el.finalRoundId.textContent=`ROUND-ID: ${state.roundId}`}
+function storageKey(){return `memoryYazyk:lastRun:${state.level}:${state.bank}`}
+function loadLastRun(){const key=storageKey();if(state.lastRunKey!==key){state.lastRunIds=[];state.lastRunKey=key}try{const raw=sessionStorage.getItem(key);if(raw)state.lastRunIds=JSON.parse(raw)}catch{}}
+function saveLastRun(){state.lastRunIds=[...state.runPairIds];state.lastRunKey=storageKey();try{sessionStorage.setItem(storageKey(),JSON.stringify(state.runPairIds))}catch{}}
+
+function conflictSet(level,id){return COLLOCATION_CONFLICTS[level]?.[id]||new Set()}
+function validateCollocationRun(stagePairs,level=state.level){
+  const ids=stagePairs.map(p=>Array.isArray(p)?p[0]:String(p));
+  const errors=[];
+  for(let i=0;i<ids.length;i++) for(let j=i+1;j<ids.length;j++) if(conflictSet(level,ids[i]).has(ids[j])) errors.push(`collocation-conflict:${level}:${ids[i]}:${ids[j]}`);
+  return {ok:errors.length===0,errors,ids};
+}
+function replayOrderedPool(pool,lastIds,rng){
+  const last=new Set(lastIds||[]);
+  const fresh=shuffle(pool.filter(p=>!last.has(p[0])),rng);
+  const old=shuffle(pool.filter(p=>last.has(p[0])),rng);
+  return [...fresh,...old];
+}
+function findIndependentSet(candidates,count,level,start=0,chosen=[]){
+  if(chosen.length===count) return [...chosen];
+  if(candidates.length-start < count-chosen.length) return null;
+  for(let i=start;i<candidates.length;i++){
+    const p=candidates[i],id=p[0];
+    if(chosen.some(q=>conflictSet(level,id).has(q[0]))) continue;
+    chosen.push(p);
+    const found=findIndependentSet(candidates,count,level,i+1,chosen);
+    if(found) return found;
+    chosen.pop();
+  }
+  return null;
+}
+function buildCollisionFreeRun(pool,level,lastIds=[],rng=state.rng,boardCount=boardPairCount(level)){
+  const ordered=replayOrderedPool(pool,lastIds,rng);
+  let visited=0;
+  function searchBoard(start,chosen){
+    visited++;
+    if(chosen.length===boardCount){
+      const used=new Set(chosen.map(p=>p[0]));
+      const remaining=ordered.filter(p=>!used.has(p[0]));
+      const pulse=findIndependentSet(remaining,PULSE_PAIRS,level);
+      if(pulse) return {board:[...chosen],pulse,visited};
+      return null;
+    }
+    if(ordered.length-start < boardCount-chosen.length) return null;
+    for(let i=start;i<ordered.length;i++){
+      const p=ordered[i],id=p[0];
+      if(chosen.some(q=>conflictSet(level,id).has(q[0]))) continue;
+      chosen.push(p);
+      const found=searchBoard(i+1,chosen);
+      if(found) return found;
+      chosen.pop();
+    }
+    return null;
+  }
+  return searchBoard(0,[]);
+}
+
+function validateContent(){
+  const errors=[]; const ids=new Set();
+  const bankIds={};
+  for(const level of Object.keys(CONTENT)) for(const bank of Object.keys(CONTENT[level])){
+    const pool=CONTENT[level][bank];
+    if(pool.length<21) errors.push(`bank-too-small:${level}:${bank}`);
+    const lefts=new Set(), rights=new Set(); bankIds[`${level}:${bank}`]=new Set();
+    for(const row of pool){
+      if(!Array.isArray(row)||row.length!==3) {errors.push(`bad-row:${level}:${bank}`);continue}
+      const [id,left,right]=row;
+      if(ids.has(id)) errors.push(`duplicate-id:${id}`); ids.add(id); bankIds[`${level}:${bank}`].add(id);
+      if(!String(left).trim()||!String(right).trim()) errors.push(`empty-text:${id}`);
+      const ln=String(left).trim().toLowerCase(), rn=String(right).trim().toLowerCase();
+      if(lefts.has(ln)) errors.push(`duplicate-left:${level}:${bank}:${left}`); lefts.add(ln);
+      if(rights.has(rn)) errors.push(`duplicate-right:${level}:${bank}:${right}`); rights.add(rn);
+    }
+  }
+  for(const level of ['56','78']){
+    const collIds=bankIds[`${level}:collocation`]||new Set();
+    const raw=COLLOCATION_CONFLICTS_RAW[level]||{};
+    for(const id of collIds) if(!(id in raw)) errors.push(`missing-conflict-metadata:${level}:${id}`);
+    for(const [id,list] of Object.entries(raw)){
+      if(!collIds.has(id)) errors.push(`unknown-conflict-source:${level}:${id}`);
+      for(const other of list){
+        if(id===other) errors.push(`self-conflict:${level}:${id}`);
+        if(!collIds.has(other)) errors.push(`unknown-conflict-id:${level}:${id}:${other}`);
+      }
+    }
+    const probeSeed=hashSeed(`validate-${level}`);
+    const probe=buildCollisionFreeRun(CONTENT[level].collocation,level,[],makeRng(probeSeed));
+    const probe2=buildCollisionFreeRun(CONTENT[level].collocation,level,[],makeRng(probeSeed));
+    if(!probe||!probe2) errors.push(`collision-free-run-unavailable:${level}`);
+    else{
+      const vb=validateCollocationRun(probe.board,level),vp=validateCollocationRun(probe.pulse,level);
+      if(!vb.ok) errors.push(...vb.errors.map(x=>`validator-board:${x}`));
+      if(!vp.ok) errors.push(...vp.errors.map(x=>`validator-pulse:${x}`));
+      const sig=x=>JSON.stringify({board:x.board.map(p=>p[0]),pulse:x.pulse.map(p=>p[0])});
+      if(sig(probe)!==sig(probe2)) errors.push(`seed-nonreproducible:${level}`);
+    }
+  }
+  return {ok:errors.length===0,errors,count:ids.size};
+}
+
+function resetRun(seed=makeSeed(),avoidLast=true){
+  state.phase='board';state.runSeed=seed>>>0;state.roundId=makeRoundId(state.runSeed);state.rng=makeRng(state.runSeed);state.score=0;state.streak=0;state.maxStreak=0;state.signal=100;state.matchedBoard=0;state.matchedPulse=0;state.wrongSelections=0;state.attempts=0;state.resolvedTasks=0;state.firstTryCorrect=0;state.eventualCorrect=0;state.wrongAttempts=0;state.locked=false;state.firstCard=null;state.pulseSelected=[];state.pairStats={};
+  if(avoidLast) loadLastRun(); else state.lastRunIds=[];
+  const pool=CONTENT[state.level][state.bank];
+  let selected;
+  if(state.bank==='collocation'){
+    const run=buildCollisionFreeRun(pool,state.level,state.lastRunIds,state.rng);
+    if(!run) throw new Error(`collision-free-run-unavailable:${state.level}`);
+    const vb=validateCollocationRun(run.board,state.level),vp=validateCollocationRun(run.pulse,state.level);
+    if(!vb.ok||!vp.ok) throw new Error(`collision-validation-failed:${[...vb.errors,...vp.errors].join('|')}`);
+    state.boardPairs=run.board;state.pulsePairs=run.pulse;selected=[...run.board,...run.pulse];
+  }else{
+    const boardCount=boardPairCount(state.level), total=totalLinks(state.level);
+    selected=sampleRun(pool,total);state.boardPairs=selected.slice(0,boardCount);state.pulsePairs=selected.slice(boardCount);
+  }
+  const expectedTotal=totalLinks(state.level);
+  if(!selected||selected.length!==expectedTotal) throw new Error(`invalid-run-size:${selected?.length??'undefined'}:${expectedTotal}`);
+  state.runPairIds=selected.map(p=>p[0]);
+  for(const p of selected) state.pairStats[p[0]]={wrong:0,resolved:false};
+  saveLastRun();updateRunIdentity();
+}
+
+function setScreen(name){el.intro.hidden=name!=='intro';el.hud.hidden=!(name==='game');el.game.hidden=name!=='game';el.final.hidden=name!=='final';if(name!=='intro') window.scrollTo({top:0,behavior:'smooth'})}
+function updateHud(){const total=totalLinks(state.level),done=state.matchedBoard+state.matchedPulse;el.progressText.textContent=`Связи ${done}/${total}`;el.progressFill.style.width=`${done/total*100}%`;el.scoreText.textContent=state.score;el.streakText.textContent=`×${state.streak}`;el.signalText.textContent=`${state.signal}%`;el.phaseLabel.textContent=state.phase==='pulse'?'Смысловой импульс':'Поле памяти'}
+function cardData(pair,side){return {pairId:pair[0],side,text:side==='L'?pair[1]:pair[2],type:BANK_META[state.bank][side==='L'?'left':'right']}}
+function syncStats(){
+  const stats=Object.values(state.pairStats);
+  state.resolvedTasks=stats.filter(x=>x.resolved).length;
+  state.eventualCorrect=state.resolvedTasks;
+  state.firstTryCorrect=stats.filter(x=>x.resolved&&x.wrong===0).length;
+  state.wrongAttempts=state.wrongSelections;
+}
+function mismatchFeedback(){
+  if(state.bank==='meaning') return 'Эти карточки не подходят друг к другу по смыслу. Попробуй ещё раз.';
+  if(state.bank==='collocation') return 'Эти карточки не складываются в нужное сочетание. Попробуй другую пару.';
+  return 'Смысл не совпал. Подумай, что выражение значит целиком, и попробуй ещё раз.';
+}
+function pulseIntro(){
+  if(state.bank==='meaning') return 'Найди слово и определение, которые точно подходят друг другу.';
+  if(state.bank==='collocation') return 'Найди слова, которые естественно соединяются друг с другом.';
+  return 'Найди выражение и значение, которые подходят друг другу по смыслу.';
+}
+function showLinkEffect(a,b,container){
+  if(!a||!b||!container)return;
+  const cr=container.getBoundingClientRect(), ar=a.getBoundingClientRect(), br=b.getBoundingClientRect();
+  const ax=ar.left+ar.width/2-cr.left+container.scrollLeft, ay=ar.top+ar.height/2-cr.top+container.scrollTop;
+  const bx=br.left+br.width/2-cr.left+container.scrollLeft, by=br.top+br.height/2-cr.top+container.scrollTop;
+  const dx=bx-ax,dy=by-ay,len=Math.hypot(dx,dy),angle=Math.atan2(dy,dx)*180/Math.PI;
+  const line=document.createElement('span');line.className='semantic-link';line.style.left=`${ax}px`;line.style.top=`${ay}px`;line.style.width=`${len}px`;line.style.transform=`rotate(${angle}deg)`;container.appendChild(line);
+  requestAnimationFrame(()=>line.classList.add('active'));setTimeout(()=>line.remove(),900);
+}
+function scrollStageBelowHud(stage){
+  requestAnimationFrame(()=>{
+    const hudH=el.hud.hidden?0:el.hud.getBoundingClientRect().height;
+    const y=window.scrollY+stage.getBoundingClientRect().top-hudH-14;
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+  });
+}
+function renderBoard(){
+  state.phase='board'; el.boardStage.hidden=false;el.transitionStage.hidden=true;el.pulseStage.hidden=true;el.modeBadge.textContent=BANK_META[state.bank].label;
+  const cards=shuffle(state.boardPairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')])); el.board.innerHTML='';el.board.dataset.count=String(cards.length);
+  for(const [index,c] of cards.entries()){const n=index+1;const b=document.createElement('button');b.className='memory-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.dataset.cardNumber=String(n);b.setAttribute('aria-label',`Карточка ${n}. Закрыта`);b.innerHTML=`<span class="card-inner"><span class="card-face card-back"><span class="card-back-number" aria-hidden="true">${n}</span></span><span class="card-face card-front"><span class="card-topline"><span class="card-type">${escapeHtml(c.type)}</span><span class="card-open-number" aria-hidden="true">${n}</span></span><span class="card-copy"><span class="card-text">${escapeHtml(c.text)}</span></span></span></span>`;b.addEventListener('click',()=>handleBoardCard(b,c));el.board.appendChild(b)}
+  el.feedback.className='feedback info';el.feedback.textContent='Начни с любой карточки. Открывай по две и ищи пару по смыслу.';updateHud();
+}
+function handleBoardCard(btn,c){
+  if(state.locked||btn.classList.contains('matched')||btn===state.firstCard?.btn)return;
+  btn.classList.add('revealed');btn.setAttribute('aria-label',c.text);
+  if(!state.firstCard){state.firstCard={btn,c};return}
+  state.locked=true;const first=state.firstCard;state.firstCard=null;
+  const correct=first.c.pairId===c.pairId && first.c.side!==c.side;
+  state.attempts++;
+  if(correct){
+    first.btn.classList.add('matched');btn.classList.add('matched');state.matchedBoard++;state.streak++;state.maxStreak=Math.max(state.maxStreak,state.streak);state.pairStats[c.pairId].resolved=true;syncStats();const bonus=100+state.streak*15+(state.signal>=90?20:0);state.score+=bonus;if(state.streak%3===0)state.signal=Math.min(100,state.signal+4);el.feedback.className='feedback good';el.feedback.textContent=`Пара найдена! +${bonus}`;showLinkEffect(first.btn,btn,el.board);updateHud();state.locked=false;if(state.matchedBoard===boardPairCount(state.level))setTimeout(showTransition,800);
+  }else{
+    state.wrongSelections++;state.streak=0;state.signal=Math.max(40,state.signal-8);state.pairStats[first.c.pairId].wrong++;state.pairStats[c.pairId].wrong++;syncStats();first.btn.classList.add('wrong');btn.classList.add('wrong');el.feedback.className='feedback bad';el.feedback.textContent=mismatchFeedback();updateHud();setTimeout(()=>{first.btn.classList.remove('revealed','wrong');btn.classList.remove('revealed','wrong');first.btn.setAttribute('aria-label',`Карточка ${first.btn.dataset.cardNumber}. Закрыта`);btn.setAttribute('aria-label',`Карточка ${btn.dataset.cardNumber}. Закрыта`);state.locked=false},1550)
+  }
+}
+function showTransition(){state.phase='transition';el.boardStage.hidden=true;el.transitionStage.hidden=false;el.pulseStage.hidden=true;updateHud()}
+function renderPulse(){
+  state.phase='pulse';el.boardStage.hidden=true;el.transitionStage.hidden=true;el.pulseStage.hidden=false;state.pulseSelected=[];const cards=shuffle(state.pulsePairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')]));el.pulseGrid.innerHTML='';
+  for(const c of cards){const b=document.createElement('button');b.className='pulse-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.innerHTML=`<div class="card-type">${escapeHtml(c.type)}</div><div class="card-text">${escapeHtml(c.text)}</div>`;b.addEventListener('click',()=>handlePulseCard(b,c));el.pulseGrid.appendChild(b)}
+  el.pulseCounter.textContent=`Осталось связей: ${PULSE_PAIRS-state.matchedPulse}`;el.pulseFeedback.className='feedback info';el.pulseFeedback.textContent=pulseIntro();updateHud();scrollStageBelowHud(el.pulseStage);
+}
+function handlePulseCard(btn,c){
+  if(state.locked||btn.classList.contains('locked'))return;
+  const idx=state.pulseSelected.findIndex(x=>x.btn===btn);if(idx>=0){btn.classList.remove('selected');state.pulseSelected.splice(idx,1);return}
+  if(state.pulseSelected.length>=2)return;btn.classList.add('selected');state.pulseSelected.push({btn,c});if(state.pulseSelected.length<2)return;
+  state.locked=true;const [a,b]=state.pulseSelected;const correct=a.c.pairId===b.c.pairId&&a.c.side!==b.c.side;
+  state.attempts++;
+  if(correct){state.matchedPulse++;state.streak++;state.maxStreak=Math.max(state.maxStreak,state.streak);state.pairStats[a.c.pairId].resolved=true;syncStats();const bonus=140+state.streak*20+(state.signal>=90?25:0);state.score+=bonus;if(state.streak%3===0)state.signal=Math.min(100,state.signal+4);a.btn.classList.remove('selected');b.btn.classList.remove('selected');a.btn.classList.add('locked');b.btn.classList.add('locked');a.btn.disabled=true;b.btn.disabled=true;el.pulseFeedback.className='feedback good';el.pulseFeedback.textContent=`Точная пара! +${bonus}`;showLinkEffect(a.btn,b.btn,el.pulseGrid);state.pulseSelected=[];el.pulseCounter.textContent=`Осталось связей: ${PULSE_PAIRS-state.matchedPulse}`;updateHud();state.locked=false;if(state.matchedPulse===PULSE_PAIRS)setTimeout(showFinal,800)
+  }else{state.wrongSelections++;state.streak=0;state.signal=Math.max(40,state.signal-8);state.pairStats[a.c.pairId].wrong++;state.pairStats[b.c.pairId].wrong++;syncStats();a.btn.classList.add('wrong');b.btn.classList.add('wrong');el.pulseFeedback.className='feedback bad';el.pulseFeedback.textContent=mismatchFeedback();updateHud();setTimeout(()=>{a.btn.classList.remove('selected','wrong');b.btn.classList.remove('selected','wrong');state.pulseSelected=[];state.locked=false},1500)}
+}
+function showFinal(){
+  state.phase='final';setScreen('final');const high=state.signal>=84&&state.wrongSelections<=3;const mid=state.signal>=68;
+  $('finalTitle').textContent=high?'Сеть восстановлена точно.':mid?'Сеть восстановлена.':'Сеть собрана — сигнал колебался.';
+  $('finalNote').textContent=high?'Большинство связей удалось собрать без лишних попыток. Новый раунд даст другой набор карточек.':mid?'Все связи собраны. В новом раунде можно попробовать удержать более длинную серию.':'Все связи всё равно восстановлены. Новый набор даст ещё одну короткую тренировку смысла.';
+  syncStats();updateRunIdentity();const total=totalLinks(state.level);$('finalScore').textContent=state.score;$('finalPairs').textContent=`${state.resolvedTasks}/${total}`;$('finalFirst').textContent=`${state.firstTryCorrect}/${total}`;$('finalWrong').textContent=state.wrongAttempts;$('finalStreak').textContent=state.maxStreak;$('finalSignal').textContent=`${state.signal}%`;$('finalPulse').textContent=`${state.matchedPulse}/${PULSE_PAIRS}`;
+}
+function startRun(seed){try{resetRun(seed);setScreen('game');renderBoard()}catch(err){console.error('RUN GENERATION FAILED',err);state.phase='intro';setScreen('intro');toast('Не удалось собрать однозначный набор. Попробуй ещё раз.')}}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]))}
+function toast(msg){el.toast.textContent=msg;el.toast.classList.add('show');setTimeout(()=>el.toast.classList.remove('show'),1600)}
+
+$('levelChoices').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(!b)return;state.level=b.dataset.level;document.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b));updateSetupIdentity()});
+$('bankChoices').addEventListener('click',e=>{const b=e.target.closest('[data-bank]');if(!b)return;state.bank=b.dataset.bank;document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x===b));updateSetupIdentity()});
+$('startBtn').addEventListener('click',()=>startRun());
+$('pulseBtn').addEventListener('click',renderPulse);
+$('replayBtn').addEventListener('click',()=>startRun());
+$('changeBtn').addEventListener('click',()=>{state.phase='intro';updateSetupIdentity();setScreen('intro')});
+
+updateSetupIdentity();
+const validation=validateContent();if(!validation.ok){console.error('CONTENT VALIDATION FAILED',validation.errors);toast('Ошибка банка заданий')}
+window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0])}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts}})};
+})();
+</script>
+</body>
+</html>
