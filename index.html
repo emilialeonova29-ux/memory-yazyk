@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>MEMORY//ЯЗЫК — Сеть смыслов v1.4.0 pre-MVP</title>
+<title>MEMORY//ЯЗЫК — Сеть смыслов v1.5.1 BANK-07 PILOT</title>
 <style>
 
 :root{
@@ -188,6 +188,31 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 .fragment-copy span{display:block;margin-top:3px;font-size:12px;line-height:1.35;color:#66736d}
 @media(max-width:620px){.fragment-teaser{grid-template-columns:1fr;gap:9px}.fragment-object{justify-content:flex-start}.fragment-piece{width:16px;height:24px}}
 
+
+/* G-002 pedagogical pilot BANK-07: familiarization -> MEMORY -> delayed semantic check */
+.pilot-context{margin:0 0 18px;padding:12px;border:1px dashed rgba(52,71,63,.16);border-radius:16px;background:rgba(255,255,255,.38)}
+.pilot-context .field-title{margin-bottom:8px}.pilot-context .segment{grid-template-columns:repeat(3,1fr)}
+.pilot-stage{padding:4px 2px 2px}.pilot-learn-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.pilot-learn-card{min-width:0;border:1px solid rgba(52,71,63,.12);border-radius:20px 20px 13px 20px;background:linear-gradient(180deg,#fffefb,#f7efdf);padding:16px 17px;box-shadow:0 8px 18px rgba(78,68,56,.06)}
+.pilot-learn-word{font-size:clamp(20px,2.3vw,27px);font-weight:900;letter-spacing:-.025em;color:#223038;margin-bottom:7px}
+.pilot-learn-meaning{font-size:15px;line-height:1.42;color:#34454a;font-weight:700}
+.pilot-learn-example{margin-top:10px;padding-top:10px;border-top:1px solid rgba(52,71,63,.09);font-size:13px;line-height:1.45;color:#66736d}
+.pilot-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.teacher-observe{margin-top:16px;border:1px dashed rgba(52,71,63,.16);border-radius:16px;background:rgba(255,255,255,.35);padding:10px 12px;color:#63716c}
+.teacher-observe summary{cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.02em}.teacher-observe-grid{display:grid;gap:8px;margin-top:10px}
+.teacher-observe-row{display:grid;grid-template-columns:minmax(120px,1fr) auto auto;gap:10px;align-items:center;padding:8px 9px;border-radius:12px;background:rgba(255,255,255,.48);font-size:12px}
+.teacher-observe-row strong{color:#374a47}.teacher-observe-row label{display:flex;align-items:center;gap:5px;white-space:nowrap}
+.pilot-check-card{width:min(760px,100%);margin:18px auto 0;border:1px solid rgba(52,71,63,.12);border-radius:24px 24px 15px 24px;background:linear-gradient(180deg,#fffefb,#f6edde);padding:clamp(20px,4vw,34px);box-shadow:0 12px 30px rgba(78,68,56,.08)}
+.pilot-check-progress{font-size:11px;text-transform:uppercase;letter-spacing:.11em;color:var(--teal);font-weight:900;margin-bottom:10px}
+.pilot-check-prompt{font-size:clamp(22px,3.4vw,34px);line-height:1.17;letter-spacing:-.025em;font-weight:900;color:#223038}
+.pilot-check-context{font-size:16px;line-height:1.48;color:#4d5c61;margin-top:8px}
+.pilot-check-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}
+.pilot-check-option{border:1px solid rgba(52,71,63,.14);background:rgba(255,255,255,.78);border-radius:16px;padding:13px 14px;text-align:left;color:#2d3e43;cursor:pointer;font-weight:720;line-height:1.35}.pilot-check-option:hover{border-color:rgba(47,143,131,.38);background:#fff}
+.pilot-check-option:disabled{cursor:default;opacity:.7}.pilot-check-skip{margin-top:10px;border:0;background:transparent;color:#6d7974;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 2px}
+.pilot-check-feedback{min-height:24px;margin-top:12px;font-size:13px;color:#66736d}
+.pilot-final-teacher{margin-top:16px}.pilot-final-teacher .teacher-choice{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.teacher-mini{border:1px solid rgba(52,71,63,.14);background:rgba(255,255,255,.72);border-radius:999px;padding:8px 11px;cursor:pointer;color:#46545a;font-size:12px}.teacher-mini.active{border-color:rgba(47,143,131,.55);background:rgba(47,143,131,.09);color:#25685f;font-weight:800}
+@media(max-width:620px){.pilot-context .segment{grid-template-columns:1fr}.pilot-learn-grid{grid-template-columns:1fr}.teacher-observe-row{grid-template-columns:1fr 1fr}.teacher-observe-row strong{grid-column:1/-1}.pilot-check-options{grid-template-columns:1fr}.pilot-actions{justify-content:stretch}.pilot-actions button{width:100%}}
+
 @media(max-width:900px){.intro,.final{grid-template-columns:1fr}.setup,.final-side{border-left:0;border-top:1px solid rgba(52,71,63,.11)}.board{grid-template-columns:repeat(4,1fr)}.pulse-grid{grid-template-columns:repeat(2,1fr)}.hud{grid-template-columns:1fr 1fr 1fr}.progresswrap{grid-column:1/-1;order:4}.hero:before{right:20px;top:28px;width:220px;height:180px}.hero:after{width:180px;height:128px;right:-24px}}
 @media(max-width:620px){.shell{padding:12px 10px 22px}.brandbar{margin-bottom:10px}.build{display:none}.panel{border-radius:22px}.hero{padding:30px 22px}.setup{padding:24px 18px}.intro{min-height:0}.mission-strip{gap:6px}.chip{font-size:11px;padding:7px 9px}.hud{position:sticky;top:0;z-index:6;background:rgba(239,231,218,.94);backdrop-filter:blur(10px);padding:8px 0;margin:4px 0 8px}.hudbox{padding:8px 9px;min-height:48px}.hudbox b{font-size:14px}.hudbox span{font-size:9px}.gamepanel{padding:14px 10px;min-height:calc(100dvh - 92px)}.stagehead{flex-direction:column;align-items:flex-start;margin-bottom:12px}.stagehead h2{font-size:26px}.stagehead p{font-size:13px}.modebadge{font-size:9px;padding:6px 8px;white-space:normal;max-width:100%;line-height:1.25}.board{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:5px}.memory-card{aspect-ratio:auto;min-height:184px}.card-front{padding:10px 10px 12px}.card-copy{padding:8px 2px 12px}.card-text{font-size:clamp(12px,3.45vw,14.5px);line-height:1.28}.card-type{font-size:7.5px}.card-open-number{font-size:9px;padding:3px 5px}.card-back-number{font-size:30px}.feedback{font-size:13px;margin-top:10px}.pulse-grid{gap:8px}.pulse-card{min-height:148px;padding:13px;border-radius:18px 18px 12px 18px}.pulse-card .card-text{font-size:14px}.transition{min-height:calc(100dvh - 110px);padding:25px 15px}.final-main{padding:32px 22px}.final-side{padding:24px 18px}.final h2{font-size:clamp(34px,11vw,46px);overflow-wrap:anywhere}.final-main p{font-size:16px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat strong{font-size:21px}.stat span{font-size:11px;line-height:1.3}.final-actions{flex-direction:column}.hero:before,.hero:after{opacity:.65}}
 @media(max-width:360px){.board{gap:7px}.memory-card{min-height:190px}.card-front{padding:9px 8px}.card-text{font-size:11.3px}.pulse-card{min-height:150px}.hudbox{padding:7px}.final h2{font-size:36px}.stats{grid-template-columns:1fr 1fr}.stat{padding:12px 10px}}
@@ -228,21 +253,35 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
           <button class="choice active" data-bank="meaning"><strong>Слово ↔ значение</strong><small>точно соотнести слово и его смысл</small></button>
           <button class="choice" data-bank="collocation"><strong>Слово ↔ сочетание</strong><small>найти естественную лексическую связь</small></button>
           <button class="choice" data-bank="idiom"><strong>Фразеологизм ↔ значение</strong><small>соотнести устойчивое выражение и смысл</small></button>
+          <button id="pilotBankChoice" class="choice" data-bank="pilotMeaning" hidden><strong>Пилот: знакомая лексика</strong><small>знакомство → Memory → короткая проверка</small></button>
         </div>
       </div>
-      <div id="setupContentId" class="teacher-meta teacher-meta-setup"><strong>Для преподавателя:</strong> G-002 / 5–6 / слово↔значение / BANK-01 / v1</div>
+      <div id="pilotContextField" class="pilot-context" hidden>
+        <div class="field-title">Для пилота: где используется</div>
+        <div class="segment" id="pilotContextChoices">
+          <button class="choice active" data-context="lesson"><strong>На уроке</strong></button>
+          <button class="choice" data-context="home"><strong>Дома</strong></button>
+          <button class="choice" data-context="external"><strong>Внешний пилот</strong></button>
+        </div>
+      </div>
       <div class="startrow"><button id="startBtn" class="primary">Запустить сеть</button></div>
     </div>
   </section>
 
   <div id="hud" class="hud" hidden>
-    <div class="hudbox progresswrap"><b id="progressText">Связи 0/7</b><span id="phaseLabel">Поле памяти</span><div class="progressline"><div id="progressFill" class="progressfill"></div></div><div id="hudContentId" class="hudmeta">G-002 / 5–6 / BANK-01 v1</div></div>
+    <div class="hudbox progresswrap"><b id="progressText">Связи 0/7</b><span id="phaseLabel">Поле памяти</span><div class="progressline"><div id="progressFill" class="progressfill"></div></div></div>
     <div class="hudbox"><b id="scoreText">0</b><span>баллы</span></div>
     <div class="hudbox"><b id="streakText">×0</b><span>серия</span></div>
     <div class="hudbox"><b id="signalText">100%</b><span>сигнал</span></div>
   </div>
 
   <section id="game" class="panel gamepanel" hidden>
+    <div id="pilotLearnStage" class="pilot-stage" hidden>
+      <div class="stagehead"><div><h2>Сначала познакомься со словами</h2><p>Посмотри на слово, короткое значение и пример. Запоминать специально не нужно — просто разберись, что означает каждое слово.</p></div><div class="modebadge">этап 1 из 3</div></div>
+      <div id="pilotLearnGrid" class="pilot-learn-grid"></div>
+      <details class="teacher-observe"><summary>Служебные отметки преподавателя</summary><div id="pilotWordObservations" class="teacher-observe-grid"></div></details>
+      <div class="pilot-actions"><button id="pilotToMemoryBtn" class="primary">Перейти к Memory</button></div>
+    </div>
     <div id="boardStage">
       <div class="stagehead"><div><h2>Поле памяти</h2><p>Открывай карточки по две и ищи точную смысловую пару. Если связь верная, пара останется в сети.</p></div><div class="modebadge" id="modeBadge">слово ↔ значение</div></div>
       <div id="board" class="board" aria-live="polite"></div>
@@ -256,6 +295,17 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
       <div id="pulseCounter" class="pulse-counter">Осталось связей: 3</div>
       <div id="pulseGrid" class="pulse-grid"></div>
       <div id="pulseFeedback" class="feedback info">Сравни смысл карточек, а не их положение.</div>
+    </div>
+    <div id="pilotCheckStage" class="pilot-stage" hidden>
+      <div class="stagehead"><div><h2>Что осталось в памяти?</h2><p>Карточек перед глазами уже нет. Ответь на несколько коротких вопросов про те же слова.</p></div><div class="modebadge">этап 3 из 3</div></div>
+      <div class="pilot-check-card">
+        <div id="pilotCheckProgress" class="pilot-check-progress">Вопрос 1 из 4</div>
+        <div id="pilotCheckPrompt" class="pilot-check-prompt"></div>
+        <div id="pilotCheckContext" class="pilot-check-context"></div>
+        <div id="pilotCheckOptions" class="pilot-check-options"></div>
+        <button id="pilotCheckUnknown" class="pilot-check-skip">Не уверен(а)</button>
+        <div id="pilotCheckFeedback" class="pilot-check-feedback"></div>
+      </div>
     </div>
   </section>
 
@@ -271,11 +321,14 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
         </div>
         <div class="fragment-copy"><strong id="fragmentTitle">Найдено: 1/5 фрагментов</strong><span id="fragmentNote">Похоже, это только часть чего-то большего.</span></div>
       </div>
-      <div class="final-teacher-meta">
-        <span class="teacher-label">Для преподавателя</span>
-        <div id="finalContentId" class="teacher-id">G-002 / 5–6 / слово↔значение / BANK-01 / v1</div>
-        <div id="finalRoundId" class="teacher-id round-id">ROUND-ID: —</div>
-      </div>
+      <details id="pilotFinalTeacher" class="teacher-observe pilot-final-teacher" hidden>
+        <summary>Служебная отметка преподавателя</summary>
+        <div class="teacher-choice" id="askedToContinueChoices">
+          <button class="teacher-mini active" data-continue="null">Не отмечено</button>
+          <button class="teacher-mini" data-continue="true">Сам попросил продолжить</button>
+          <button class="teacher-mini" data-continue="false">Не просил продолжить</button>
+        </div>
+      </details>
       <div class="note">Результат этого игрового раунда не является диагностикой освоения темы. Игра предназначена для лёгкой смысловой практики в конце урока.</div>
     </div>
     <div class="final-side">
@@ -295,7 +348,7 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 <script>
 (() => {
 'use strict';
-const GAME_VERSION='1.4.0';
+const GAME_VERSION='1.5.1-pilot';
 const PULSE_PAIRS=3;
 const PRE_MVP_CYCLE={
   cycleId:'PRE-MVP-RETURN-01',
@@ -305,8 +358,33 @@ const PRE_MVP_CYCLE={
   ledgerKey:'memoryYazyk:preMVP:return-cycle:v1'
 };
 const RESULT_STORAGE_KEY='memoryYazyk:lastNormalizedResult:G-002';
-function boardPairCount(level=state?.level||'56'){return level==='78'?8:6}
-function totalLinks(level=state?.level||'56'){return boardPairCount(level)+PULSE_PAIRS}
+const RESULT_HISTORY_KEY='memoryYazyk:normalizedResultHistory:G-002:v1';
+const RESULT_SCHEMA=Object.freeze({
+  version:'memory-result-v1',
+  semantics:Object.freeze({
+    selfCorrections:'Количество смысловых пар, которые были правильно завершены после того, как хотя бы одна карточка пары участвовала минимум в одной ошибочной связи. Одна неверная связь двух разных пар может поэтому дать selfCorrections = 2.',
+    pilotPostCheck:'Результат проверки после игры хранится отдельно от Memory и не интерпретируется автоматически как освоение навыка.'
+  })
+});
+// BANK-07 v1 CONTENT LOCK — approved by Educational HQ for the lexical-load pedagogical pilot.
+// Do not shorten or rephrase word meanings/examples without a new CONTENT QA.
+let PILOT_BANK_07=[
+  {id:'78p01',word:'намерение',meaning:'то, что человек решил или собирается сделать.',example:'У него было намерение закончить работу до вечера.'},
+  {id:'78p02',word:'препятствие',meaning:'то, что мешает движению или выполнению дела.',example:'Сломанный мост стал препятствием на нашем пути.'},
+  {id:'78p03',word:'сомнение',meaning:'неуверенность в том, что что-то верно или правильно.',example:'У меня возникло сомнение: правильно ли я понял условие?'},
+  {id:'78p04',word:'преимущество',meaning:'то, что даёт более выгодное положение по сравнению с другими.',example:'Хорошая подготовка стала его преимуществом на соревновании.'},
+  {id:'78p05',word:'уместный',meaning:'подходящий к данной ситуации.',example:'Это был уместный вопрос: он помог уточнить главное.'},
+  {id:'78p06',word:'достоверный',meaning:'такой, которому можно доверять, потому что он соответствует фактам.',example:'Это достоверный факт: его подтвердили документы.'},
+  {id:'78p07',word:'предвидеть',meaning:'заранее предполагать, что может произойти.',example:'Синоптики пытались предвидеть резкое похолодание.'},
+  {id:'78p08',word:'искажать',meaning:'изменять так, что первоначальный смысл или вид становится неверным.',example:'Нельзя искажать чужие слова, меняя их смысл.'}
+];
+const PILOT_BANK_ID='BANK-07';
+const PILOT_BANK_VERSION='v1';
+const PILOT_POST_CHECK_COUNT=4;
+function isPilotBank(bank=state?.bank){return bank==='pilotMeaning'}
+function pilotReady(){return validatePilotBank(PILOT_BANK_07).ok}
+function boardPairCount(level=state?.level||'56',bank=state?.bank||'meaning'){return isPilotBank(bank)?PILOT_BANK_07.length:(level==='78'?8:6)}
+function totalLinks(level=state?.level||'56',bank=state?.bank||'meaning'){return boardPairCount(level,bank)+(isPilotBank(bank)?0:PULSE_PAIRS)}
 
 const CONTENT={
   '56':{
@@ -456,7 +534,8 @@ const CONTENT={
 const BANK_META={
   meaning:{label:'слово ↔ значение', left:'СЛОВО', right:'ЗНАЧЕНИЕ'},
   collocation:{label:'слово ↔ сочетание', left:'СЛОВО', right:'СОЧЕТАНИЕ'},
-  idiom:{label:'фразеологизм ↔ значение', left:'ФРАЗЕОЛОГИЗМ', right:'ЗНАЧЕНИЕ'}
+  idiom:{label:'фразеологизм ↔ значение', left:'ФРАЗЕОЛОГИЗМ', right:'ЗНАЧЕНИЕ'},
+  pilotMeaning:{label:'слово ↔ значение', left:'СЛОВО', right:'ЗНАЧЕНИЕ'}
 };
 
 const CONTENT_IDENTITY={
@@ -468,12 +547,13 @@ const CONTENT_IDENTITY={
   '78':{
     meaning:{mode:'7–8',bankId:'BANK-04',bankVersion:'v1'},
     collocation:{mode:'7–8',bankId:'BANK-05',bankVersion:'v1'},
-    idiom:{mode:'7–8',bankId:'BANK-06',bankVersion:'v1'}
+    idiom:{mode:'7–8',bankId:'BANK-06',bankVersion:'v1'},
+    pilotMeaning:{mode:'7–8',bankId:PILOT_BANK_ID,bankVersion:PILOT_BANK_VERSION,cycleEligible:false,pilot:true}
   }
 };
 function contentIdentity(level=state.level,bank=state.bank){
   const meta=CONTENT_IDENTITY[level][bank];
-  return {gameId:'G-002',mode:meta.mode,bankLabel:BANK_META[bank].label.replace(/\s*↔\s*/g,'↔'),bankId:meta.bankId,bankVersion:meta.bankVersion};
+  return {gameId:'G-002',mode:meta.mode,bankLabel:BANK_META[bank].label.replace(/\s*↔\s*/g,'↔'),bankId:meta.bankId,bankVersion:meta.bankVersion,cycleEligible:meta.cycleEligible!==false,pilot:Boolean(meta.pilot)};
 }
 function contentIdentityText(level=state.level,bank=state.bank){
   const m=contentIdentity(level,bank);
@@ -483,9 +563,19 @@ function shortContentIdentityText(level=state.level,bank=state.bank){
   const m=contentIdentity(level,bank);
   return `${m.gameId} / ${m.mode} / ${m.bankId} ${m.bankVersion}`;
 }
-function makeRoundId(seed){
-  const code=hashSeed(`G-002-round:${seed>>>0}`).toString(36).toUpperCase().padStart(7,'0').slice(-6);
-  return `R-${code}`;
+function makeRoundId(){
+  try{
+    if(globalThis.crypto?.randomUUID){
+      const compact=globalThis.crypto.randomUUID().replace(/-/g,'').slice(0,12).toUpperCase();
+      return `R-${compact}`;
+    }
+    if(globalThis.crypto?.getRandomValues){
+      const bytes=new Uint8Array(8);globalThis.crypto.getRandomValues(bytes);
+      return `R-${Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('').slice(0,12).toUpperCase()}`;
+    }
+  }catch{}
+  const fallback=hashSeed(`${Date.now()}-${performance.now()}-${Math.random()}`).toString(36).toUpperCase().padStart(10,'0');
+  return `R-${fallback.slice(-10)}`;
 }
 
 
@@ -517,19 +607,73 @@ const state={
   score:0, streak:0, maxStreak:0, signal:100, matchedBoard:0, matchedPulse:0, wrongSelections:0,
   attempts:0, resolvedTasks:0, firstTryCorrect:0, eventualCorrect:0, wrongAttempts:0,
   helpUsed:false, selfCorrections:0, replayStarted:false, startedAt:null, normalizedResult:null, cycleReward:null,
+  pilotContext:'lesson', pilotQuestions:[], pilotCheckIndex:0, pilotPostCheck:null, pilotUnfamiliar:[], pilotExplanation:[], askedToContinue:null,
   locked:false, firstCard:null, pulseSelected:[], pairStats:{}, lastRunIds:[], lastRunKey:null
 };
 
 const $=id=>document.getElementById(id);
-const el={intro:$('intro'),hud:$('hud'),game:$('game'),final:$('final'),board:$('board'),feedback:$('feedback'),boardStage:$('boardStage'),transitionStage:$('transitionStage'),pulseStage:$('pulseStage'),pulseGrid:$('pulseGrid'),pulseFeedback:$('pulseFeedback'),pulseCounter:$('pulseCounter'),modeBadge:$('modeBadge'),progressText:$('progressText'),progressFill:$('progressFill'),phaseLabel:$('phaseLabel'),scoreText:$('scoreText'),streakText:$('streakText'),signalText:$('signalText'),setupContentId:$('setupContentId'),hudContentId:$('hudContentId'),finalContentId:$('finalContentId'),finalRoundId:$('finalRoundId'),fragmentTeaser:$('fragmentTeaser'),fragmentTitle:$('fragmentTitle'),fragmentNote:$('fragmentNote'),toast:$('toast')};
+const el={intro:$('intro'),hud:$('hud'),game:$('game'),final:$('final'),board:$('board'),feedback:$('feedback'),boardStage:$('boardStage'),transitionStage:$('transitionStage'),pulseStage:$('pulseStage'),pulseGrid:$('pulseGrid'),pulseFeedback:$('pulseFeedback'),pulseCounter:$('pulseCounter'),modeBadge:$('modeBadge'),progressText:$('progressText'),progressFill:$('progressFill'),phaseLabel:$('phaseLabel'),scoreText:$('scoreText'),streakText:$('streakText'),signalText:$('signalText'),setupContentId:$('setupContentId'),hudContentId:$('hudContentId'),finalContentId:$('finalContentId'),finalRoundId:$('finalRoundId'),fragmentTeaser:$('fragmentTeaser'),fragmentTitle:$('fragmentTitle'),fragmentNote:$('fragmentNote'),pilotBankChoice:$('pilotBankChoice'),pilotContextField:$('pilotContextField'),pilotLearnStage:$('pilotLearnStage'),pilotLearnGrid:$('pilotLearnGrid'),pilotWordObservations:$('pilotWordObservations'),pilotToMemoryBtn:$('pilotToMemoryBtn'),pilotCheckStage:$('pilotCheckStage'),pilotCheckProgress:$('pilotCheckProgress'),pilotCheckPrompt:$('pilotCheckPrompt'),pilotCheckContext:$('pilotCheckContext'),pilotCheckOptions:$('pilotCheckOptions'),pilotCheckUnknown:$('pilotCheckUnknown'),pilotCheckFeedback:$('pilotCheckFeedback'),pilotFinalTeacher:$('pilotFinalTeacher'),toast:$('toast')};
 
 function hashSeed(str){let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function makeRng(seed){let x=seed>>>0||0x9e3779b9;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/4294967296}}
 function shuffle(arr,rng=state.rng){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function sampleRun(pool,count){const last=new Set(state.lastRunIds||[]);const fresh=shuffle(pool.filter(p=>!last.has(p[0])));const old=shuffle(pool.filter(p=>last.has(p[0])));return [...fresh,...old].slice(0,count)}
 function makeSeed(){return hashSeed(`${Date.now()}-${performance.now()}-${Math.random()}`)}
-function updateSetupIdentity(){if(el.setupContentId)el.setupContentId.innerHTML=`<strong>Для преподавателя:</strong> ${escapeHtml(contentIdentityText())}`}
-function updateRunIdentity(){const full=contentIdentityText();if(el.hudContentId)el.hudContentId.textContent=`${full} · ${state.roundId}`;if(el.finalContentId)el.finalContentId.textContent=full;if(el.finalRoundId)el.finalRoundId.textContent=`ROUND-ID: ${state.roundId}`}
+function validatePilotBank(items=PILOT_BANK_07){
+  const errors=[];
+  if(!Array.isArray(items))return {ok:false,ready:false,errors:['pilot-bank-not-array'],count:0};
+  if(items.length===0)return {ok:false,ready:false,errors:['pilot-content-awaiting-educational-hq'],count:0};
+  if(items.length<8||items.length>10)errors.push(`pilot-bank-size:${items.length}:expected-8-10`);
+  const ids=new Set(),words=new Set(),meanings=new Set();
+  for(const [index,item] of items.entries()){
+    if(!item||typeof item!=='object'){errors.push(`pilot-bad-item:${index}`);continue}
+    for(const key of ['id','word','meaning','example']) if(!String(item[key]??'').trim()) errors.push(`pilot-empty-${key}:${index}`);
+    const id=String(item.id||''); if(ids.has(id))errors.push(`pilot-duplicate-id:${id}`);ids.add(id);
+    const w=String(item.word||'').trim().toLowerCase(); if(words.has(w))errors.push(`pilot-duplicate-word:${w}`);words.add(w);
+    const m=String(item.meaning||'').trim().toLowerCase(); if(meanings.has(m))errors.push(`pilot-duplicate-meaning:${m}`);meanings.add(m);
+  }
+  return {ok:errors.length===0,ready:errors.length===0,errors,count:items.length};
+}
+function installPilotBank(items){
+  const copy=Array.isArray(items)?items.map(x=>({id:String(x.id||''),word:String(x.word||''),meaning:String(x.meaning||''),example:String(x.example||'')})):items;
+  const validation=validatePilotBank(copy);
+  if(!validation.ok)throw new Error(`invalid-pilot-bank:${validation.errors.join('|')}`);
+  PILOT_BANK_07=copy;refreshPilotAvailability();return validation;
+}
+function refreshPilotAvailability(){
+  const ready=pilotReady();
+  if(el.pilotBankChoice)el.pilotBankChoice.hidden=!ready||state.level!=='78';
+  if(!ready&&isPilotBank()){state.bank='meaning';document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x.dataset.bank==='meaning'))}
+  if(el.pilotContextField)el.pilotContextField.hidden=!isPilotBank();
+}
+function activePool(){
+  if(isPilotBank())return PILOT_BANK_07.map(x=>[x.id,x.word,x.meaning]);
+  return CONTENT[state.level][state.bank];
+}
+function updateSetupIdentity(){/* tech identity intentionally hidden from child-facing UI */}
+function updateRunIdentity(){/* tech identity intentionally hidden from child-facing UI */}
+function loadResultHistory(){
+  const empty={schemaVersion:'memory-result-history-v1',gameId:'G-002',results:{}};
+  try{
+    const raw=localStorage.getItem(RESULT_HISTORY_KEY);
+    if(!raw)return empty;
+    const parsed=JSON.parse(raw);
+    if(!parsed||typeof parsed!=='object')return empty;
+    return {schemaVersion:'memory-result-history-v1',gameId:'G-002',results:parsed.results&&typeof parsed.results==='object'?parsed.results:{}};
+  }catch{return empty}
+}
+function saveResultHistory(history){
+  try{localStorage.setItem(RESULT_HISTORY_KEY,JSON.stringify(history));return true}catch{return false}
+}
+function persistNormalizedResult(result){
+  if(!result?.roundId)return false;
+  const history=loadResultHistory();
+  history.results[result.roundId]=JSON.parse(JSON.stringify(result));
+  saveResultHistory(history);
+  try{sessionStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify(result))}catch{}
+  return true;
+}
+function getResultHistory(){return JSON.parse(JSON.stringify(loadResultHistory()))}
 function bankCycleKey(identity=contentIdentity()){return `${identity.gameId}:${identity.bankId}:${identity.bankVersion}`}
 function loadCycleLedger(){
   const empty={cycleId:PRE_MVP_CYCLE.cycleId,fragments:{},completedBanks:{}};
@@ -551,7 +695,7 @@ function processCycleReward(result){
   const identity=contentIdentity();
   const bankKey=bankCycleKey(identity);
   const wasNewBank=!ledger.completedBanks[bankKey];
-  const eligible=Boolean(result.completed && state.matchedPulse===PULSE_PAIRS && result.eventualCorrect===totalLinks(state.level));
+  const eligible=Boolean(identity.cycleEligible && result.completed && state.matchedPulse===PULSE_PAIRS && result.eventualCorrect===totalLinks(state.level,state.bank));
   let awardedNow=false;
   if(eligible && wasNewBank){
     ledger.completedBanks[bankKey]={completedAt:result.completedAt,roundId:result.roundId};
@@ -584,9 +728,12 @@ function processCycleReward(result){
 function buildNormalizedResult(){
   syncStats();
   const identity=contentIdentity();
-  const completed=state.resolvedTasks===totalLinks(state.level)&&state.matchedPulse===PULSE_PAIRS;
+  const pilot=isPilotBank();
+  const memoryCompleted=state.resolvedTasks===boardPairCount(state.level,state.bank);
+  const postCompleted=pilot?Boolean(state.pilotPostCheck?.completed):true;
+  const completed=pilot?(memoryCompleted&&postCompleted):(state.resolvedTasks===totalLinks(state.level,state.bank)&&state.matchedPulse===PULSE_PAIRS);
   const result={
-    schemaVersion:'memory-result-v1',
+    schemaVersion:RESULT_SCHEMA.version,
     gameId:identity.gameId,
     gameTitle:'MEMORY//ЯЗЫК — Сеть смыслов',
     gameVersion:GAME_VERSION,
@@ -596,8 +743,9 @@ function buildNormalizedResult(){
     roundId:state.roundId,
     sessionId:state.roundId,
     runSeed:state.runSeed,
+    context:pilot?state.pilotContext:null,
     startedAt:state.startedAt,
-    completedAt:new Date().toISOString(),
+    completedAt:state.normalizedResult?.roundId===state.roundId?state.normalizedResult.completedAt:new Date().toISOString(),
     completed,
     attempts:state.attempts,
     resolvedTasks:state.resolvedTasks,
@@ -605,12 +753,26 @@ function buildNormalizedResult(){
     eventualCorrect:state.eventualCorrect,
     wrongAttempts:state.wrongAttempts,
     helpUsed:Boolean(state.helpUsed),
+    // selfCorrections = number of semantic pairs eventually resolved after either card took part in >=1 wrong pairing; one wrong pairing can therefore yield two self-corrected pairs.
     selfCorrections:state.selfCorrections,
-    replayStarted:false,
+    replayStarted:Boolean(state.replayStarted),
+    askedToContinue:pilot?state.askedToContinue:null,
     score:state.score,
     maxStreak:state.maxStreak,
     signal:state.signal,
-    pulseCorrect:state.matchedPulse,
+    pulseCorrect:pilot?null:state.matchedPulse,
+    memoryResult:pilot?{
+      completed:memoryCompleted,
+      attempts:state.attempts,
+      resolvedTasks:state.resolvedTasks,
+      firstTryCorrect:state.firstTryCorrect,
+      eventualCorrect:state.eventualCorrect,
+      wrongAttempts:state.wrongAttempts,
+      helpUsed:Boolean(state.helpUsed),
+      selfCorrections:state.selfCorrections
+    }:null,
+    postCheckResult:pilot?JSON.parse(JSON.stringify(state.pilotPostCheck||{completed:false,total:PILOT_POST_CHECK_COUNT,answered:0,correct:0,answers:[]})):null,
+    wordObservations:pilot?{unfamiliar:[...state.pilotUnfamiliar],explanationNeeded:[...state.pilotExplanation]}:null,
     resultStats:{
       attempts:state.attempts,
       resolvedTasks:state.resolvedTasks,
@@ -620,27 +782,40 @@ function buildNormalizedResult(){
       score:state.score,
       maxStreak:state.maxStreak,
       signal:state.signal,
-      pulseCorrect:state.matchedPulse
+      pulseCorrect:pilot?null:state.matchedPulse
     },
     rewardsEarned:[],
     cycleProgress:{current:0,total:PRE_MVP_CYCLE.fragmentTotal,label:`0/${PRE_MVP_CYCLE.fragmentTotal}`}
   };
-  const reward=processCycleReward(result);
-  if(reward.event)result.rewardsEarned=[reward.event];
-  result.cycleProgress=reward.cycleProgress;
-  state.cycleReward=reward;
+  if(pilot){
+    const ledger=loadCycleLedger();
+    result.cycleProgress=cycleProgressFromLedger(ledger);
+    state.cycleReward={awardedNow:false,event:null,cycleProgress:result.cycleProgress,owned:Boolean(ledger.fragments?.[PRE_MVP_CYCLE.fragmentId]),wasNewBank:false,eligible:false};
+  }else{
+    const reward=processCycleReward(result);
+    if(reward.event)result.rewardsEarned=[reward.event];
+    result.cycleProgress=reward.cycleProgress;
+    state.cycleReward=reward;
+  }
   state.normalizedResult=result;
-  try{sessionStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify(result))}catch{}
+  persistNormalizedResult(result);
   return result;
 }
 function markReplayStarted(){
-  if(!state.normalizedResult||!state.normalizedResult.completed)return;
-  state.normalizedResult.replayStarted=true;
+  let previous=state.normalizedResult;
+  if(!previous){
+    try{const raw=sessionStorage.getItem(RESULT_STORAGE_KEY);if(raw)previous=JSON.parse(raw)}catch{}
+  }
+  if(!previous?.completed||!previous.roundId)return false;
+  previous.replayStarted=true;
   state.replayStarted=true;
-  try{sessionStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify(state.normalizedResult))}catch{}
+  persistNormalizedResult(previous);
+  if(state.normalizedResult?.roundId===previous.roundId)state.normalizedResult=previous;
+  return true;
 }
 function renderFragmentTeaser(){
   if(!el.fragmentTeaser)return;
+  if(isPilotBank()){el.fragmentTeaser.hidden=true;return}
   const reward=state.cycleReward;
   if(!reward||!reward.owned){el.fragmentTeaser.hidden=true;return}
   el.fragmentTeaser.hidden=false;
@@ -744,25 +919,39 @@ function validateContent(){
       if(sig(probe)!==sig(probe2)) errors.push(`seed-nonreproducible:${level}`);
     }
   }
-  return {ok:errors.length===0,errors,count:ids.size};
+  const pilotValidation=validatePilotBank(PILOT_BANK_07);
+  if(PILOT_BANK_07.length>0&&!pilotValidation.ok) errors.push(...pilotValidation.errors);
+  return {ok:errors.length===0,errors,count:ids.size,pilot:{bankId:PILOT_BANK_ID,ready:pilotValidation.ok,count:PILOT_BANK_07.length,errors:pilotValidation.errors}};
 }
 
+function buildPilotQuestions(){
+  const rng=makeRng(hashSeed(`${state.runSeed}:postcheck`));
+  const targets=shuffle(PILOT_BANK_07,rng).slice(0,Math.min(PILOT_POST_CHECK_COUNT,PILOT_BANK_07.length));
+  return targets.map((target,index)=>{
+    const distractors=shuffle(PILOT_BANK_07.filter(x=>x.id!==target.id),rng).slice(0,3);
+    const options=shuffle([target,...distractors],rng).map(x=>({itemId:x.id,label:x.meaning}));
+    return {itemId:target.id,type:index%2===0?'word-meaning':'context-meaning',word:target.word,example:target.example,correctItemId:target.id,options,selectedItemId:null,correct:null};
+  });
+}
 function resetRun(seed=makeSeed(),avoidLast=true){
-  state.phase='board';state.runSeed=seed>>>0;state.roundId=makeRoundId(state.runSeed);state.rng=makeRng(state.runSeed);state.score=0;state.streak=0;state.maxStreak=0;state.signal=100;state.matchedBoard=0;state.matchedPulse=0;state.wrongSelections=0;state.attempts=0;state.resolvedTasks=0;state.firstTryCorrect=0;state.eventualCorrect=0;state.wrongAttempts=0;state.helpUsed=false;state.selfCorrections=0;state.replayStarted=false;state.startedAt=new Date().toISOString();state.normalizedResult=null;state.cycleReward=null;state.locked=false;state.firstCard=null;state.pulseSelected=[];state.pairStats={};
+  state.phase=isPilotBank()?'pilot-learn':'board';state.runSeed=seed>>>0;state.roundId=makeRoundId();state.rng=makeRng(state.runSeed);state.score=0;state.streak=0;state.maxStreak=0;state.signal=100;state.matchedBoard=0;state.matchedPulse=0;state.wrongSelections=0;state.attempts=0;state.resolvedTasks=0;state.firstTryCorrect=0;state.eventualCorrect=0;state.wrongAttempts=0;state.helpUsed=false;state.selfCorrections=0;state.replayStarted=false;state.startedAt=new Date().toISOString();state.normalizedResult=null;state.cycleReward=null;state.locked=false;state.firstCard=null;state.pulseSelected=[];state.pairStats={};state.pilotQuestions=[];state.pilotCheckIndex=0;state.pilotPostCheck=null;state.pilotUnfamiliar=[];state.pilotExplanation=[];state.askedToContinue=null;
+  if(isPilotBank()&&!pilotReady())throw new Error('pilot-content-awaiting-educational-hq');
   if(avoidLast) loadLastRun(); else state.lastRunIds=[];
-  const pool=CONTENT[state.level][state.bank];
+  const pool=activePool();
   let selected;
-  if(state.bank==='collocation'){
+  if(isPilotBank()){
+    state.boardPairs=[...pool];state.pulsePairs=[];selected=[...pool];state.pilotQuestions=buildPilotQuestions();
+  }else if(state.bank==='collocation'){
     const run=buildCollisionFreeRun(pool,state.level,state.lastRunIds,state.rng);
     if(!run) throw new Error(`collision-free-run-unavailable:${state.level}`);
     const vb=validateCollocationRun(run.board,state.level),vp=validateCollocationRun(run.pulse,state.level);
     if(!vb.ok||!vp.ok) throw new Error(`collision-validation-failed:${[...vb.errors,...vp.errors].join('|')}`);
     state.boardPairs=run.board;state.pulsePairs=run.pulse;selected=[...run.board,...run.pulse];
   }else{
-    const boardCount=boardPairCount(state.level), total=totalLinks(state.level);
+    const boardCount=boardPairCount(state.level,state.bank), total=totalLinks(state.level,state.bank);
     selected=sampleRun(pool,total);state.boardPairs=selected.slice(0,boardCount);state.pulsePairs=selected.slice(boardCount);
   }
-  const expectedTotal=totalLinks(state.level);
+  const expectedTotal=totalLinks(state.level,state.bank);
   if(!selected||selected.length!==expectedTotal) throw new Error(`invalid-run-size:${selected?.length??'undefined'}:${expectedTotal}`);
   state.runPairIds=selected.map(p=>p[0]);
   for(const p of selected) state.pairStats[p[0]]={wrong:0,resolved:false};
@@ -770,7 +959,7 @@ function resetRun(seed=makeSeed(),avoidLast=true){
 }
 
 function setScreen(name){el.intro.hidden=name!=='intro';el.hud.hidden=!(name==='game');el.game.hidden=name!=='game';el.final.hidden=name!=='final';if(name!=='intro') window.scrollTo({top:0,behavior:'smooth'})}
-function updateHud(){const total=totalLinks(state.level),done=state.matchedBoard+state.matchedPulse;el.progressText.textContent=`Связи ${done}/${total}`;el.progressFill.style.width=`${done/total*100}%`;el.scoreText.textContent=state.score;el.streakText.textContent=`×${state.streak}`;el.signalText.textContent=`${state.signal}%`;el.phaseLabel.textContent=state.phase==='pulse'?'Смысловой импульс':'Поле памяти'}
+function updateHud(){const total=totalLinks(state.level,state.bank),done=state.matchedBoard+(isPilotBank()?0:state.matchedPulse);el.progressText.textContent=isPilotBank()&&state.phase==='pilot-check'?`Проверка ${Math.min(state.pilotCheckIndex+1,PILOT_POST_CHECK_COUNT)}/${PILOT_POST_CHECK_COUNT}`:`Связи ${done}/${total}`;el.progressFill.style.width=isPilotBank()&&state.phase==='pilot-check'?`${state.pilotCheckIndex/PILOT_POST_CHECK_COUNT*100}%`:`${total?done/total*100:0}%`;el.scoreText.textContent=state.score;el.streakText.textContent=`×${state.streak}`;el.signalText.textContent=`${state.signal}%`;el.phaseLabel.textContent=state.phase==='pilot-learn'?'Знакомство':state.phase==='pilot-check'?'Проверка после игры':state.phase==='pulse'?'Смысловой импульс':'Поле памяти'}
 function cardData(pair,side){return {pairId:pair[0],side,text:side==='L'?pair[1]:pair[2],type:BANK_META[state.bank][side==='L'?'left':'right']}}
 function syncStats(){
   const stats=Object.values(state.pairStats);
@@ -826,8 +1015,47 @@ function bindCardActivation(btn,handler){
     handler();
   });
 }
+function renderPilotLearn(){
+  state.phase='pilot-learn';el.pilotLearnStage.hidden=false;el.boardStage.hidden=true;el.transitionStage.hidden=true;el.pulseStage.hidden=true;el.pilotCheckStage.hidden=true;
+  el.pilotLearnGrid.innerHTML=PILOT_BANK_07.map(item=>`<article class="pilot-learn-card"><div class="pilot-learn-word">${escapeHtml(item.word)}</div><div class="pilot-learn-meaning">${escapeHtml(item.meaning)}</div><div class="pilot-learn-example">${escapeHtml(item.example)}</div></article>`).join('');
+  el.pilotWordObservations.innerHTML=PILOT_BANK_07.map(item=>`<div class="teacher-observe-row"><strong>${escapeHtml(item.word)}</strong><label><input type="checkbox" data-pilot-unfamiliar="${escapeHtml(item.id)}"> незнакомо</label><label><input type="checkbox" data-pilot-explain="${escapeHtml(item.id)}"> потребовалось объяснение</label></div>`).join('');
+  updateHud();scrollStageBelowHud(el.pilotLearnStage);
+}
+function updatePilotObservation(id,kind,checked){
+  const key=kind==='unfamiliar'?'pilotUnfamiliar':'pilotExplanation';
+  const set=new Set(state[key]);checked?set.add(id):set.delete(id);state[key]=[...set];
+  if(kind==='explanation')state.helpUsed=state.pilotExplanation.length>0;
+  if(state.normalizedResult){state.normalizedResult.helpUsed=state.helpUsed;state.normalizedResult.memoryResult.helpUsed=state.helpUsed;state.normalizedResult.wordObservations={unfamiliar:[...state.pilotUnfamiliar],explanationNeeded:[...state.pilotExplanation]};persistNormalizedResult(state.normalizedResult)}
+}
+function startPilotPostCheck(){
+  state.phase='pilot-check';state.pilotCheckIndex=0;state.pilotPostCheck={completed:false,total:state.pilotQuestions.length,answered:0,correct:0,answers:[]};
+  el.pilotLearnStage.hidden=true;el.boardStage.hidden=true;el.transitionStage.hidden=true;el.pulseStage.hidden=true;el.pilotCheckStage.hidden=false;renderPilotQuestion();updateHud();scrollStageBelowHud(el.pilotCheckStage);
+}
+function renderPilotQuestion(){
+  const q=state.pilotQuestions[state.pilotCheckIndex];if(!q){finishPilotPostCheck();return}
+  el.pilotCheckProgress.textContent=`Вопрос ${state.pilotCheckIndex+1} из ${state.pilotQuestions.length}`;
+  if(q.type==='word-meaning'){el.pilotCheckPrompt.textContent=`Что значит «${q.word}»?`;el.pilotCheckContext.textContent='Выбери самое точное значение.'}
+  else{el.pilotCheckPrompt.textContent=`Какое значение у слова «${q.word}» в этом примере?`;el.pilotCheckContext.textContent=q.example}
+  el.pilotCheckOptions.innerHTML='';el.pilotCheckFeedback.textContent='';el.pilotCheckUnknown.disabled=false;
+  for(const option of q.options){const b=document.createElement('button');b.className='pilot-check-option';b.textContent=option.label;b.addEventListener('click',()=>recordPilotAnswer(option.itemId));el.pilotCheckOptions.appendChild(b)}
+}
+function recordPilotAnswer(selectedItemId){
+  const q=state.pilotQuestions[state.pilotCheckIndex];if(!q||q.selectedItemId!==null)return;
+  q.selectedItemId=selectedItemId;const correct=selectedItemId===q.correctItemId;q.correct=correct;
+  state.pilotPostCheck.answers.push({itemId:q.itemId,type:q.type,selectedItemId,correct});state.pilotPostCheck.answered++;if(correct)state.pilotPostCheck.correct++;
+  el.pilotCheckOptions.querySelectorAll('button').forEach(b=>b.disabled=true);el.pilotCheckUnknown.disabled=true;el.pilotCheckFeedback.textContent='Ответ записан.';
+  setTimeout(()=>{state.pilotCheckIndex++;if(state.pilotCheckIndex>=state.pilotQuestions.length)finishPilotPostCheck();else{renderPilotQuestion();updateHud()}},320);
+}
+function recordPilotUnknown(){
+  const q=state.pilotQuestions[state.pilotCheckIndex];if(!q||q.selectedItemId!==null)return;
+  q.selectedItemId='__unknown__';q.correct=false;state.pilotPostCheck.answers.push({itemId:q.itemId,type:q.type,selectedItemId:null,correct:false,unknown:true});state.pilotPostCheck.answered++;
+  el.pilotCheckOptions.querySelectorAll('button').forEach(b=>b.disabled=true);el.pilotCheckUnknown.disabled=true;el.pilotCheckFeedback.textContent='Ответ записан.';
+  setTimeout(()=>{state.pilotCheckIndex++;if(state.pilotCheckIndex>=state.pilotQuestions.length)finishPilotPostCheck();else{renderPilotQuestion();updateHud()}},320);
+}
+function finishPilotPostCheck(){state.pilotPostCheck.completed=true;state.pilotCheckIndex=state.pilotQuestions.length;showFinal()}
+function setAskedToContinue(value){state.askedToContinue=value;if(state.normalizedResult){state.normalizedResult.askedToContinue=value;persistNormalizedResult(state.normalizedResult)}document.querySelectorAll('[data-continue]').forEach(b=>b.classList.toggle('active',String(value)===b.dataset.continue||(value===null&&b.dataset.continue==='null')))}
 function renderBoard(){
-  state.phase='board'; el.boardStage.hidden=false;el.transitionStage.hidden=true;el.pulseStage.hidden=true;el.modeBadge.textContent=BANK_META[state.bank].label;
+  state.phase='board'; if(el.pilotLearnStage)el.pilotLearnStage.hidden=true;el.boardStage.hidden=false;el.transitionStage.hidden=true;el.pulseStage.hidden=true;if(el.pilotCheckStage)el.pilotCheckStage.hidden=true;el.modeBadge.textContent=isPilotBank()?'этап 2 из 3 · слово ↔ значение':BANK_META[state.bank].label;
   const cards=shuffle(state.boardPairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')])); el.board.innerHTML='';el.board.dataset.count=String(cards.length);
   for(const [index,c] of cards.entries()){const n=index+1;const b=document.createElement('button');b.className='memory-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.dataset.cardNumber=String(n);b.setAttribute('aria-label',`Карточка ${n}. Закрыта`);b.draggable=false;b.innerHTML=`<span class="card-inner"><span class="card-face card-back"><span class="card-back-number" aria-hidden="true">${n}</span></span><span class="card-face card-front"><span class="card-topline"><span class="card-type">${escapeHtml(c.type)}</span><span class="card-open-number" aria-hidden="true">${n}</span></span><span class="card-copy"><span class="card-text">${escapeHtml(c.text)}</span></span></span></span>`;bindCardActivation(b,()=>handleBoardCard(b,c));el.board.appendChild(b)}
   el.feedback.className='feedback info';el.feedback.textContent='Начни с любой карточки. Открывай по две и ищи пару по смыслу.';updateHud();
@@ -840,14 +1068,14 @@ function handleBoardCard(btn,c){
   const correct=first.c.pairId===c.pairId && first.c.side!==c.side;
   state.attempts++;
   if(correct){
-    first.btn.classList.add('matched');btn.classList.add('matched');state.matchedBoard++;state.streak++;state.maxStreak=Math.max(state.maxStreak,state.streak);state.pairStats[c.pairId].resolved=true;syncStats();const bonus=100+state.streak*15+(state.signal>=90?20:0);state.score+=bonus;if(state.streak%3===0)state.signal=Math.min(100,state.signal+4);el.feedback.className='feedback good';el.feedback.textContent=`Пара найдена! +${bonus}`;showLinkEffect(first.btn,btn,el.board);updateHud();state.locked=false;if(state.matchedBoard===boardPairCount(state.level))setTimeout(showTransition,800);
+    first.btn.classList.add('matched');btn.classList.add('matched');state.matchedBoard++;state.streak++;state.maxStreak=Math.max(state.maxStreak,state.streak);state.pairStats[c.pairId].resolved=true;syncStats();const bonus=100+state.streak*15+(state.signal>=90?20:0);state.score+=bonus;if(state.streak%3===0)state.signal=Math.min(100,state.signal+4);el.feedback.className='feedback good';el.feedback.textContent=`Пара найдена! +${bonus}`;showLinkEffect(first.btn,btn,el.board);updateHud();state.locked=false;if(state.matchedBoard===boardPairCount(state.level,state.bank))setTimeout(()=>isPilotBank()?startPilotPostCheck():showTransition(),800);
   }else{
     state.wrongSelections++;state.streak=0;state.signal=Math.max(40,state.signal-8);state.pairStats[first.c.pairId].wrong++;state.pairStats[c.pairId].wrong++;syncStats();first.btn.classList.add('wrong');btn.classList.add('wrong');el.feedback.className='feedback bad';el.feedback.textContent=mismatchFeedback();updateHud();setTimeout(()=>{first.btn.classList.remove('revealed','wrong');btn.classList.remove('revealed','wrong');first.btn.setAttribute('aria-label',`Карточка ${first.btn.dataset.cardNumber}. Закрыта`);btn.setAttribute('aria-label',`Карточка ${btn.dataset.cardNumber}. Закрыта`);state.locked=false},1550)
   }
 }
-function showTransition(){state.phase='transition';el.boardStage.hidden=true;el.transitionStage.hidden=false;el.pulseStage.hidden=true;updateHud()}
+function showTransition(){state.phase='transition';if(el.pilotLearnStage)el.pilotLearnStage.hidden=true;el.boardStage.hidden=true;el.transitionStage.hidden=false;el.pulseStage.hidden=true;if(el.pilotCheckStage)el.pilotCheckStage.hidden=true;updateHud()}
 function renderPulse(){
-  state.phase='pulse';el.boardStage.hidden=true;el.transitionStage.hidden=true;el.pulseStage.hidden=false;state.pulseSelected=[];const cards=shuffle(state.pulsePairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')]));el.pulseGrid.innerHTML='';
+  state.phase='pulse';if(el.pilotLearnStage)el.pilotLearnStage.hidden=true;el.boardStage.hidden=true;el.transitionStage.hidden=true;el.pulseStage.hidden=false;if(el.pilotCheckStage)el.pilotCheckStage.hidden=true;state.pulseSelected=[];const cards=shuffle(state.pulsePairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')]));el.pulseGrid.innerHTML='';
   for(const c of cards){const b=document.createElement('button');b.className='pulse-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.draggable=false;b.innerHTML=`<div class="card-type">${escapeHtml(c.type)}</div><div class="card-text">${escapeHtml(c.text)}</div>`;bindCardActivation(b,()=>handlePulseCard(b,c));el.pulseGrid.appendChild(b)}
   el.pulseCounter.textContent=`Осталось связей: ${PULSE_PAIRS-state.matchedPulse}`;el.pulseFeedback.className='feedback info';el.pulseFeedback.textContent=pulseIntro();updateHud();scrollStageBelowHud(el.pulseStage);
 }
@@ -861,26 +1089,39 @@ function handlePulseCard(btn,c){
   }else{state.wrongSelections++;state.streak=0;state.signal=Math.max(40,state.signal-8);state.pairStats[a.c.pairId].wrong++;state.pairStats[b.c.pairId].wrong++;syncStats();a.btn.classList.add('wrong');b.btn.classList.add('wrong');el.pulseFeedback.className='feedback bad';el.pulseFeedback.textContent=mismatchFeedback();updateHud();setTimeout(()=>{a.btn.classList.remove('selected','wrong');b.btn.classList.remove('selected','wrong');state.pulseSelected=[];state.locked=false},1500)}
 }
 function showFinal(){
-  state.phase='final';setScreen('final');const high=state.signal>=84&&state.wrongSelections<=3;const mid=state.signal>=68;
-  $('finalTitle').textContent=high?'Сеть восстановлена точно.':mid?'Сеть восстановлена.':'Сеть собрана — сигнал колебался.';
-  $('finalNote').textContent=high?'Большинство связей удалось собрать без лишних попыток. Новый раунд даст другой набор карточек.':mid?'Все связи собраны. В новом раунде можно попробовать удержать более длинную серию.':'Все связи всё равно восстановлены. Новый набор даст ещё одну короткую тренировку смысла.';
-  syncStats();updateRunIdentity();const total=totalLinks(state.level);$('finalScore').textContent=state.score;$('finalPairs').textContent=`${state.resolvedTasks}/${total}`;$('finalFirst').textContent=`${state.firstTryCorrect}/${total}`;$('finalWrong').textContent=state.wrongAttempts;$('finalStreak').textContent=state.maxStreak;$('finalSignal').textContent=`${state.signal}%`;$('finalPulse').textContent=`${state.matchedPulse}/${PULSE_PAIRS}`;
+  state.phase='final';setScreen('final');const pilot=isPilotBank();const high=state.signal>=84&&state.wrongSelections<=3;const mid=state.signal>=68;
+  if(pilot){
+    $('finalTitle').textContent='Пилот завершён.';
+    $('finalNote').textContent='Memory и короткая проверка после игры закончены. Их результаты сохраняются отдельно.';
+  }else{
+    $('finalTitle').textContent=high?'Сеть восстановлена точно.':mid?'Сеть восстановлена.':'Сеть собрана — сигнал колебался.';
+    $('finalNote').textContent=high?'Большинство связей удалось собрать без лишних попыток. Новый раунд даст другой набор карточек.':mid?'Все связи собраны. В новом раунде можно попробовать удержать более длинную серию.':'Все связи всё равно восстановлены. Новый набор даст ещё одну короткую тренировку смысла.';
+  }
+  syncStats();updateRunIdentity();const total=totalLinks(state.level,state.bank),displayTotal=pilot?boardPairCount(state.level,state.bank):total;$('finalScore').textContent=state.score;$('finalPairs').textContent=`${state.resolvedTasks}/${displayTotal}`;$('finalFirst').textContent=`${state.firstTryCorrect}/${displayTotal}`;$('finalWrong').textContent=state.wrongAttempts;$('finalStreak').textContent=state.maxStreak;$('finalSignal').textContent=`${state.signal}%`;
+  const pulseStat=$('finalPulse');const pulseLabel=pulseStat?.nextElementSibling;
+  if(pilot){pulseStat.textContent=`${state.pilotPostCheck?.correct||0}/${state.pilotPostCheck?.total||PILOT_POST_CHECK_COUNT}`;if(pulseLabel)pulseLabel.textContent='проверка после игры';if(el.pilotFinalTeacher)el.pilotFinalTeacher.hidden=false}
+  else{pulseStat.textContent=`${state.matchedPulse}/${PULSE_PAIRS}`;if(pulseLabel)pulseLabel.textContent='смысловой импульс';if(el.pilotFinalTeacher)el.pilotFinalTeacher.hidden=true}
   buildNormalizedResult();renderFragmentTeaser();
 }
-function startRun(seed){try{resetRun(seed);setScreen('game');renderBoard()}catch(err){console.error('RUN GENERATION FAILED',err);state.phase='intro';setScreen('intro');toast('Не удалось собрать однозначный набор. Попробуй ещё раз.')}}
+function startRun(seed){try{resetRun(seed);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard()}catch(err){console.error('RUN GENERATION FAILED',err);state.phase='intro';setScreen('intro');toast(isPilotBank()&&!pilotReady()?'Пилотный банк ещё не загружен.':'Не удалось собрать однозначный набор. Попробуй ещё раз.')}}
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]))}
 function toast(msg){el.toast.textContent=msg;el.toast.classList.add('show');setTimeout(()=>el.toast.classList.remove('show'),1600)}
 
-$('levelChoices').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(!b)return;state.level=b.dataset.level;document.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b));updateSetupIdentity()});
-$('bankChoices').addEventListener('click',e=>{const b=e.target.closest('[data-bank]');if(!b)return;state.bank=b.dataset.bank;document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x===b));updateSetupIdentity()});
+$('levelChoices').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(!b)return;state.level=b.dataset.level;if(state.level!=='78'&&isPilotBank())state.bank='meaning';document.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x.dataset.bank===state.bank));refreshPilotAvailability();updateSetupIdentity()});
+$('bankChoices').addEventListener('click',e=>{const b=e.target.closest('[data-bank]');if(!b||b.hidden)return;state.bank=b.dataset.bank;document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x===b));refreshPilotAvailability();updateSetupIdentity()});
+$('pilotContextChoices').addEventListener('click',e=>{const b=e.target.closest('[data-context]');if(!b)return;state.pilotContext=b.dataset.context;document.querySelectorAll('[data-context]').forEach(x=>x.classList.toggle('active',x===b))});
 $('startBtn').addEventListener('click',()=>{markReplayStarted();startRun()});
+$('pilotToMemoryBtn').addEventListener('click',renderBoard);
+$('pilotWordObservations').addEventListener('change',e=>{const u=e.target.closest('[data-pilot-unfamiliar]');if(u)updatePilotObservation(u.dataset.pilotUnfamiliar,'unfamiliar',u.checked);const x=e.target.closest('[data-pilot-explain]');if(x)updatePilotObservation(x.dataset.pilotExplain,'explanation',x.checked)});
+$('pilotCheckUnknown').addEventListener('click',recordPilotUnknown);
+$('askedToContinueChoices').addEventListener('click',e=>{const b=e.target.closest('[data-continue]');if(!b)return;const raw=b.dataset.continue;setAskedToContinue(raw==='null'?null:raw==='true')});
 $('pulseBtn').addEventListener('click',renderPulse);
 $('replayBtn').addEventListener('click',()=>{markReplayStarted();startRun()});
-$('changeBtn').addEventListener('click',()=>{state.phase='intro';updateSetupIdentity();setScreen('intro')});
+$('changeBtn').addEventListener('click',()=>{state.phase='intro';refreshPilotAvailability();updateSetupIdentity();setScreen('intro')});
 
-updateSetupIdentity();
+refreshPilotAvailability();updateSetupIdentity();
 const validation=validateContent();if(!validation.ok){console.error('CONTENT VALIDATION FAILED',validation.errors);toast('Ошибка банка заданий')}
-window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0])}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
+window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
 })();
 </script>
 </body>
