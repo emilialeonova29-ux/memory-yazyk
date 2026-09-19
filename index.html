@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>MEMORY//ЯЗЫК — Сеть смыслов v1.5.1 BANK-07 PILOT</title>
+<title>MEMORY//ЯЗЫК — Сеть смыслов v1.5.3 BANK-07 PILOT</title>
 <style>
 
 :root{
@@ -348,7 +348,7 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 <script>
 (() => {
 'use strict';
-const GAME_VERSION='1.5.1-pilot';
+const GAME_VERSION='1.5.3-pilot';
 const PULSE_PAIRS=3;
 const PRE_MVP_CYCLE={
   cycleId:'PRE-MVP-RETURN-01',
@@ -381,6 +381,15 @@ let PILOT_BANK_07=[
 const PILOT_BANK_ID='BANK-07';
 const PILOT_BANK_VERSION='v1';
 const PILOT_POST_CHECK_COUNT=4;
+const PILOT_NOTES=Object.freeze([
+  Object.freeze({
+    date:'2026-09-19',
+    status:'preliminary-positive-signal',
+    modes:Object.freeze(['слово ↔ значение','слово ↔ словосочетание']),
+    note:'Облегчённая лексика → ребёнок лучше понимает пары → игровой процесс воспринимается легче и в целом нравится. Требуется ещё несколько сопоставимых пилотов для подтверждения гипотезы.',
+    uxSignal:'Иногда две карточки одной пары оказывались рядом, из-за чего снижалась нагрузка на запоминание расположения.'
+  })
+]);
 function isPilotBank(bank=state?.bank){return bank==='pilotMeaning'}
 function pilotReady(){return validatePilotBank(PILOT_BANK_07).ok}
 function boardPairCount(level=state?.level||'56',bank=state?.bank||'meaning'){return isPilotBank(bank)?PILOT_BANK_07.length:(level==='78'?8:6)}
@@ -617,6 +626,68 @@ const el={intro:$('intro'),hud:$('hud'),game:$('game'),final:$('final'),board:$(
 function hashSeed(str){let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function makeRng(seed){let x=seed>>>0||0x9e3779b9;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/4294967296}}
 function shuffle(arr,rng=state.rng){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function inspectBoardLayout(cards,columns=2){
+  const positions=new Map();
+  cards.forEach((card,index)=>{
+    const pairId=card?.pairId;
+    if(!positions.has(pairId))positions.set(pairId,[]);
+    positions.get(pairId).push(index);
+  });
+  return [...positions.entries()].map(([pairId,pairPositions])=>{
+    const sorted=[...pairPositions].sort((a,b)=>a-b);
+    const [a,b]=sorted;
+    const adjacent=sorted.length===2&&Math.floor(a/columns)===Math.floor(b/columns)&&Math.abs(a-b)===1;
+    return {pairId,positions:sorted,cardNumbers:sorted.map(i=>i+1),columns,adjacent};
+  });
+}
+function validateBoardLayout(cards,columnsList=[2,4]){
+  const reports=[];
+  for(const columns of columnsList){
+    if(!Number.isInteger(columns)||columns<2)continue;
+    reports.push(...inspectBoardLayout(cards,columns));
+  }
+  const conflicts=reports.filter(item=>item.adjacent);
+  return {ok:conflicts.length===0,conflicts,pairs:reports};
+}
+function deterministicBoardFallback(cards,rng){
+  const source=shuffle(cards,rng);
+  const used=new Array(source.length).fill(false);
+  const result=[];
+  function place(){
+    if(result.length===source.length)return true;
+    const previous=result[result.length-1];
+    for(let i=0;i<source.length;i++){
+      if(used[i])continue;
+      const candidate=source[i];
+      if(previous&&candidate.pairId===previous.pairId)continue;
+      used[i]=true;result.push(candidate);
+      if(place())return true;
+      result.pop();used[i]=false;
+    }
+    return false;
+  }
+  if(place())return result;
+  const groups=new Map();
+  for(const card of source){if(!groups.has(card.pairId))groups.set(card.pairId,[]);groups.get(card.pairId).push(card)}
+  const orderedGroups=shuffle([...groups.values()],rng);
+  return [...orderedGroups.map(group=>group[0]),...orderedGroups.map(group=>group[1])];
+}
+function boardLayoutRng(cards){
+  const pairKey=[...new Set(cards.map(card=>card.pairId))].sort().join(',');
+  return makeRng(hashSeed(`${state.runSeed}|${state.level}|${state.bank}|board-layout-v1|${pairKey}`));
+}
+function shuffleBoardCards(cards,rng=boardLayoutRng(cards),maxAttempts=64){
+  const source=[...cards];
+  for(let attempt=1;attempt<=maxAttempts;attempt++){
+    const candidate=shuffle(source,rng);
+    const check=validateBoardLayout(candidate,[2,4]);
+    if(check.ok)return {cards:candidate,attempts:attempt,usedFallback:false,layoutCheck:check};
+  }
+  const fallback=deterministicBoardFallback(source,rng);
+  const check=validateBoardLayout(fallback,[2,4]);
+  if(!check.ok)throw new Error(`board-layout-fallback-failed:${source.length}`);
+  return {cards:fallback,attempts:maxAttempts,usedFallback:true,layoutCheck:check};
+}
 function sampleRun(pool,count){const last=new Set(state.lastRunIds||[]);const fresh=shuffle(pool.filter(p=>!last.has(p[0])));const old=shuffle(pool.filter(p=>last.has(p[0])));return [...fresh,...old].slice(0,count)}
 function makeSeed(){return hashSeed(`${Date.now()}-${performance.now()}-${Math.random()}`)}
 function validatePilotBank(items=PILOT_BANK_07){
@@ -1056,7 +1127,7 @@ function finishPilotPostCheck(){state.pilotPostCheck.completed=true;state.pilotC
 function setAskedToContinue(value){state.askedToContinue=value;if(state.normalizedResult){state.normalizedResult.askedToContinue=value;persistNormalizedResult(state.normalizedResult)}document.querySelectorAll('[data-continue]').forEach(b=>b.classList.toggle('active',String(value)===b.dataset.continue||(value===null&&b.dataset.continue==='null')))}
 function renderBoard(){
   state.phase='board'; if(el.pilotLearnStage)el.pilotLearnStage.hidden=true;el.boardStage.hidden=false;el.transitionStage.hidden=true;el.pulseStage.hidden=true;if(el.pilotCheckStage)el.pilotCheckStage.hidden=true;el.modeBadge.textContent=isPilotBank()?'этап 2 из 3 · слово ↔ значение':BANK_META[state.bank].label;
-  const cards=shuffle(state.boardPairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')])); el.board.innerHTML='';el.board.dataset.count=String(cards.length);
+  const layout=shuffleBoardCards(state.boardPairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')]));const cards=layout.cards;state.boardLayoutReport=layout.layoutCheck;state.boardLayoutCards=cards.map(c=>({pairId:c.pairId,side:c.side}));el.board.innerHTML='';el.board.dataset.count=String(cards.length);el.board.dataset.layoutAttempts=String(layout.attempts);el.board.dataset.layoutFallback=layout.usedFallback?'1':'0';
   for(const [index,c] of cards.entries()){const n=index+1;const b=document.createElement('button');b.className='memory-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.dataset.cardNumber=String(n);b.setAttribute('aria-label',`Карточка ${n}. Закрыта`);b.draggable=false;b.innerHTML=`<span class="card-inner"><span class="card-face card-back"><span class="card-back-number" aria-hidden="true">${n}</span></span><span class="card-face card-front"><span class="card-topline"><span class="card-type">${escapeHtml(c.type)}</span><span class="card-open-number" aria-hidden="true">${n}</span></span><span class="card-copy"><span class="card-text">${escapeHtml(c.text)}</span></span></span></span>`;bindCardActivation(b,()=>handleBoardCard(b,c));el.board.appendChild(b)}
   el.feedback.className='feedback info';el.feedback.textContent='Начни с любой карточки. Открывай по две и ищи пару по смыслу.';updateHud();
 }
@@ -1121,7 +1192,7 @@ $('changeBtn').addEventListener('click',()=>{state.phase='intro';refreshPilotAva
 
 refreshPilotAvailability();updateSetupIdentity();
 const validation=validateContent();if(!validation.ok){console.error('CONTENT VALIDATION FAILED',validation.errors);toast('Ошибка банка заданий')}
-window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
+window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,PILOT_NOTES,getPilotNotes:()=>JSON.parse(JSON.stringify(PILOT_NOTES)),getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,inspectBoardLayout,validateBoardLayout,shuffleBoardCards,getBoardLayoutReport:()=>state.boardLayoutReport?JSON.parse(JSON.stringify(state.boardLayoutReport)):null,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
 })();
 </script>
 </body>
