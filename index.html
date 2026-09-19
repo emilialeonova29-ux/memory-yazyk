@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>MEMORY//ЯЗЫК — Сеть смыслов v1.3.5</title>
+<title>MEMORY//ЯЗЫК — Сеть смыслов v1.4.0 pre-MVP</title>
 <style>
 
 :root{
@@ -107,7 +107,7 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 .board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-content:start;padding:6px;border-radius:24px;background:
   linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.16));
   border:1px dashed rgba(52,71,63,.1)}
-.memory-card{min-width:0;aspect-ratio:1.03/1;border:0;background:transparent;padding:0;perspective:900px;cursor:pointer}
+.memory-card{min-width:0;aspect-ratio:1.03/1;border:0;background:transparent;padding:0;perspective:900px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
 .card-inner{display:block;position:relative;width:100%;height:100%;transition:transform .42s cubic-bezier(.2,.75,.25,1);transform-style:preserve-3d}
 .memory-card.revealed .card-inner,.memory-card.matched .card-inner{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;border-radius:22px 22px 14px 22px;backface-visibility:hidden;border:1px solid rgba(52,71,63,.12);overflow:hidden;clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);box-shadow:0 10px 22px rgba(78,68,56,.08)}
@@ -133,7 +133,7 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 .feedback.bad{border-color:rgba(199,95,90,.22);background:rgba(199,95,90,.08);color:#8c433f}
 .feedback.info{border-color:rgba(47,143,131,.18);background:rgba(47,143,131,.06)}
 .pulse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:860px;margin:0 auto}
-.pulse-card{min-height:180px;border:1px solid rgba(52,71,63,.12);background:linear-gradient(180deg,#fffefb,#f5eddd);border-radius:22px 22px 14px 22px;color:var(--ink);padding:18px;text-align:left;cursor:pointer;transition:.16s ease;position:relative;clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);box-shadow:0 10px 22px rgba(78,68,56,.08)}
+.pulse-card{min-height:180px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;border:1px solid rgba(52,71,63,.12);background:linear-gradient(180deg,#fffefb,#f5eddd);border-radius:22px 22px 14px 22px;color:var(--ink);padding:18px;text-align:left;cursor:pointer;transition:.16s ease;position:relative;clip-path:polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);box-shadow:0 10px 22px rgba(78,68,56,.08)}
 .pulse-card:hover{transform:translateY(-2px);border-color:rgba(47,143,131,.33)}
 .pulse-card.selected{border-color:rgba(47,143,131,.8);box-shadow:0 0 0 2px rgba(47,143,131,.12),0 14px 28px rgba(47,143,131,.12)}
 .pulse-card.locked{border-color:rgba(47,148,100,.55);opacity:.58;cursor:default}
@@ -177,6 +177,16 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 .final-teacher-meta .teacher-label{display:block;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:#87918c;margin-bottom:5px}
 .final-teacher-meta .teacher-id{font-size:11px;line-height:1.45;color:#56655f;overflow-wrap:anywhere}
 .final-teacher-meta .round-id{margin-top:3px;font-weight:800;color:#324740}
+
+
+/* pre-MVP return-loop: one lightweight shared fragment, no metaworld UI */
+.fragment-teaser{margin-top:18px;padding:15px 16px;border:1px solid rgba(47,143,131,.18);border-radius:18px;background:linear-gradient(135deg,rgba(47,143,131,.08),rgba(213,165,76,.08));display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:center}
+.fragment-object{display:flex;gap:5px;align-items:center}
+.fragment-piece{width:18px;height:27px;border:1.5px solid rgba(52,71,63,.28);background:rgba(255,255,255,.4);clip-path:polygon(20% 0,100% 12%,88% 100%,0 82%)}
+.fragment-piece.found{border-color:rgba(47,143,131,.65);background:linear-gradient(160deg,var(--teal-2),var(--teal));box-shadow:0 5px 12px rgba(47,143,131,.16)}
+.fragment-copy strong{display:block;font-size:15px;color:#25433e}
+.fragment-copy span{display:block;margin-top:3px;font-size:12px;line-height:1.35;color:#66736d}
+@media(max-width:620px){.fragment-teaser{grid-template-columns:1fr;gap:9px}.fragment-object{justify-content:flex-start}.fragment-piece{width:16px;height:24px}}
 
 @media(max-width:900px){.intro,.final{grid-template-columns:1fr}.setup,.final-side{border-left:0;border-top:1px solid rgba(52,71,63,.11)}.board{grid-template-columns:repeat(4,1fr)}.pulse-grid{grid-template-columns:repeat(2,1fr)}.hud{grid-template-columns:1fr 1fr 1fr}.progresswrap{grid-column:1/-1;order:4}.hero:before{right:20px;top:28px;width:220px;height:180px}.hero:after{width:180px;height:128px;right:-24px}}
 @media(max-width:620px){.shell{padding:12px 10px 22px}.brandbar{margin-bottom:10px}.build{display:none}.panel{border-radius:22px}.hero{padding:30px 22px}.setup{padding:24px 18px}.intro{min-height:0}.mission-strip{gap:6px}.chip{font-size:11px;padding:7px 9px}.hud{position:sticky;top:0;z-index:6;background:rgba(239,231,218,.94);backdrop-filter:blur(10px);padding:8px 0;margin:4px 0 8px}.hudbox{padding:8px 9px;min-height:48px}.hudbox b{font-size:14px}.hudbox span{font-size:9px}.gamepanel{padding:14px 10px;min-height:calc(100dvh - 92px)}.stagehead{flex-direction:column;align-items:flex-start;margin-bottom:12px}.stagehead h2{font-size:26px}.stagehead p{font-size:13px}.modebadge{font-size:9px;padding:6px 8px;white-space:normal;max-width:100%;line-height:1.25}.board{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:5px}.memory-card{aspect-ratio:auto;min-height:184px}.card-front{padding:10px 10px 12px}.card-copy{padding:8px 2px 12px}.card-text{font-size:clamp(12px,3.45vw,14.5px);line-height:1.28}.card-type{font-size:7.5px}.card-open-number{font-size:9px;padding:3px 5px}.card-back-number{font-size:30px}.feedback{font-size:13px;margin-top:10px}.pulse-grid{gap:8px}.pulse-card{min-height:148px;padding:13px;border-radius:18px 18px 12px 18px}.pulse-card .card-text{font-size:14px}.transition{min-height:calc(100dvh - 110px);padding:25px 15px}.final-main{padding:32px 22px}.final-side{padding:24px 18px}.final h2{font-size:clamp(34px,11vw,46px);overflow-wrap:anywhere}.final-main p{font-size:16px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat strong{font-size:21px}.stat span{font-size:11px;line-height:1.3}.final-actions{flex-direction:column}.hero:before,.hero:after{opacity:.65}}
@@ -255,6 +265,12 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
       <h2 id="finalTitle">Сеть восстановлена.</h2>
       <p id="finalNote">Ты собрал все смысловые связи. Новый раунд даст другой набор карточек.</p>
       <div class="final-actions"><button id="replayBtn" class="primary">Новая партия</button><button id="changeBtn" class="secondary">Сменить режим</button></div>
+      <div id="fragmentTeaser" class="fragment-teaser" hidden aria-live="polite">
+        <div class="fragment-object" aria-hidden="true">
+          <span class="fragment-piece found"></span><span class="fragment-piece"></span><span class="fragment-piece"></span><span class="fragment-piece"></span><span class="fragment-piece"></span>
+        </div>
+        <div class="fragment-copy"><strong id="fragmentTitle">Найдено: 1/5 фрагментов</strong><span id="fragmentNote">Похоже, это только часть чего-то большего.</span></div>
+      </div>
       <div class="final-teacher-meta">
         <span class="teacher-label">Для преподавателя</span>
         <div id="finalContentId" class="teacher-id">G-002 / 5–6 / слово↔значение / BANK-01 / v1</div>
@@ -279,8 +295,16 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 <script>
 (() => {
 'use strict';
-const GAME_VERSION='1.3.5';
+const GAME_VERSION='1.4.0';
 const PULSE_PAIRS=3;
+const PRE_MVP_CYCLE={
+  cycleId:'PRE-MVP-RETURN-01',
+  fragmentId:'fragment-1-of-5',
+  fragmentIndex:1,
+  fragmentTotal:5,
+  ledgerKey:'memoryYazyk:preMVP:return-cycle:v1'
+};
+const RESULT_STORAGE_KEY='memoryYazyk:lastNormalizedResult:G-002';
 function boardPairCount(level=state?.level||'56'){return level==='78'?8:6}
 function totalLinks(level=state?.level||'56'){return boardPairCount(level)+PULSE_PAIRS}
 
@@ -492,11 +516,12 @@ const state={
   level:'56', bank:'meaning', phase:'intro', runSeed:0, roundId:'', rng:null, runPairIds:[], boardPairs:[], pulsePairs:[],
   score:0, streak:0, maxStreak:0, signal:100, matchedBoard:0, matchedPulse:0, wrongSelections:0,
   attempts:0, resolvedTasks:0, firstTryCorrect:0, eventualCorrect:0, wrongAttempts:0,
+  helpUsed:false, selfCorrections:0, replayStarted:false, startedAt:null, normalizedResult:null, cycleReward:null,
   locked:false, firstCard:null, pulseSelected:[], pairStats:{}, lastRunIds:[], lastRunKey:null
 };
 
 const $=id=>document.getElementById(id);
-const el={intro:$('intro'),hud:$('hud'),game:$('game'),final:$('final'),board:$('board'),feedback:$('feedback'),boardStage:$('boardStage'),transitionStage:$('transitionStage'),pulseStage:$('pulseStage'),pulseGrid:$('pulseGrid'),pulseFeedback:$('pulseFeedback'),pulseCounter:$('pulseCounter'),modeBadge:$('modeBadge'),progressText:$('progressText'),progressFill:$('progressFill'),phaseLabel:$('phaseLabel'),scoreText:$('scoreText'),streakText:$('streakText'),signalText:$('signalText'),setupContentId:$('setupContentId'),hudContentId:$('hudContentId'),finalContentId:$('finalContentId'),finalRoundId:$('finalRoundId'),toast:$('toast')};
+const el={intro:$('intro'),hud:$('hud'),game:$('game'),final:$('final'),board:$('board'),feedback:$('feedback'),boardStage:$('boardStage'),transitionStage:$('transitionStage'),pulseStage:$('pulseStage'),pulseGrid:$('pulseGrid'),pulseFeedback:$('pulseFeedback'),pulseCounter:$('pulseCounter'),modeBadge:$('modeBadge'),progressText:$('progressText'),progressFill:$('progressFill'),phaseLabel:$('phaseLabel'),scoreText:$('scoreText'),streakText:$('streakText'),signalText:$('signalText'),setupContentId:$('setupContentId'),hudContentId:$('hudContentId'),finalContentId:$('finalContentId'),finalRoundId:$('finalRoundId'),fragmentTeaser:$('fragmentTeaser'),fragmentTitle:$('fragmentTitle'),fragmentNote:$('fragmentNote'),toast:$('toast')};
 
 function hashSeed(str){let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function makeRng(seed){let x=seed>>>0||0x9e3779b9;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/4294967296}}
@@ -505,6 +530,124 @@ function sampleRun(pool,count){const last=new Set(state.lastRunIds||[]);const fr
 function makeSeed(){return hashSeed(`${Date.now()}-${performance.now()}-${Math.random()}`)}
 function updateSetupIdentity(){if(el.setupContentId)el.setupContentId.innerHTML=`<strong>Для преподавателя:</strong> ${escapeHtml(contentIdentityText())}`}
 function updateRunIdentity(){const full=contentIdentityText();if(el.hudContentId)el.hudContentId.textContent=`${full} · ${state.roundId}`;if(el.finalContentId)el.finalContentId.textContent=full;if(el.finalRoundId)el.finalRoundId.textContent=`ROUND-ID: ${state.roundId}`}
+function bankCycleKey(identity=contentIdentity()){return `${identity.gameId}:${identity.bankId}:${identity.bankVersion}`}
+function loadCycleLedger(){
+  const empty={cycleId:PRE_MVP_CYCLE.cycleId,fragments:{},completedBanks:{}};
+  try{
+    const raw=localStorage.getItem(PRE_MVP_CYCLE.ledgerKey);
+    if(!raw)return empty;
+    const parsed=JSON.parse(raw);
+    if(!parsed||parsed.cycleId!==PRE_MVP_CYCLE.cycleId)return empty;
+    return {cycleId:PRE_MVP_CYCLE.cycleId,fragments:parsed.fragments||{},completedBanks:parsed.completedBanks||{}};
+  }catch{return empty}
+}
+function saveCycleLedger(ledger){try{localStorage.setItem(PRE_MVP_CYCLE.ledgerKey,JSON.stringify(ledger));return true}catch{return false}}
+function cycleProgressFromLedger(ledger){
+  const current=Math.min(PRE_MVP_CYCLE.fragmentTotal,Object.keys(ledger.fragments||{}).length);
+  return {current,total:PRE_MVP_CYCLE.fragmentTotal,label:`${current}/${PRE_MVP_CYCLE.fragmentTotal}`};
+}
+function processCycleReward(result){
+  const ledger=loadCycleLedger();
+  const identity=contentIdentity();
+  const bankKey=bankCycleKey(identity);
+  const wasNewBank=!ledger.completedBanks[bankKey];
+  const eligible=Boolean(result.completed && state.matchedPulse===PULSE_PAIRS && result.eventualCorrect===totalLinks(state.level));
+  let awardedNow=false;
+  if(eligible && wasNewBank){
+    ledger.completedBanks[bankKey]={completedAt:result.completedAt,roundId:result.roundId};
+    if(!ledger.fragments[PRE_MVP_CYCLE.fragmentId]){
+      const provisionalProgress={current:1,total:PRE_MVP_CYCLE.fragmentTotal,label:`1/${PRE_MVP_CYCLE.fragmentTotal}`};
+      ledger.fragments[PRE_MVP_CYCLE.fragmentId]={
+        type:'cycle-fragment',
+        cycleId:PRE_MVP_CYCLE.cycleId,
+        cycleItemId:PRE_MVP_CYCLE.fragmentId,
+        fragmentIndex:PRE_MVP_CYCLE.fragmentIndex,
+        fragmentTotal:PRE_MVP_CYCLE.fragmentTotal,
+        sourceGame:identity.gameId,
+        sourceBank:identity.bankId,
+        bankVersion:identity.bankVersion,
+        sourceRoundId:result.roundId,
+        reason:'completed-new-bank-final-semantic-pulse',
+        cycleProgress:provisionalProgress,
+        awardedAt:result.completedAt
+      };
+      awardedNow=true;
+    }
+    saveCycleLedger(ledger);
+  }
+  const progress=cycleProgressFromLedger(ledger);
+  const stored=ledger.fragments[PRE_MVP_CYCLE.fragmentId]||null;
+  if(stored)stored.cycleProgress=progress;
+  const eventForRound=stored&&stored.sourceRoundId===result.roundId?JSON.parse(JSON.stringify(stored)):null;
+  return {awardedNow,event:eventForRound,cycleProgress:progress,owned:Boolean(stored),wasNewBank,eligible};
+}
+function buildNormalizedResult(){
+  syncStats();
+  const identity=contentIdentity();
+  const completed=state.resolvedTasks===totalLinks(state.level)&&state.matchedPulse===PULSE_PAIRS;
+  const result={
+    schemaVersion:'memory-result-v1',
+    gameId:identity.gameId,
+    gameTitle:'MEMORY//ЯЗЫК — Сеть смыслов',
+    gameVersion:GAME_VERSION,
+    mode:identity.mode,
+    bankId:identity.bankId,
+    bankVersion:identity.bankVersion,
+    roundId:state.roundId,
+    sessionId:state.roundId,
+    runSeed:state.runSeed,
+    startedAt:state.startedAt,
+    completedAt:new Date().toISOString(),
+    completed,
+    attempts:state.attempts,
+    resolvedTasks:state.resolvedTasks,
+    firstTryCorrect:state.firstTryCorrect,
+    eventualCorrect:state.eventualCorrect,
+    wrongAttempts:state.wrongAttempts,
+    helpUsed:Boolean(state.helpUsed),
+    selfCorrections:state.selfCorrections,
+    replayStarted:false,
+    score:state.score,
+    maxStreak:state.maxStreak,
+    signal:state.signal,
+    pulseCorrect:state.matchedPulse,
+    resultStats:{
+      attempts:state.attempts,
+      resolvedTasks:state.resolvedTasks,
+      firstTryCorrect:state.firstTryCorrect,
+      eventualCorrect:state.eventualCorrect,
+      wrongAttempts:state.wrongAttempts,
+      score:state.score,
+      maxStreak:state.maxStreak,
+      signal:state.signal,
+      pulseCorrect:state.matchedPulse
+    },
+    rewardsEarned:[],
+    cycleProgress:{current:0,total:PRE_MVP_CYCLE.fragmentTotal,label:`0/${PRE_MVP_CYCLE.fragmentTotal}`}
+  };
+  const reward=processCycleReward(result);
+  if(reward.event)result.rewardsEarned=[reward.event];
+  result.cycleProgress=reward.cycleProgress;
+  state.cycleReward=reward;
+  state.normalizedResult=result;
+  try{sessionStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify(result))}catch{}
+  return result;
+}
+function markReplayStarted(){
+  if(!state.normalizedResult||!state.normalizedResult.completed)return;
+  state.normalizedResult.replayStarted=true;
+  state.replayStarted=true;
+  try{sessionStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify(state.normalizedResult))}catch{}
+}
+function renderFragmentTeaser(){
+  if(!el.fragmentTeaser)return;
+  const reward=state.cycleReward;
+  if(!reward||!reward.owned){el.fragmentTeaser.hidden=true;return}
+  el.fragmentTeaser.hidden=false;
+  const progress=reward.cycleProgress;
+  el.fragmentTitle.textContent=reward.awardedNow?`Найдено: ${progress.label} фрагментов`:`Собрано: ${progress.label} фрагментов`;
+  el.fragmentNote.textContent=reward.awardedNow?'Похоже, это только часть чего-то большего.':'Остальные части ещё не найдены.';
+}
 function storageKey(){return `memoryYazyk:lastRun:${state.level}:${state.bank}`}
 function loadLastRun(){const key=storageKey();if(state.lastRunKey!==key){state.lastRunIds=[];state.lastRunKey=key}try{const raw=sessionStorage.getItem(key);if(raw)state.lastRunIds=JSON.parse(raw)}catch{}}
 function saveLastRun(){state.lastRunIds=[...state.runPairIds];state.lastRunKey=storageKey();try{sessionStorage.setItem(storageKey(),JSON.stringify(state.runPairIds))}catch{}}
@@ -605,7 +748,7 @@ function validateContent(){
 }
 
 function resetRun(seed=makeSeed(),avoidLast=true){
-  state.phase='board';state.runSeed=seed>>>0;state.roundId=makeRoundId(state.runSeed);state.rng=makeRng(state.runSeed);state.score=0;state.streak=0;state.maxStreak=0;state.signal=100;state.matchedBoard=0;state.matchedPulse=0;state.wrongSelections=0;state.attempts=0;state.resolvedTasks=0;state.firstTryCorrect=0;state.eventualCorrect=0;state.wrongAttempts=0;state.locked=false;state.firstCard=null;state.pulseSelected=[];state.pairStats={};
+  state.phase='board';state.runSeed=seed>>>0;state.roundId=makeRoundId(state.runSeed);state.rng=makeRng(state.runSeed);state.score=0;state.streak=0;state.maxStreak=0;state.signal=100;state.matchedBoard=0;state.matchedPulse=0;state.wrongSelections=0;state.attempts=0;state.resolvedTasks=0;state.firstTryCorrect=0;state.eventualCorrect=0;state.wrongAttempts=0;state.helpUsed=false;state.selfCorrections=0;state.replayStarted=false;state.startedAt=new Date().toISOString();state.normalizedResult=null;state.cycleReward=null;state.locked=false;state.firstCard=null;state.pulseSelected=[];state.pairStats={};
   if(avoidLast) loadLastRun(); else state.lastRunIds=[];
   const pool=CONTENT[state.level][state.bank];
   let selected;
@@ -635,6 +778,7 @@ function syncStats(){
   state.eventualCorrect=state.resolvedTasks;
   state.firstTryCorrect=stats.filter(x=>x.resolved&&x.wrong===0).length;
   state.wrongAttempts=state.wrongSelections;
+  state.selfCorrections=stats.filter(x=>x.resolved&&x.wrong>0).length;
 }
 function mismatchFeedback(){
   if(state.bank==='meaning') return 'Эти карточки не подходят друг к другу по смыслу. Попробуй ещё раз.';
@@ -662,10 +806,30 @@ function scrollStageBelowHud(stage){
     window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
   });
 }
+function bindCardActivation(btn,handler){
+  let touchStart=null,touchMoved=false,suppressClickUntil=0;
+  btn.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1)return;
+    const t=e.touches[0];touchStart={x:t.clientX,y:t.clientY};touchMoved=false;
+  },{passive:true});
+  btn.addEventListener('touchmove',e=>{
+    if(!touchStart||!e.touches.length)return;
+    const t=e.touches[0];
+    if(Math.hypot(t.clientX-touchStart.x,t.clientY-touchStart.y)>10)touchMoved=true;
+  },{passive:true});
+  btn.addEventListener('touchend',e=>{
+    if(!touchStart||touchMoved){touchStart=null;return}
+    touchStart=null;suppressClickUntil=performance.now()+650;e.preventDefault();handler();
+  },{passive:false});
+  btn.addEventListener('click',e=>{
+    if(performance.now()<suppressClickUntil){e.preventDefault();return}
+    handler();
+  });
+}
 function renderBoard(){
   state.phase='board'; el.boardStage.hidden=false;el.transitionStage.hidden=true;el.pulseStage.hidden=true;el.modeBadge.textContent=BANK_META[state.bank].label;
   const cards=shuffle(state.boardPairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')])); el.board.innerHTML='';el.board.dataset.count=String(cards.length);
-  for(const [index,c] of cards.entries()){const n=index+1;const b=document.createElement('button');b.className='memory-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.dataset.cardNumber=String(n);b.setAttribute('aria-label',`Карточка ${n}. Закрыта`);b.innerHTML=`<span class="card-inner"><span class="card-face card-back"><span class="card-back-number" aria-hidden="true">${n}</span></span><span class="card-face card-front"><span class="card-topline"><span class="card-type">${escapeHtml(c.type)}</span><span class="card-open-number" aria-hidden="true">${n}</span></span><span class="card-copy"><span class="card-text">${escapeHtml(c.text)}</span></span></span></span>`;b.addEventListener('click',()=>handleBoardCard(b,c));el.board.appendChild(b)}
+  for(const [index,c] of cards.entries()){const n=index+1;const b=document.createElement('button');b.className='memory-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.dataset.cardNumber=String(n);b.setAttribute('aria-label',`Карточка ${n}. Закрыта`);b.draggable=false;b.innerHTML=`<span class="card-inner"><span class="card-face card-back"><span class="card-back-number" aria-hidden="true">${n}</span></span><span class="card-face card-front"><span class="card-topline"><span class="card-type">${escapeHtml(c.type)}</span><span class="card-open-number" aria-hidden="true">${n}</span></span><span class="card-copy"><span class="card-text">${escapeHtml(c.text)}</span></span></span></span>`;bindCardActivation(b,()=>handleBoardCard(b,c));el.board.appendChild(b)}
   el.feedback.className='feedback info';el.feedback.textContent='Начни с любой карточки. Открывай по две и ищи пару по смыслу.';updateHud();
 }
 function handleBoardCard(btn,c){
@@ -684,7 +848,7 @@ function handleBoardCard(btn,c){
 function showTransition(){state.phase='transition';el.boardStage.hidden=true;el.transitionStage.hidden=false;el.pulseStage.hidden=true;updateHud()}
 function renderPulse(){
   state.phase='pulse';el.boardStage.hidden=true;el.transitionStage.hidden=true;el.pulseStage.hidden=false;state.pulseSelected=[];const cards=shuffle(state.pulsePairs.flatMap(p=>[cardData(p,'L'),cardData(p,'R')]));el.pulseGrid.innerHTML='';
-  for(const c of cards){const b=document.createElement('button');b.className='pulse-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.innerHTML=`<div class="card-type">${escapeHtml(c.type)}</div><div class="card-text">${escapeHtml(c.text)}</div>`;b.addEventListener('click',()=>handlePulseCard(b,c));el.pulseGrid.appendChild(b)}
+  for(const c of cards){const b=document.createElement('button');b.className='pulse-card';b.dataset.pair=c.pairId;b.dataset.side=c.side;b.draggable=false;b.innerHTML=`<div class="card-type">${escapeHtml(c.type)}</div><div class="card-text">${escapeHtml(c.text)}</div>`;bindCardActivation(b,()=>handlePulseCard(b,c));el.pulseGrid.appendChild(b)}
   el.pulseCounter.textContent=`Осталось связей: ${PULSE_PAIRS-state.matchedPulse}`;el.pulseFeedback.className='feedback info';el.pulseFeedback.textContent=pulseIntro();updateHud();scrollStageBelowHud(el.pulseStage);
 }
 function handlePulseCard(btn,c){
@@ -701,6 +865,7 @@ function showFinal(){
   $('finalTitle').textContent=high?'Сеть восстановлена точно.':mid?'Сеть восстановлена.':'Сеть собрана — сигнал колебался.';
   $('finalNote').textContent=high?'Большинство связей удалось собрать без лишних попыток. Новый раунд даст другой набор карточек.':mid?'Все связи собраны. В новом раунде можно попробовать удержать более длинную серию.':'Все связи всё равно восстановлены. Новый набор даст ещё одну короткую тренировку смысла.';
   syncStats();updateRunIdentity();const total=totalLinks(state.level);$('finalScore').textContent=state.score;$('finalPairs').textContent=`${state.resolvedTasks}/${total}`;$('finalFirst').textContent=`${state.firstTryCorrect}/${total}`;$('finalWrong').textContent=state.wrongAttempts;$('finalStreak').textContent=state.maxStreak;$('finalSignal').textContent=`${state.signal}%`;$('finalPulse').textContent=`${state.matchedPulse}/${PULSE_PAIRS}`;
+  buildNormalizedResult();renderFragmentTeaser();
 }
 function startRun(seed){try{resetRun(seed);setScreen('game');renderBoard()}catch(err){console.error('RUN GENERATION FAILED',err);state.phase='intro';setScreen('intro');toast('Не удалось собрать однозначный набор. Попробуй ещё раз.')}}
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]))}
@@ -708,14 +873,14 @@ function toast(msg){el.toast.textContent=msg;el.toast.classList.add('show');setT
 
 $('levelChoices').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(!b)return;state.level=b.dataset.level;document.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b));updateSetupIdentity()});
 $('bankChoices').addEventListener('click',e=>{const b=e.target.closest('[data-bank]');if(!b)return;state.bank=b.dataset.bank;document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x===b));updateSetupIdentity()});
-$('startBtn').addEventListener('click',()=>startRun());
+$('startBtn').addEventListener('click',()=>{markReplayStarted();startRun()});
 $('pulseBtn').addEventListener('click',renderPulse);
-$('replayBtn').addEventListener('click',()=>startRun());
+$('replayBtn').addEventListener('click',()=>{markReplayStarted();startRun()});
 $('changeBtn').addEventListener('click',()=>{state.phase='intro';updateSetupIdentity();setScreen('intro')});
 
 updateSetupIdentity();
 const validation=validateContent();if(!validation.ok){console.error('CONTENT VALIDATION FAILED',validation.errors);toast('Ошибка банка заданий')}
-window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0])}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts}})};
+window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0])}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
 })();
 </script>
 </body>
