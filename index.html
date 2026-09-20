@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>MEMORY//ЯЗЫК — Сеть смыслов v1.5.4 PILOT</title>
+<title>MEMORY//ЯЗЫК — Сеть смыслов v1.6.1</title>
 <style>
 
 :root{
@@ -223,12 +223,63 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
 
 
 .teacher-build{font-size:11px;color:var(--muted);opacity:.8;margin-top:5px;letter-spacing:.03em}
+
+/* pre-MVP shared collection: compact cross-game progress, same-origin/local-device only */
+.shared-collection-shell{position:relative;margin-left:auto;z-index:12}
+.shared-collection-button{display:grid;grid-template-columns:auto auto;grid-template-areas:"title count" "dots dots";align-items:center;column-gap:9px;row-gap:5px;min-width:164px;border:1px solid rgba(52,71,63,.14);border-radius:16px;background:rgba(255,251,244,.86);padding:8px 10px;color:#30413e;cursor:pointer;box-shadow:0 5px 14px rgba(73,63,49,.05);text-align:left}
+.shared-collection-title{grid-area:title;font-size:11px;font-weight:900;color:#43544f}.shared-collection-count{grid-area:count;font-size:11px;font-weight:900;color:var(--teal);justify-self:end}
+.shared-collection-dots{grid-area:dots;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.shared-dot{height:7px;border-radius:999px;border:1px solid rgba(52,71,63,.2);background:rgba(255,255,255,.58)}.shared-dot.found{background:var(--teal);border-color:var(--teal);box-shadow:0 2px 6px rgba(47,143,131,.18)}
+.shared-collection-popover{position:absolute;right:0;top:calc(100% + 8px);width:min(270px,calc(100vw - 24px));padding:14px;border:1px solid rgba(52,71,63,.14);border-radius:18px;background:#fffaf1;box-shadow:var(--shadow);color:#32423e}.shared-collection-popover strong{display:block;font-size:15px}.shared-collection-popover p{margin:8px 0 0;font-size:12.5px;line-height:1.4;color:#60706a}
+.shared-piece-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:11px}.shared-piece{aspect-ratio:.86/1;border:1.5px solid rgba(52,71,63,.22);border-radius:9px 9px 6px 9px;background:rgba(255,255,255,.68);clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,0 100%)}.shared-piece.found{border-color:rgba(47,143,131,.68);background:linear-gradient(155deg,var(--teal-2),var(--teal))}
+@media(max-width:620px){.brandbar{gap:8px}.shared-collection-button{min-width:136px;padding:7px 8px}.shared-collection-title,.shared-collection-count{font-size:10px}.shared-collection-popover{right:-2px}}
+
+
+/* pre-MVP student identity: local-only, shared by G-001 + G-002 */
+.active-student{display:flex;align-items:center;gap:8px;min-width:0;padding:7px 9px;border:1px solid rgba(80,90,90,.16);border-radius:14px;background:rgba(255,255,255,.55);font-size:11px;color:inherit}
+.active-student strong{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.student-switch{border:0;background:transparent;color:inherit;font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:3px}
+.student-entry{margin:0 0 20px;padding:14px;border:1px solid rgba(80,90,90,.14);border-radius:18px;background:rgba(255,255,255,.42)}.student-entry-title{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}.student-grid{display:grid;grid-template-columns:1.15fr 1fr .7fr;gap:8px}.student-field label{display:block;font-size:10px;font-weight:800;margin:0 0 5px;opacity:.76}.student-field input{width:100%;min-width:0;border:1px solid rgba(80,90,90,.18);border-radius:12px;background:rgba(255,255,255,.84);color:inherit;padding:10px 11px;font:inherit}.student-field input.invalid{border-color:#c75f5a;box-shadow:0 0 0 2px rgba(199,95,90,.08)}.student-error{min-height:14px;margin-top:3px;font-size:9px;color:#a74945;line-height:1.2}.student-note{margin-top:8px;font-size:10px;line-height:1.35;opacity:.68}
+@media(max-width:700px){.brandbar{flex-wrap:wrap}.student-grid{grid-template-columns:1fr}.active-student{order:3;flex:0 0 100%;width:100%;max-width:100%;min-width:0;justify-content:space-between}.active-student strong{min-width:0;max-width:calc(100% - 76px);white-space:normal;line-height:1.2}.student-switch{flex:0 0 auto;white-space:nowrap}.student-entry{padding:12px}}
+
+
+/* Shared series authorship layer — presentation only */
+.author-credit{margin-top:18px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;max-width:520px;color:#53615d;position:relative;z-index:2}
+.author-credit strong{font-size:13px;line-height:1.35;color:#31423f;font-weight:800}
+.author-credit span{font-size:11.5px;line-height:1.4;color:#75817c}
+.author-about-trigger{margin-top:6px;border:0;background:transparent;color:var(--teal);font-weight:800;font-size:12px;padding:2px 0;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(47,143,131,.28);text-underline-offset:3px}
+.author-about-trigger:hover{text-decoration-color:currentColor}
+.author-about-trigger:focus-visible{outline:3px solid rgba(47,143,131,.25);outline-offset:4px;border-radius:6px}
+.author-modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:18px;background:rgba(33,48,56,.38);backdrop-filter:blur(5px)}
+.author-modal[hidden]{display:none!important}
+.author-modal-card{width:min(520px,100%);max-height:min(720px,calc(100dvh - 32px));overflow:auto;background:linear-gradient(180deg,#fffdf8,#f6edde);border:1px solid rgba(52,71,63,.16);border-radius:26px;box-shadow:0 28px 80px rgba(65,55,39,.22);padding:clamp(22px,5vw,34px);position:relative;color:var(--ink)}
+.author-modal-close{position:absolute;right:14px;top:12px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(52,71,63,.13);background:rgba(255,255,255,.7);color:#41504d;font-size:22px;line-height:1;cursor:pointer}
+.author-modal-kicker{font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.author-modal h2{font-size:clamp(26px,5vw,34px);letter-spacing:-.035em;margin:0 42px 14px 0;color:#223038}
+.author-modal-lead{font-size:15px;font-weight:800;margin:0 0 4px;color:#2f3e3a}
+.author-modal-series{font-size:13px;line-height:1.45;color:#677670;margin:0 0 22px}
+.author-game-meta{display:grid;gap:9px;border-top:1px solid rgba(52,71,63,.11);border-bottom:1px solid rgba(52,71,63,.11);padding:16px 0;margin:0 0 18px}
+.author-game-meta div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;font-size:13px;line-height:1.4}
+.author-game-meta span{color:#7a857f}.author-game-meta strong{font-weight:760;color:#2c3b38;overflow-wrap:anywhere}
+.author-copyright{font-size:12px;color:#6c7974;margin:0}
+@media(max-width:620px){.author-credit{margin-top:14px}.author-credit strong{font-size:12px}.author-credit span{font-size:10.5px}.author-modal{padding:10px}.author-modal-card{border-radius:20px;padding:22px 18px}.author-game-meta div{grid-template-columns:74px minmax(0,1fr);gap:8px}.author-modal h2{font-size:26px}}
+
 </style>
 </head>
 <body>
 <div class="shell">
   <div class="brandbar">
     <div class="logo">MEMORY<span>//</span>ЯЗЫК</div>
+    <div class="active-student" id="activeStudentBar" hidden><strong id="activeStudentText">Сейчас играет</strong><button class="student-switch" id="changeStudentBtn" type="button">Сменить игрока</button></div>
+    <div class="shared-collection-shell" id="sharedCollectionShell">
+      <button class="shared-collection-button" id="sharedCollectionButton" type="button" aria-expanded="false" aria-controls="sharedCollectionPopover">
+        <span class="shared-collection-title">Моя коллекция</span><strong class="shared-collection-count" data-shared-count>0 из 5</strong>
+        <span class="shared-collection-dots" aria-hidden="true"><i class="shared-dot" data-shared-dot="1"></i><i class="shared-dot" data-shared-dot="2"></i><i class="shared-dot" data-shared-dot="3"></i><i class="shared-dot" data-shared-dot="4"></i><i class="shared-dot" data-shared-dot="5"></i></span>
+      </button>
+      <div class="shared-collection-popover" id="sharedCollectionPopover" hidden>
+        <strong>Моя коллекция — <span data-shared-count>0 из 5</span></strong>
+        <div class="shared-piece-row" aria-hidden="true"><span class="shared-piece" data-shared-piece="1"></span><span class="shared-piece" data-shared-piece="2"></span><span class="shared-piece" data-shared-piece="3"></span><span class="shared-piece" data-shared-piece="4"></span><span class="shared-piece" data-shared-piece="5"></span></div>
+        <p>Фрагменты можно находить в разных играх.</p>
+      </div>
+    </div>
   </div>
 
   <section id="intro" class="panel intro">
@@ -241,6 +292,15 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
       </div>
     </div>
     <div class="setup">
+      <div class="student-entry" id="studentEntry">
+        <div class="student-entry-title">Игрок</div>
+        <div class="student-grid">
+          <div class="student-field"><label for="studentCodeInput">Код ученика *</label><input id="studentCodeInput" type="text" maxlength="12" autocomplete="off" placeholder="A7K4"><div class="student-error" id="studentCodeError" aria-live="polite"></div></div>
+          <div class="student-field"><label for="studentNameInput">Имя</label><input id="studentNameInput" type="text" maxlength="32" autocomplete="given-name" placeholder="Ханум"><div class="student-error" id="studentNameError" aria-live="polite"></div></div>
+          <div class="student-field"><label for="studentClassInput">Класс</label><input id="studentClassInput" type="text" maxlength="4" autocomplete="off" placeholder="6"><div class="student-error" id="studentClassError" aria-live="polite"></div></div>
+        </div>
+        <div class="student-note">Код выдаёт преподаватель. На этом этапе прогресс хранится только в этом браузере.</div>
+      </div>
       <h2>Настройка раунда</h2>
       <p>Выбери возрастной уровень и тип смысловой связи. Ядро игры остаётся тем же, меняется только банк.</p>
       <div class="field">
@@ -268,6 +328,11 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
         </div>
       </div>
       <div class="startrow"><button id="startBtn" class="primary">Запустить сеть</button></div>
+      <div class="author-credit" data-series-authorship="v1" aria-label="Автор игры">
+        <strong>Авторская игра Эмилии Леоновой</strong>
+        <span>из серии интерактивных игр по русскому языку</span>
+        <button class="author-about-trigger" id="aboutGameBtn" type="button">Об игре</button>
+      </div>
     </div>
   </section>
 
@@ -323,9 +388,9 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
           <span class="fragment-piece found"></span><span class="fragment-piece"></span><span class="fragment-piece"></span><span class="fragment-piece"></span><span class="fragment-piece"></span>
         </div>
         <div class="fragment-copy">
-          <strong id="fragmentTitle">Ты нашёл первый фрагмент!</strong>
+          <strong id="fragmentTitle">Ты нашёл новый фрагмент!</strong>
           <span id="fragmentCount" class="fragment-count">Собрано: 1 из 5</span>
-          <span id="fragmentNote" class="fragment-note">Остальные фрагменты спрятаны в других играх.</span>
+          <span id="fragmentNote" class="fragment-note">Остальные фрагменты можно находить в других играх.</span>
         </div>
       </div>
       <details id="pilotFinalTeacher" class="teacher-observe pilot-final-teacher" hidden>
@@ -352,20 +417,166 @@ h1 em{font-style:normal;color:var(--berry);background:linear-gradient(transparen
   </section>
 </div>
 <div id="toast" class="toast" role="status"></div>
+
+<div class="author-modal" id="aboutGameModal" hidden role="dialog" aria-modal="true" aria-labelledby="aboutGameTitle">
+  <div class="author-modal-card">
+    <button class="author-modal-close" id="aboutGameClose" type="button" aria-label="Закрыть">×</button>
+    <div class="author-modal-kicker">Об игре</div>
+    <h2 id="aboutGameTitle">MEMORY//ЯЗЫК — Сеть смыслов</h2>
+    <p class="author-modal-lead">Автор и методический разработчик — Эмилия Леонова</p>
+    <p class="author-modal-series">Авторская серия интерактивных игр по русскому языку</p>
+    <div class="author-game-meta">
+      <div><span>Название</span><strong>MEMORY//ЯЗЫК — Сеть смыслов</strong></div>
+      <div><span>GAME-ID</span><strong>G-002</strong></div>
+      <div><span>Версия</span><strong>1.6.1</strong></div>
+      <div><span>Год</span><strong>2026</strong></div>
+    </div>
+    <div class="author-future-action-slot" data-series-future-action-slot hidden aria-hidden="true"></div>
+    <p class="author-copyright">© 2026 Эмилия Леонова</p>
+  </div>
+</div>
 <script>
 (() => {
 'use strict';
-const GAME_VERSION='1.5.4-pilot';
+
+const SHARED_PROGRESS_CONFIG=Object.freeze({
+  storageKey:'rusgame.sharedProgress.v1',
+  activeStudentKey:'rusgame.activeStudent.v1',
+  schemaVersion:2,
+  cycleId:'PRE-MVP-RETURN-01',
+  totalFragments:5,
+  maxResultsPerGame:30
+});
+function normalizeStudentIdentity(raw={}){
+  const studentCode=String(raw.studentCode||'').trim().toUpperCase().replace(/\s+/g,'');
+  const firstName=String(raw.firstName||raw.name||'').trim().replace(/\s+/g,' ');
+  const className=String(raw.className||'').trim().replace(/\s+/g,'').toUpperCase();
+  return {studentCode,firstName,className};
+}
+function validateStudentIdentity(raw={}){
+  const student=normalizeStudentIdentity(raw),errors={};
+  if(!student.studentCode)errors.studentCode='Укажи код ученика.';
+  else if(!/^(?=.*\p{L})(?=.*\d)[\p{L}\d]{4,12}$/u.test(student.studentCode))errors.studentCode='Код: 4–12 букв и цифр, например A7K4.';
+  if(student.firstName.length>32)errors.firstName='Имя слишком длинное.';
+  if(student.className&&!/^\d{1,2}[A-ZА-ЯЁ]?$/u.test(student.className))errors.className='Например: 6, 6А или 7Б.';
+  return {ok:Object.keys(errors).length===0,student,errors};
+}
+function studentDisplay(student){
+  if(!student?.studentCode)return '';
+  const parts=[];if(student.firstName)parts.push(student.firstName);if(student.className)parts.push(`${student.className} класс`);
+  return parts.length?parts.join(' · '):student.studentCode;
+}
+function loadActiveStudent(){
+  try{const raw=JSON.parse(localStorage.getItem(SHARED_PROGRESS_CONFIG.activeStudentKey)||'null');const v=validateStudentIdentity(raw||{});return v.ok?v.student:null}catch{return null}
+}
+function saveActiveStudent(student){try{localStorage.setItem(SHARED_PROGRESS_CONFIG.activeStudentKey,JSON.stringify(normalizeStudentIdentity(student)));return true}catch{return false}}
+function clearActiveStudentStorage(){try{localStorage.removeItem(SHARED_PROGRESS_CONFIG.activeStudentKey)}catch{}}
+function emptySharedRoot(){return {schemaVersion:SHARED_PROGRESS_CONFIG.schemaVersion,cycleId:SHARED_PROGRESS_CONFIG.cycleId,totalFragments:SHARED_PROGRESS_CONFIG.totalFragments,students:{},legacyUnassigned:null,updatedAt:null}}
+function emptyStudentProgress(studentCode,meta={}){const s=normalizeStudentIdentity({...meta,studentCode});return {studentCode:s.studentCode,displayName:s.firstName||'',className:s.className||'',fragments:{},results:{},updatedAt:null}}
+function normalizeStudentProgress(code,raw={}){
+  const meta=normalizeStudentIdentity({studentCode:code,firstName:raw.displayName||raw.firstName||'',className:raw.className||''});
+  const fragments={};
+  const source=raw.fragments&&typeof raw.fragments==='object'?raw.fragments:{};
+  for(const [id,item] of Object.entries(source)){
+    if(!id||!item||typeof item!=='object')continue;const index=Number(item.fragmentIndex);
+    if(!Number.isInteger(index)||index<1||index>SHARED_PROGRESS_CONFIG.totalFragments)continue;
+    fragments[id]={...item,cycleItemId:id,fragmentIndex:index,fragmentTotal:SHARED_PROGRESS_CONFIG.totalFragments,studentCode:meta.studentCode};
+  }
+  const results=raw.results&&typeof raw.results==='object'?raw.results:{};
+  return {studentCode:meta.studentCode,displayName:meta.firstName,className:meta.className,fragments,results,updatedAt:typeof raw.updatedAt==='string'?raw.updatedAt:null};
+}
+function normalizeSharedRoot(raw){
+  const base=emptySharedRoot();
+  if(!raw||typeof raw!=='object'||raw.cycleId!==SHARED_PROGRESS_CONFIG.cycleId)return base;
+  if(Number(raw.schemaVersion)===1&&raw.fragments){
+    return {...base,legacyUnassigned:{schemaVersion:1,fragments:raw.fragments,updatedAt:raw.updatedAt||null},updatedAt:raw.updatedAt||null};
+  }
+  const students={};const source=raw.students&&typeof raw.students==='object'?raw.students:{};
+  for(const [code,profile] of Object.entries(source)){const v=validateStudentIdentity({studentCode:code});if(!v.ok)continue;students[v.student.studentCode]=normalizeStudentProgress(v.student.studentCode,profile)}
+  return {...base,students,legacyUnassigned:raw.legacyUnassigned||null,updatedAt:typeof raw.updatedAt==='string'?raw.updatedAt:null};
+}
+function loadSharedRoot(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(SHARED_PROGRESS_CONFIG.storageKey)||'null');const normalized=normalizeSharedRoot(parsed);
+    if(parsed&&Number(parsed.schemaVersion)===1){try{localStorage.setItem(SHARED_PROGRESS_CONFIG.storageKey,JSON.stringify(normalized))}catch{}}
+    return normalized;
+  }catch{return emptySharedRoot()}
+}
+function saveSharedRoot(root){const normalized=normalizeSharedRoot(root);normalized.updatedAt=new Date().toISOString();try{localStorage.setItem(SHARED_PROGRESS_CONFIG.storageKey,JSON.stringify(normalized))}catch{}return normalized}
+function getStudentProgress(studentCode,create=false,meta={}){
+  const code=normalizeStudentIdentity({studentCode}).studentCode;if(!code)return null;const root=loadSharedRoot();
+  let profile=root.students[code]?normalizeStudentProgress(code,root.students[code]):null;
+  if(!profile&&create){profile=emptyStudentProgress(code,meta);root.students[code]=profile;saveSharedRoot(root)}
+  return profile;
+}
+function upsertStudentProfileMeta(student){
+  const v=validateStudentIdentity(student);if(!v.ok)return null;const s=v.student,root=loadSharedRoot();
+  const profile=root.students[s.studentCode]?normalizeStudentProgress(s.studentCode,root.students[s.studentCode]):emptyStudentProgress(s.studentCode,s);
+  if(s.firstName)profile.displayName=s.firstName;if(s.className)profile.className=s.className;profile.updatedAt=new Date().toISOString();root.students[s.studentCode]=profile;saveSharedRoot(root);return profile;
+}
+function loadSharedProgress(studentCode=loadActiveStudent()?.studentCode){return studentCode?getStudentProgress(studentCode,false)||emptyStudentProgress(studentCode):emptyStudentProgress('')}
+function sharedProgressSummary(progress=loadSharedProgress()){
+  const fragments=Object.values(progress?.fragments||{});const indexes=new Set(fragments.map(x=>Number(x.fragmentIndex)).filter(x=>Number.isInteger(x)&&x>=1&&x<=SHARED_PROGRESS_CONFIG.totalFragments));
+  return {current:indexes.size,total:SHARED_PROGRESS_CONFIG.totalFragments,label:`${indexes.size} из ${SHARED_PROGRESS_CONFIG.totalFragments}`,indexes:[...indexes].sort((a,b)=>a-b),studentCode:progress?.studentCode||null};
+}
+function awardSharedFragment(def){
+  const code=normalizeStudentIdentity({studentCode:def.studentCode||loadActiveStudent()?.studentCode}).studentCode;
+  if(!code)return {awardedNow:false,event:null,progress:{current:0,total:5,label:'0 из 5',indexes:[],studentCode:null},error:'missing-student-code'};
+  const root=loadSharedRoot(),active=loadActiveStudent(),meta=active?.studentCode===code?active:{studentCode:code};
+  const progress=root.students[code]?normalizeStudentProgress(code,root.students[code]):emptyStudentProgress(code,meta);const existing=progress.fragments?.[def.cycleItemId]||null;
+  if(existing){if(active?.studentCode===code)renderSharedCollection(progress);return {awardedNow:false,event:JSON.parse(JSON.stringify(existing)),progress:sharedProgressSummary(progress)}}
+  const event={type:'cycle-fragment',cycleId:SHARED_PROGRESS_CONFIG.cycleId,cycleItemId:def.cycleItemId,fragmentIndex:def.fragmentIndex,fragmentTotal:SHARED_PROGRESS_CONFIG.totalFragments,studentCode:code,sourceGame:def.sourceGame,sourceBank:def.sourceBank??null,bankVersion:def.bankVersion??null,sourceVersion:def.sourceVersion??null,sourceRoundId:def.sourceRoundId??null,sourceRunSeed:def.sourceRunSeed??null,reason:def.reason,awardedAt:def.awardedAt||new Date().toISOString()};
+  progress.fragments[event.cycleItemId]=event;progress.updatedAt=event.awardedAt;root.students[code]=progress;const saved=saveSharedRoot(root);const savedProfile=saved.students[code];if(active?.studentCode===code)renderSharedCollection(savedProfile);
+  return {awardedNow:true,event:JSON.parse(JSON.stringify(event)),progress:sharedProgressSummary(savedProfile)};
+}
+function persistSharedGameResult(gameId,resultId,result,studentCode=result?.studentCode||loadActiveStudent()?.studentCode){
+  const code=normalizeStudentIdentity({studentCode}).studentCode;if(!code||!gameId||!resultId)return false;const root=loadSharedRoot(),active=loadActiveStudent(),meta=active?.studentCode===code?active:{studentCode:code};
+  const profile=root.students[code]?normalizeStudentProgress(code,root.students[code]):emptyStudentProgress(code,meta);if(!profile.results[gameId]||typeof profile.results[gameId]!=='object')profile.results[gameId]={};
+  profile.results[gameId][resultId]=JSON.parse(JSON.stringify(result));
+  const entries=Object.entries(profile.results[gameId]);if(entries.length>SHARED_PROGRESS_CONFIG.maxResultsPerGame){entries.sort((a,b)=>String(a[1]?.completedAt||a[1]?.startedAt||'').localeCompare(String(b[1]?.completedAt||b[1]?.startedAt||'')));for(const [id] of entries.slice(0,entries.length-SHARED_PROGRESS_CONFIG.maxResultsPerGame))delete profile.results[gameId][id]}
+  profile.updatedAt=new Date().toISOString();root.students[code]=profile;saveSharedRoot(root);return true;
+}
+function setStudentInputs(student){
+  const s=student||{studentCode:'',firstName:'',className:''};const map={studentCodeInput:s.studentCode||'',studentNameInput:s.firstName||'',studentClassInput:s.className||''};for(const [id,value] of Object.entries(map)){const n=document.getElementById(id);if(n)n.value=value}
+}
+function clearStudentErrors(){for(const id of ['studentCode','studentName','studentClass']){const input=document.getElementById(id+'Input'),err=document.getElementById(id+'Error');if(input)input.classList.remove('invalid');if(err)err.textContent=''}}
+function showStudentErrors(errors){clearStudentErrors();const map={studentCode:'studentCode',firstName:'studentName',className:'studentClass'};for(const [key,msg] of Object.entries(errors||{})){const base=map[key];if(!base)continue;const input=document.getElementById(base+'Input'),err=document.getElementById(base+'Error');if(input)input.classList.add('invalid');if(err)err.textContent=msg}}
+function readStudentInputs(){return {studentCode:document.getElementById('studentCodeInput')?.value||'',firstName:document.getElementById('studentNameInput')?.value||'',className:document.getElementById('studentClassInput')?.value||''}}
+function renderActiveStudentUI(student=loadActiveStudent()){
+  const bar=document.getElementById('activeStudentBar'),text=document.getElementById('activeStudentText'),collection=document.getElementById('sharedCollectionShell');
+  if(!student){if(bar)bar.hidden=true;if(collection)collection.hidden=true;return null}
+  if(bar)bar.hidden=false;if(text)text.textContent=`Сейчас играет: ${studentDisplay(student)}`;if(collection)collection.hidden=false;return student;
+}
+function activateStudent(raw){const v=validateStudentIdentity(raw);if(!v.ok){showStudentErrors(v.errors);return v}clearStudentErrors();saveActiveStudent(v.student);upsertStudentProfileMeta(v.student);setStudentInputs(v.student);renderActiveStudentUI(v.student);renderSharedCollection(loadSharedProgress(v.student.studentCode));return v}
+function ensureActiveStudentFromInputs(){return activateStudent(readStudentInputs()).ok}
+function clearActiveStudent(){clearActiveStudentStorage();setStudentInputs(null);clearStudentErrors();renderActiveStudentUI(null);renderSharedCollection();return true}
+function renderSharedCollection(progress=loadSharedProgress()){
+  const active=loadActiveStudent(),shell=document.getElementById('sharedCollectionShell');if(shell)shell.hidden=!active;const summary=active?sharedProgressSummary(progress):{current:0,total:5,label:'0 из 5',indexes:[]};const found=new Set(summary.indexes);
+  document.querySelectorAll('[data-shared-dot]').forEach(node=>node.classList.toggle('found',found.has(Number(node.dataset.sharedDot))));document.querySelectorAll('[data-shared-piece]').forEach(node=>node.classList.toggle('found',found.has(Number(node.dataset.sharedPiece))));document.querySelectorAll('[data-shared-count]').forEach(node=>node.textContent=summary.label);return summary;
+}
+function setupSharedCollectionUI(){
+  const button=document.getElementById('sharedCollectionButton'),popover=document.getElementById('sharedCollectionPopover');
+  if(button&&popover){button.addEventListener('click',e=>{e.stopPropagation();const open=popover.hidden;popover.hidden=!open;button.setAttribute('aria-expanded',String(open))});document.addEventListener('click',e=>{if(!popover.hidden&&!popover.contains(e.target)&&!button.contains(e.target)){popover.hidden=true;button.setAttribute('aria-expanded','false')}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!popover.hidden){popover.hidden=true;button.setAttribute('aria-expanded','false');button.focus()}})}
+  for(const id of ['studentCodeInput','studentNameInput','studentClassInput'])document.getElementById(id)?.addEventListener('input',clearStudentErrors);
+  const restored=loadActiveStudent();if(restored){upsertStudentProfileMeta(restored);setStudentInputs(restored)}renderActiveStudentUI(restored);renderSharedCollection(restored?loadSharedProgress(restored.studentCode):null);
+  window.addEventListener('storage',e=>{if(e.key===SHARED_PROGRESS_CONFIG.storageKey)renderSharedCollection();if(e.key===SHARED_PROGRESS_CONFIG.activeStudentKey){const s=loadActiveStudent();renderActiveStudentUI(s);if(s)setStudentInputs(s);renderSharedCollection()}});
+}
+
+const GAME_VERSION='1.6.1-preMVP-student';
 const PULSE_PAIRS=3;
 const PRE_MVP_CYCLE={
   cycleId:'PRE-MVP-RETURN-01',
   fragmentId:'fragment-1-of-5',
   fragmentIndex:1,
   fragmentTotal:5,
-  ledgerKey:'memoryYazyk:preMVP:return-cycle:v1'
+  ledgerKey:'memoryYazyk:preMVP:return-cycle:v2',
+  sharedKey:SHARED_PROGRESS_CONFIG.storageKey
 };
-const RESULT_STORAGE_KEY='memoryYazyk:lastNormalizedResult:G-002';
-const RESULT_HISTORY_KEY='memoryYazyk:normalizedResultHistory:G-002:v1';
+const RESULT_STORAGE_BASE='memoryYazyk:lastNormalizedResult:G-002:v2';
+const RESULT_HISTORY_BASE='memoryYazyk:normalizedResultHistory:G-002:v2';
+function resultStorageKey(studentCode){return `${RESULT_STORAGE_BASE}:${normalizeStudentIdentity({studentCode}).studentCode}`}
+function resultHistoryKey(studentCode){return `${RESULT_HISTORY_BASE}:${normalizeStudentIdentity({studentCode}).studentCode}`}
+function cycleLedgerKey(studentCode){return `${PRE_MVP_CYCLE.ledgerKey}:${normalizeStudentIdentity({studentCode}).studentCode}`}
 const RESULT_SCHEMA=Object.freeze({
   version:'memory-result-v1',
   semantics:Object.freeze({
@@ -619,6 +830,7 @@ function normalizeConflictGraph(raw){
 const COLLOCATION_CONFLICTS=normalizeConflictGraph(COLLOCATION_CONFLICTS_RAW);
 
 const state={
+  student:null,
   level:'56', bank:'meaning', phase:'intro', runSeed:0, roundId:'', rng:null, runPairIds:[], boardPairs:[], pulsePairs:[],
   score:0, streak:0, maxStreak:0, signal:100, matchedBoard:0, matchedPulse:0, wrongSelections:0,
   attempts:0, resolvedTasks:0, firstTryCorrect:0, eventualCorrect:0, wrongAttempts:0,
@@ -730,78 +942,47 @@ function activePool(){
 }
 function updateSetupIdentity(){/* tech identity intentionally hidden from child-facing UI */}
 function updateRunIdentity(){/* tech identity intentionally hidden from child-facing UI */}
-function loadResultHistory(){
-  const empty={schemaVersion:'memory-result-history-v1',gameId:'G-002',results:{}};
-  try{
-    const raw=localStorage.getItem(RESULT_HISTORY_KEY);
-    if(!raw)return empty;
-    const parsed=JSON.parse(raw);
-    if(!parsed||typeof parsed!=='object')return empty;
-    return {schemaVersion:'memory-result-history-v1',gameId:'G-002',results:parsed.results&&typeof parsed.results==='object'?parsed.results:{}};
-  }catch{return empty}
+function loadResultHistory(studentCode=state.student?.studentCode||loadActiveStudent()?.studentCode){
+  const code=normalizeStudentIdentity({studentCode}).studentCode;const empty={schemaVersion:'memory-result-history-v2',gameId:'G-002',studentCode:code||null,results:{}};if(!code)return empty;
+  try{const raw=localStorage.getItem(resultHistoryKey(code));if(!raw)return empty;const parsed=JSON.parse(raw);return {...empty,results:parsed?.results&&typeof parsed.results==='object'?parsed.results:{}}}catch{return empty}
 }
-function saveResultHistory(history){
-  try{localStorage.setItem(RESULT_HISTORY_KEY,JSON.stringify(history));return true}catch{return false}
-}
+function saveResultHistory(history,studentCode=history?.studentCode||state.student?.studentCode){const code=normalizeStudentIdentity({studentCode}).studentCode;if(!code)return false;try{localStorage.setItem(resultHistoryKey(code),JSON.stringify({...history,studentCode:code}));return true}catch{return false}}
 function persistNormalizedResult(result){
-  if(!result?.roundId)return false;
-  const history=loadResultHistory();
-  history.results[result.roundId]=JSON.parse(JSON.stringify(result));
-  saveResultHistory(history);
-  try{sessionStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify(result))}catch{}
+  if(!result?.roundId||!result?.studentCode)return false;const history=loadResultHistory(result.studentCode);history.results[result.roundId]=JSON.parse(JSON.stringify(result));saveResultHistory(history,result.studentCode);
+  try{sessionStorage.setItem(resultStorageKey(result.studentCode),JSON.stringify(result))}catch{}
+  persistSharedGameResult('G-002',result.roundId,{gameId:result.gameId,gameVersion:result.gameVersion,studentCode:result.studentCode,bankId:result.bankId,bankVersion:result.bankVersion,roundId:result.roundId,completed:result.completed,firstTryCorrect:result.firstTryCorrect,eventualCorrect:result.eventualCorrect,wrongAttempts:result.wrongAttempts,helpUsed:result.helpUsed,replayStarted:result.replayStarted,completedAt:result.completedAt},result.studentCode);
   return true;
 }
 function getResultHistory(){return JSON.parse(JSON.stringify(loadResultHistory()))}
 function bankCycleKey(identity=contentIdentity()){return `${identity.gameId}:${identity.bankId}:${identity.bankVersion}`}
-function loadCycleLedger(){
-  const empty={cycleId:PRE_MVP_CYCLE.cycleId,fragments:{},completedBanks:{}};
-  try{
-    const raw=localStorage.getItem(PRE_MVP_CYCLE.ledgerKey);
-    if(!raw)return empty;
-    const parsed=JSON.parse(raw);
-    if(!parsed||parsed.cycleId!==PRE_MVP_CYCLE.cycleId)return empty;
-    return {cycleId:PRE_MVP_CYCLE.cycleId,fragments:parsed.fragments||{},completedBanks:parsed.completedBanks||{}};
-  }catch{return empty}
+function loadCycleLedger(studentCode=state.student?.studentCode||loadActiveStudent()?.studentCode){
+  const code=normalizeStudentIdentity({studentCode}).studentCode;const empty={cycleId:PRE_MVP_CYCLE.cycleId,studentCode:code||null,fragments:{},completedBanks:{}};if(!code)return empty;
+  try{const raw=localStorage.getItem(cycleLedgerKey(code));if(!raw)return empty;const parsed=JSON.parse(raw);if(!parsed||parsed.cycleId!==PRE_MVP_CYCLE.cycleId)return empty;return {...empty,fragments:parsed.fragments||{},completedBanks:parsed.completedBanks||{}}}catch{return empty}
 }
-function saveCycleLedger(ledger){try{localStorage.setItem(PRE_MVP_CYCLE.ledgerKey,JSON.stringify(ledger));return true}catch{return false}}
-function cycleProgressFromLedger(ledger){
-  const current=Math.min(PRE_MVP_CYCLE.fragmentTotal,Object.keys(ledger.fragments||{}).length);
-  return {current,total:PRE_MVP_CYCLE.fragmentTotal,label:`${current}/${PRE_MVP_CYCLE.fragmentTotal}`};
-}
+function saveCycleLedger(ledger,studentCode=ledger?.studentCode||state.student?.studentCode){const code=normalizeStudentIdentity({studentCode}).studentCode;if(!code)return false;try{localStorage.setItem(cycleLedgerKey(code),JSON.stringify({...ledger,studentCode:code}));return true}catch{return false}}
+function migrateLegacyMemoryFragment(){return false /* anonymous legacy rewards are intentionally not assigned to a student automatically */}
+function cycleProgressFromShared(studentCode=state.student?.studentCode||loadActiveStudent()?.studentCode){return sharedProgressSummary(loadSharedProgress(studentCode))}
 function processCycleReward(result){
-  const ledger=loadCycleLedger();
+  const studentCode=state.student?.studentCode;
+  const ledger=loadCycleLedger(studentCode);
   const identity=contentIdentity();
   const bankKey=bankCycleKey(identity);
   const wasNewBank=!ledger.completedBanks[bankKey];
   const eligible=Boolean(identity.cycleEligible && result.completed && state.matchedPulse===PULSE_PAIRS && result.eventualCorrect===totalLinks(state.level,state.bank));
-  let awardedNow=false;
+  let sharedAward={awardedNow:false,event:null,progress:cycleProgressFromShared()};
   if(eligible && wasNewBank){
     ledger.completedBanks[bankKey]={completedAt:result.completedAt,roundId:result.roundId};
-    if(!ledger.fragments[PRE_MVP_CYCLE.fragmentId]){
-      const provisionalProgress={current:1,total:PRE_MVP_CYCLE.fragmentTotal,label:`1/${PRE_MVP_CYCLE.fragmentTotal}`};
-      ledger.fragments[PRE_MVP_CYCLE.fragmentId]={
-        type:'cycle-fragment',
-        cycleId:PRE_MVP_CYCLE.cycleId,
-        cycleItemId:PRE_MVP_CYCLE.fragmentId,
-        fragmentIndex:PRE_MVP_CYCLE.fragmentIndex,
-        fragmentTotal:PRE_MVP_CYCLE.fragmentTotal,
-        sourceGame:identity.gameId,
-        sourceBank:identity.bankId,
-        bankVersion:identity.bankVersion,
-        sourceRoundId:result.roundId,
-        reason:'completed-new-bank-final-semantic-pulse',
-        cycleProgress:provisionalProgress,
-        awardedAt:result.completedAt
-      };
-      awardedNow=true;
-    }
-    saveCycleLedger(ledger);
+    saveCycleLedger(ledger,studentCode);
+    sharedAward=awardSharedFragment({
+      studentCode,
+      cycleItemId:PRE_MVP_CYCLE.fragmentId,fragmentIndex:PRE_MVP_CYCLE.fragmentIndex,
+      sourceGame:identity.gameId,sourceBank:identity.bankId,bankVersion:identity.bankVersion,sourceVersion:GAME_VERSION,
+      sourceRoundId:result.roundId,sourceRunSeed:state.runSeed,reason:'completed-new-bank-final-semantic-pulse',awardedAt:result.completedAt
+    });
   }
-  const progress=cycleProgressFromLedger(ledger);
-  const stored=ledger.fragments[PRE_MVP_CYCLE.fragmentId]||null;
-  if(stored)stored.cycleProgress=progress;
-  const eventForRound=stored&&stored.sourceRoundId===result.roundId?JSON.parse(JSON.stringify(stored)):null;
-  return {awardedNow,event:eventForRound,cycleProgress:progress,owned:Boolean(stored),wasNewBank,eligible};
+  const shared=loadSharedProgress(studentCode);const progress=sharedProgressSummary(shared);const stored=shared.fragments?.[PRE_MVP_CYCLE.fragmentId]||null;
+  const eventForRound=sharedAward.awardedNow&&sharedAward.event?.sourceRoundId===result.roundId?sharedAward.event:null;
+  return {awardedNow:Boolean(sharedAward.awardedNow),event:eventForRound,cycleProgress:progress,owned:Boolean(stored),wasNewBank,eligible};
 }
 function buildNormalizedResult(){
   syncStats();
@@ -812,6 +993,8 @@ function buildNormalizedResult(){
   const completed=pilot?(memoryCompleted&&postCompleted):(state.resolvedTasks===totalLinks(state.level,state.bank)&&state.matchedPulse===PULSE_PAIRS);
   const result={
     schemaVersion:RESULT_SCHEMA.version,
+    studentCode:state.student?.studentCode||null,
+    student:state.student?{studentCode:state.student.studentCode,firstName:state.student.firstName||'',className:state.student.className||''}:null,
     gameId:identity.gameId,
     gameTitle:'MEMORY//ЯЗЫК — Сеть смыслов',
     gameVersion:GAME_VERSION,
@@ -866,9 +1049,9 @@ function buildNormalizedResult(){
     cycleProgress:{current:0,total:PRE_MVP_CYCLE.fragmentTotal,label:`0/${PRE_MVP_CYCLE.fragmentTotal}`}
   };
   if(pilot){
-    const ledger=loadCycleLedger();
-    result.cycleProgress=cycleProgressFromLedger(ledger);
-    state.cycleReward={awardedNow:false,event:null,cycleProgress:result.cycleProgress,owned:Boolean(ledger.fragments?.[PRE_MVP_CYCLE.fragmentId]),wasNewBank:false,eligible:false};
+    const shared=loadSharedProgress(state.student?.studentCode);
+    result.cycleProgress=sharedProgressSummary(shared);
+    state.cycleReward={awardedNow:false,event:null,cycleProgress:result.cycleProgress,owned:Boolean(shared.fragments?.[PRE_MVP_CYCLE.fragmentId]),wasNewBank:false,eligible:false};
   }else{
     const reward=processCycleReward(result);
     if(reward.event)result.rewardsEarned=[reward.event];
@@ -882,7 +1065,7 @@ function buildNormalizedResult(){
 function markReplayStarted(){
   let previous=state.normalizedResult;
   if(!previous){
-    try{const raw=sessionStorage.getItem(RESULT_STORAGE_KEY);if(raw)previous=JSON.parse(raw)}catch{}
+    try{const code=state.normalizedResult?.studentCode||state.student?.studentCode||loadActiveStudent()?.studentCode;const raw=code?sessionStorage.getItem(resultStorageKey(code)):null;if(raw)previous=JSON.parse(raw)}catch{}
   }
   if(!previous?.completed||!previous.roundId)return false;
   previous.replayStarted=true;
@@ -893,16 +1076,17 @@ function markReplayStarted(){
 }
 function renderFragmentTeaser(){
   if(!el.fragmentTeaser)return;
-  if(isPilotBank()){el.fragmentTeaser.hidden=true;return}
   const reward=state.cycleReward;
-  if(!reward||!reward.owned){el.fragmentTeaser.hidden=true;return}
+  if(isPilotBank()||!reward?.awardedNow){el.fragmentTeaser.hidden=true;return}
+  const progress=renderSharedCollection();
   el.fragmentTeaser.hidden=false;
-  const progress=reward.cycleProgress;
-  el.fragmentTitle.textContent=reward.awardedNow?'Ты нашёл первый фрагмент!':'Первый фрагмент уже найден';
+  el.fragmentTitle.textContent='Ты нашёл новый фрагмент!';
   if(el.fragmentCount)el.fragmentCount.textContent=`Собрано: ${progress.current} из ${progress.total}`;
-  el.fragmentNote.textContent='Остальные фрагменты спрятаны в других играх.';
+  el.fragmentNote.textContent='Остальные фрагменты можно находить в других играх.';
+  const found=new Set(progress.indexes);
+  el.fragmentTeaser.querySelectorAll('.fragment-piece').forEach((node,i)=>node.classList.toggle('found',found.has(i+1)));
 }
-function storageKey(){return `memoryYazyk:lastRun:${state.level}:${state.bank}`}
+function storageKey(){return `memoryYazyk:lastRun:${state.student?.studentCode||'NO-STUDENT'}:${state.level}:${state.bank}`}
 function loadLastRun(){const key=storageKey();if(state.lastRunKey!==key){state.lastRunIds=[];state.lastRunKey=key}try{const raw=sessionStorage.getItem(key);if(raw)state.lastRunIds=JSON.parse(raw)}catch{}}
 function saveLastRun(){state.lastRunIds=[...state.runPairIds];state.lastRunKey=storageKey();try{sessionStorage.setItem(storageKey(),JSON.stringify(state.runPairIds))}catch{}}
 
@@ -1013,6 +1197,7 @@ function buildPilotQuestions(){
   });
 }
 function resetRun(seed=makeSeed(),avoidLast=true){
+  const active=loadActiveStudent();if(!active)throw new Error('student-code-required');state.student={...active};
   state.phase=isPilotBank()?'pilot-learn':'board';state.runSeed=seed>>>0;state.roundId=makeRoundId();state.rng=makeRng(state.runSeed);state.score=0;state.streak=0;state.maxStreak=0;state.signal=100;state.matchedBoard=0;state.matchedPulse=0;state.wrongSelections=0;state.attempts=0;state.resolvedTasks=0;state.firstTryCorrect=0;state.eventualCorrect=0;state.wrongAttempts=0;state.helpUsed=false;state.selfCorrections=0;state.replayStarted=false;state.startedAt=new Date().toISOString();state.normalizedResult=null;state.cycleReward=null;state.locked=false;state.firstCard=null;state.pulseSelected=[];state.pairStats={};state.pilotQuestions=[];state.pilotCheckIndex=0;state.pilotPostCheck=null;state.pilotUnfamiliar=[];state.pilotExplanation=[];state.askedToContinue=null;
   if(isPilotBank()&&!pilotReady())throw new Error('pilot-content-awaiting-educational-hq');
   if(avoidLast) loadLastRun(); else state.lastRunIds=[];
@@ -1189,7 +1374,7 @@ function toast(msg){el.toast.textContent=msg;el.toast.classList.add('show');setT
 $('levelChoices').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(!b)return;state.level=b.dataset.level;if(state.level!=='78'&&isPilotBank())state.bank='meaning';document.querySelectorAll('[data-level]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x.dataset.bank===state.bank));refreshPilotAvailability();updateSetupIdentity()});
 $('bankChoices').addEventListener('click',e=>{const b=e.target.closest('[data-bank]');if(!b||b.hidden)return;state.bank=b.dataset.bank;document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x===b));refreshPilotAvailability();updateSetupIdentity()});
 $('pilotContextChoices').addEventListener('click',e=>{const b=e.target.closest('[data-context]');if(!b)return;state.pilotContext=b.dataset.context;document.querySelectorAll('[data-context]').forEach(x=>x.classList.toggle('active',x===b))});
-$('startBtn').addEventListener('click',()=>{markReplayStarted();startRun()});
+$('startBtn').addEventListener('click',()=>{if(!ensureActiveStudentFromInputs())return;markReplayStarted();startRun()});
 $('pilotToMemoryBtn').addEventListener('click',renderBoard);
 $('pilotWordObservations').addEventListener('change',e=>{const u=e.target.closest('[data-pilot-unfamiliar]');if(u)updatePilotObservation(u.dataset.pilotUnfamiliar,'unfamiliar',u.checked);const x=e.target.closest('[data-pilot-explain]');if(x)updatePilotObservation(x.dataset.pilotExplain,'explanation',x.checked)});
 $('pilotCheckUnknown').addEventListener('click',recordPilotUnknown);
@@ -1197,11 +1382,29 @@ $('askedToContinueChoices').addEventListener('click',e=>{const b=e.target.closes
 $('pulseBtn').addEventListener('click',renderPulse);
 $('replayBtn').addEventListener('click',()=>{markReplayStarted();startRun()});
 $('changeBtn').addEventListener('click',()=>{state.phase='intro';refreshPilotAvailability();updateSetupIdentity();setScreen('intro')});
+document.getElementById('changeStudentBtn')?.addEventListener('click',()=>{clearActiveStudent();state.student=null;state.normalizedResult=null;state.cycleReward=null;state.replayStarted=false;state.phase='intro';refreshPilotAvailability();setScreen('intro');document.getElementById('studentCodeInput')?.focus()});
 
-refreshPilotAvailability();updateSetupIdentity();
+setupSharedCollectionUI();refreshPilotAvailability();updateSetupIdentity();
 const validation=validateContent();if(!validation.ok){console.error('CONTENT VALIDATION FAILED',validation.errors);toast('Ошибка банка заданий')}
-window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,PILOT_NOTES,getPilotNotes:()=>JSON.parse(JSON.stringify(PILOT_NOTES)),getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,inspectBoardLayout,validateBoardLayout,shuffleBoardCards,getBoardLayoutReport:()=>state.boardLayoutReport?JSON.parse(JSON.stringify(state.boardLayoutReport)):null,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
+window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,PILOT_NOTES,getPilotNotes:()=>JSON.parse(JSON.stringify(PILOT_NOTES)),getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,inspectBoardLayout,validateBoardLayout,shuffleBoardCards,getBoardLayoutReport:()=>state.boardLayoutReport?JSON.parse(JSON.stringify(state.boardLayoutReport)):null,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getActiveStudent:()=>loadActiveStudent(),activateStudent,getSharedRoot:()=>JSON.parse(JSON.stringify(loadSharedRoot())),getSharedProgress:(code)=>JSON.parse(JSON.stringify(loadSharedProgress(code))),getSharedProgressSummary:(code)=>sharedProgressSummary(loadSharedProgress(code)),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
 })();
 </script>
+
+<script>
+(() => {
+  const openBtn=document.getElementById('aboutGameBtn');
+  const modal=document.getElementById('aboutGameModal');
+  const closeBtn=document.getElementById('aboutGameClose');
+  if(!openBtn||!modal||!closeBtn) return;
+  let returnFocus=null;
+  const open=()=>{returnFocus=document.activeElement;modal.hidden=false;document.body.dataset.authorModalOpen='1';requestAnimationFrame(()=>closeBtn.focus())};
+  const close=()=>{modal.hidden=true;delete document.body.dataset.authorModalOpen;if(returnFocus&&typeof returnFocus.focus==='function')returnFocus.focus()};
+  openBtn.addEventListener('click',open);
+  closeBtn.addEventListener('click',close);
+  modal.addEventListener('click',e=>{if(e.target===modal)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
+})();
+</script>
+
 </body>
 </html>
