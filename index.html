@@ -562,7 +562,41 @@ function setupSharedCollectionUI(){
   window.addEventListener('storage',e=>{if(e.key===SHARED_PROGRESS_CONFIG.storageKey)renderSharedCollection();if(e.key===SHARED_PROGRESS_CONFIG.activeStudentKey){const s=loadActiveStudent();renderActiveStudentUI(s);if(s)setStudentInputs(s);renderSharedCollection()}});
 }
 
-const GAME_VERSION='1.6.1-preMVP-student';
+const GAME_VERSION='1.6.1';
+const BUILD_TAG='preMVP-student';
+
+const GAME_RESULT_SYNC={
+  endpoint:'https://acfuzhmqjdaypnhfabec.supabase.co/functions/v1/game-result',
+  publishableKey:'sb_publishable_RXV49_9pWkIABvqqTEU11g_KzjQPmSC',
+  outboxKey:'rusgame.gameResultOutbox.v1'
+};
+function cloudSafeResult(result){
+  const clone=JSON.parse(JSON.stringify(result||{}));
+  delete clone.student;delete clone.player;
+  return clone;
+}
+function loadGameResultOutbox(){try{const x=JSON.parse(localStorage.getItem(GAME_RESULT_SYNC.outboxKey)||'{}');return x&&typeof x==='object'&&!Array.isArray(x)?x:{}}catch{return {}}}
+function saveGameResultOutbox(outbox){try{localStorage.setItem(GAME_RESULT_SYNC.outboxKey,JSON.stringify(outbox));return true}catch{return false}}
+function gameResultSyncKey(result){return `${result?.gameId||'GAME'}:${result?.sessionId||result?.roundId||'SESSION'}`}
+function queueGameResultSync(result){
+  if(!result?.completed||!result?.studentCode||!result?.sessionId||!result?.resultStats)return false;
+  const payload={result:cloudSafeResult(result),sourcePath:location.pathname};
+  const outbox=loadGameResultOutbox();outbox[gameResultSyncKey(result)]=payload;saveGameResultOutbox(outbox);
+  void flushGameResultOutbox();return true;
+}
+async function flushGameResultOutbox(){
+  const snapshot=loadGameResultOutbox();
+  for(const [key,payload] of Object.entries(snapshot)){
+    try{
+      const response=await fetch(GAME_RESULT_SYNC.endpoint,{method:'POST',headers:{apikey:GAME_RESULT_SYNC.publishableKey,'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true});
+      if(!response.ok)continue;
+      const current=loadGameResultOutbox();if(current[key]){delete current[key];saveGameResultOutbox(current)}
+    }catch{}
+  }
+}
+window.addEventListener('online',()=>{void flushGameResultOutbox()});
+setTimeout(()=>{void flushGameResultOutbox()},0);
+
 const PULSE_PAIRS=3;
 const PRE_MVP_CYCLE={
   cycleId:'PRE-MVP-RETURN-01',
@@ -932,7 +966,8 @@ function installPilotBank(items){
 }
 function refreshPilotAvailability(){
   const ready=pilotReady();
-  if(el.pilotBankChoice)el.pilotBankChoice.hidden=!ready||state.level!=='78';
+  // Production student flow: BANK-07/pilotMeaning remains available only through QA/debug API, never through the ordinary selector.
+  if(el.pilotBankChoice)el.pilotBankChoice.hidden=true;
   if(!ready&&isPilotBank()){state.bank='meaning';document.querySelectorAll('[data-bank]').forEach(x=>x.classList.toggle('active',x.dataset.bank==='meaning'))}
   if(el.pilotContextField)el.pilotContextField.hidden=!isPilotBank();
 }
@@ -951,6 +986,7 @@ function persistNormalizedResult(result){
   if(!result?.roundId||!result?.studentCode)return false;const history=loadResultHistory(result.studentCode);history.results[result.roundId]=JSON.parse(JSON.stringify(result));saveResultHistory(history,result.studentCode);
   try{sessionStorage.setItem(resultStorageKey(result.studentCode),JSON.stringify(result))}catch{}
   persistSharedGameResult('G-002',result.roundId,{gameId:result.gameId,gameVersion:result.gameVersion,studentCode:result.studentCode,bankId:result.bankId,bankVersion:result.bankVersion,roundId:result.roundId,completed:result.completed,firstTryCorrect:result.firstTryCorrect,eventualCorrect:result.eventualCorrect,wrongAttempts:result.wrongAttempts,helpUsed:result.helpUsed,replayStarted:result.replayStarted,completedAt:result.completedAt},result.studentCode);
+  queueGameResultSync(result);
   return true;
 }
 function getResultHistory(){return JSON.parse(JSON.stringify(loadResultHistory()))}
@@ -1386,7 +1422,7 @@ document.getElementById('changeStudentBtn')?.addEventListener('click',()=>{clear
 
 setupSharedCollectionUI();refreshPilotAvailability();updateSetupIdentity();
 const validation=validateContent();if(!validation.ok){console.error('CONTENT VALIDATION FAILED',validation.errors);toast('Ошибка банка заданий')}
-window.__MEMORY_GAME__={version:GAME_VERSION,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,PILOT_NOTES,getPilotNotes:()=>JSON.parse(JSON.stringify(PILOT_NOTES)),getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,inspectBoardLayout,validateBoardLayout,shuffleBoardCards,getBoardLayoutReport:()=>state.boardLayoutReport?JSON.parse(JSON.stringify(state.boardLayoutReport)):null,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getActiveStudent:()=>loadActiveStudent(),activateStudent,getSharedRoot:()=>JSON.parse(JSON.stringify(loadSharedRoot())),getSharedProgress:(code)=>JSON.parse(JSON.stringify(loadSharedProgress(code))),getSharedProgressSummary:(code)=>sharedProgressSummary(loadSharedProgress(code)),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
+window.__MEMORY_GAME__={version:GAME_VERSION,buildTag:BUILD_TAG,state,CONTENT,BANK_META,CONTENT_IDENTITY,RESULT_SCHEMA,PILOT_BANK_ID,PILOT_BANK_VERSION,PILOT_NOTES,getGameResultOutbox:()=>JSON.parse(JSON.stringify(loadGameResultOutbox())),queueGameResultSync,flushGameResultOutbox,getPilotNotes:()=>JSON.parse(JSON.stringify(PILOT_NOTES)),getPilotBank:()=>JSON.parse(JSON.stringify(PILOT_BANK_07)),installPilotBank,validatePilotBank,contentIdentity,contentIdentityText,makeRoundId,boardPairCount,totalLinks,conflicts:COLLOCATION_CONFLICTS_RAW,validate:validateContent,validateCollocationRun,inspectBoardLayout,validateBoardLayout,shuffleBoardCards,getBoardLayoutReport:()=>state.boardLayoutReport?JSON.parse(JSON.stringify(state.boardLayoutReport)):null,buildNormalizedResult,getNormalizedResult:()=>state.normalizedResult?JSON.parse(JSON.stringify(state.normalizedResult)):null,getCycleLedger:()=>JSON.parse(JSON.stringify(loadCycleLedger())),getActiveStudent:()=>loadActiveStudent(),activateStudent,getSharedRoot:()=>JSON.parse(JSON.stringify(loadSharedRoot())),getSharedProgress:(code)=>JSON.parse(JSON.stringify(loadSharedProgress(code))),getSharedProgressSummary:(code)=>sharedProgressSummary(loadSharedProgress(code)),getResultHistory,persistNormalizedResult,markReplayStarted,setAskedToContinue,startWithSeed:(seed,level=state.level,bank=state.bank)=>{state.level=level;state.bank=bank;resetRun(Number(seed)>>>0,false);setScreen('game');isPilotBank()?renderPilotLearn():renderBoard();return {board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId)}},getRun:()=>({seed:state.runSeed,roundId:state.roundId,contentIdentity:contentIdentity(),level:state.level,bank:state.bank,ids:[...state.runPairIds],board:state.boardPairs.map(p=>p[0]),pulse:state.pulsePairs.map(p=>p[0]),postCheck:state.pilotQuestions.map(q=>q.itemId),stats:JSON.parse(JSON.stringify(state.pairStats)),metrics:{attempts:state.attempts,resolvedTasks:state.resolvedTasks,firstTryCorrect:state.firstTryCorrect,eventualCorrect:state.eventualCorrect,wrongAttempts:state.wrongAttempts,helpUsed:state.helpUsed,selfCorrections:state.selfCorrections,replayStarted:state.replayStarted}})};
 })();
 </script>
 
